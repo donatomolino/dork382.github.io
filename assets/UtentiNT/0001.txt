@@ -1,4 +1,13 @@
-0001NickDorK
-0001NomeDonato
-0001CognomeMolino
-0001Descrizionedonatomolino.it questo è un test
+0001NickDorK/////////
+0001NomeDonato///////
+0001CognomeMolino///////
+0001Rank3v3Diamond1/////
+0001Rank2v2Diamond1/////
+0001Rank1v1Platinum1/////
+0001Rank3v3soloPlatinum1/////
+0001HoopsGold2//////////
+0001RumblePlatinum2/////
+0001DropshotGold2//////////
+0001SnowdayGold2//////////
+0001PlatformSteam/////////
+0001YearBorn2002///////////
