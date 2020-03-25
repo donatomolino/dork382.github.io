@@ -1,0 +1,1 @@
+Questo programma funziona solo su un monitor 1920x1080 e necessita di essere messo su un server.
