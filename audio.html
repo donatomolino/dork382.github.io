@@ -1,0 +1,166 @@
+<div id="click">Click to start audio</div>
+
+<a href="https://youtu.be/OhPcA7jyJp8" target="_blank" data-keyframers-credit style="color: #FFF; z-index: 10"></a>
+<script src="https://codepen.io/shshaw/pen/QmZYMG.js"></script>
+
+<style>
+    html {
+        background: #ffffff;
+        color: #ffffff;
+        font-family: monospace;
+        height: 100%;
+    }
+
+    body {
+        min-height: 100%;
+    }
+
+    body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        z-index: 2;
+    }
+
+    canvas {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    #click {
+        padding: 1em;
+    }
+</style>
+
+<script>
+    console.clear();
+
+    const NUMBER_OF_NODES = 24;
+    const TRIGGER_THRESHOLD = 120;
+    const triggered = [];
+
+    const audioCtx = new AudioContext();
+    const data = new Uint8Array(NUMBER_OF_NODES * 4);
+
+    const analyserNode = new AnalyserNode(audioCtx, {
+        fftSize: 256, //2 ** 8,
+        maxDecibels: -20,
+        minDecibels: -80,
+        smoothingTimeConstant: 0.8
+    });
+
+    function updateVisualizer() {
+        try {
+            requestAnimationFrame(updateVisualizer);
+            analyserNode.getByteFrequencyData(data);
+
+            updateCanvas(data);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    function startStream() {
+        return navigator.mediaDevices
+            .getUserMedia({ audio: true, video: false })
+            .then(stream => audioCtx.createMediaStreamSource(stream))
+            .then(source => {
+                source.connect(analyserNode);
+            })
+            .then(updateVisualizer);
+    }
+
+    const click = document.getElementById("click");
+    // Have to initialize via a user event
+    document.addEventListener("click", () => {
+        click.parentNode && click.parentNode.removeChild(click);
+        audioCtx.resume();
+        startStream();
+    });
+
+    /* ---------------------------------- */
+
+    const canvas = document.createElement("canvas"),
+        ctx = canvas.getContext("2d");
+
+    let width = (canvas.width = document.body.clientWidth),
+        height = (canvas.height = document.body.clientHeight);
+
+    document.body.appendChild(canvas);
+
+    function updateCanvas(data) {
+        //ctx.clearRect(0, 0, width, height);
+        //ctx.globalCompositeOperation = 'source-over';
+
+        ctx.globalAlpha = 0.1;
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.globalAlpha = 1;
+
+        //ctx.globalCompositeOperation = 'screen';
+
+        if (data) {
+            let w = width / NUMBER_OF_NODES;
+            let halfHeight = height / 2;
+
+            ctx.beginPath();
+            ctx.moveTo(-20, height);
+
+            for (var i = 0; i < NUMBER_OF_NODES; i += 2) {
+                let x1 = i * w;
+                let y1 = height - height * (data[i] / 255);
+                let x2 = (i + 1) * w;
+                let y2 = height - height * (data[i + 1] / 255);
+
+                ctx.quadraticCurveTo(x1, y1, x2, y2);
+            }
+            ctx.lineTo(width + 20, height);
+            ctx.closePath();
+
+            ctx.fillStyle = "#f5a623";
+            ctx.strokeStyle = "#f5a623";
+            ctx.lineWidth = 20;
+
+            ctx.globalAlpha = 0.2;
+            ctx.fill();
+            ctx.globalAlpha = 0.5;
+            ctx.stroke();
+
+            /* ---------------------------------- */
+
+            ctx.beginPath();
+            ctx.moveTo(width + 20, height);
+
+            for (var i = 0; i < NUMBER_OF_NODES; i += 2) {
+                let x1 = width - i * w;
+                let y1 = height - height * (data[i] / 255);
+                let x2 = width - (i + 1) * w;
+                let y2 = height - height * (data[i + 1] / 255);
+
+                ctx.quadraticCurveTo(x1, y1, x2, y2);
+            }
+            ctx.lineTo(-20, height);
+            ctx.closePath();
+
+            ctx.fillStyle = "#fff";
+            ctx.strokeStyle = "#fff";
+            ctx.lineWidth = 20;
+
+            ctx.globalAlpha = 0.2;
+            ctx.fill();
+            ctx.globalAlpha = 0.5;
+            ctx.stroke();
+        }
+    }
+
+    updateCanvas();
+
+</script>
