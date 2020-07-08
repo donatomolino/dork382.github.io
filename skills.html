@@ -6,9 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="assets/fontawesome/css/all.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <!-- Icon -->
@@ -59,11 +61,11 @@
         </div>
     </nav>
     <br><br><br>
-    <h1 class="text-center">Skills</h1>
+    <h1 class="text-center ">Skills</h1>
     <!-- Navbar End -->
     <div id="hero-area" class="hero-area-bg">
         <div class="container" style="color: #868e96">
-            <h4 class="text-center">Programming Languages</h4>
+            <h4 class="text-center wow">Programming Languages</h4>
             <hr style=" border: 3px solid #222222;
         border-radius: 5px; width: 70%;">
             <br><br><br>
@@ -378,14 +380,41 @@
 
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3">
-            <p>2019-2020 | Donato Molino</p>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <a class="dk-nocolor" href="https://t.me/dork382"><i class="fab fa-telegram"></i></a>
+                        <a class="dk-nocolor" href="https://www.instagram.com/donatomolino/"><i
+                                class="fab fa-instagram"></i></a>
+                        <a class="dk-nocolor" href="https://steamcommunity.com/id/dork382"><i
+                                class="fab fa-steam"></i></a>
+                        <a class="dk-nocolor" href="https://www.twitch.tv/dork382"><i class="fab fa-twitch"></i></a>
+                        <a class="dk-nocolor" href="https://github.com/Dork3822"><i class="fab fa-github"></i></a>
+                    </div>
+                    <div class="col-sm">
+                        <br>
+                        <p>2019-2020 | Donato Molino</p>
+                    </div>
+                    <div class="col-sm">
+                        <a href="privacy.html">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <!-- Copyright -->
 
     </footer>
     <!-- Footer -->
 
-
+    <script>
+        $(document).ready(function () {
+            new WOW().init();
+            $(".wow").addClass("fadeInUp");
+        });
+    </script>
 
 </body>
 

@@ -16,8 +16,41 @@
     font-size: 1.5rem;
 }
 
+.fab {
+  font-size: 30px;
+  padding: 10px;
+}
+
+.dk-nocolor
+{
+  color: inherit;
+}
+/* Add a hover effect if you want */
+.fab:hover {
+  opacity: 0.7;
+}
+
+/* Set a specific color for each brand */
+
+/* Facebook */
+.fa-telegram {
+  
+}
+
+.fa-instagram {
+  
+}
+
+/* Twitter */
+
+
 .progress{
   background-color: white;
+}
+
+.progress-bar {
+  -webkit-transition: none !important;
+  transition: none !important;
 }
 
 .dk-text-gray
