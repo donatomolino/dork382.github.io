@@ -29,7 +29,7 @@
 
 </head>
 
-<body
+<body onload="setInterval(change, 25)"
     style="background-color: #fafafa; color: #1f1f1f; font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'">
 
     
@@ -42,12 +42,12 @@
         <div class="container">
             <br><br><br><br>
             <hr style=" border: 3px solid #1f1f1f;
-        border-radius: 5px; width: 70%;">
+        border-radius: 5px; width: 70%;" id="hr1">
             <h1 class="text-center" style="font-size: 200px; color: #1f1f1f; font-family: impact;">iOS</h1>
            
             <a class="text-center" style="align-items: center; text-align: center; display:block; font-family: Roboto;" href="assets/imgios/ios5A.pptx">Download Powerpoint</a>
             <hr style=" border: 2px solid #1f1f1f;
-            border-radius: 3px; width: 50%;">
+            border-radius: 3px; width: 50%;" id="hr2">
             <br><br><br><br>
 
                 <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic example" style="font-family: impact; font-size: 10%">
@@ -306,7 +306,68 @@ style="display: block; width: 100%;" data-height="200">
     
          
 
+    <script>
+
     
+
+        var uno = 50;
+        var due = 70;
+        var unoreset = false;
+        var duereset = false;
+        function change()
+        {   
+            
+            var hr1 = document.getElementById("hr1");
+            var hr2 = document.getElementById("hr2");
+
+            if(uno > 90)
+            {
+                unoreset = true;
+                uno = 90;
+                
+            }
+            else if(uno < 10)
+            {
+                unoreset = false;
+            }
+
+            if(due > 90)
+            {
+                duereset = true;
+                due = 90;
+                
+            }
+            else if(due < 10)
+            {
+                duereset = false;
+            }
+
+            if(unoreset)
+            {
+                uno-=0.5;
+                
+            }
+            else
+            {
+                uno+=0.3;
+            }
+
+            if(duereset)
+            {
+                due-=0.5;
+            }
+            else
+            {
+                due+=0.3;
+            }
+
+            hr1.style.width = uno + "%";
+            hr2.style.width = due+ "%";
+            
+        }
+
+        
+    </script>
 
 
 
