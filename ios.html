@@ -57,6 +57,11 @@
                     <a type="button" class="btn btn-primary curved" href="#Feature" style="">Features</a>
                     <a type="button" class="btn btn-primary curved" href="#Comparison" style="border-top-right-radius: 50px; border-bottom-right-radius: 50px; background-image: linear-gradient(to right,#93b874 , #ff6961); border-width: 0px;">Comparison</a>
                 </div>
+                <br><br>
+                <!-- Default switch -->
+                <div style="text-align: center;" id="removeT" onclick="remove()">
+                <button class="btn btn-primary text-center"">Remove Text</button>
+            </div>
                 <br><br><br><br><br><br>
         </div>
     </div>
@@ -115,7 +120,7 @@ style="display: block; width: 100%;" data-height="200">
                     <hr style=" border: 2px solid #fafafa;
             border-radius: 3px; width: 50%;">
                     
-                    <p style="font-family: 'Roboto', sans-serif; font-size: 23px;">In 2005 Steve Jobs tried to create an operative system for our mobile-phones , His idea was the one to carry the experience of Mac (MacOS) on a mobile phone , when he proposed is idea, he had to discuss with the entire Apple team, and after many discussions, they created the IPhone OS, which is commonly known now as the iOS system, which got placed in the market  on 9th January 2007.
+                    <p id="p1" style="font-family: 'Roboto', sans-serif; font-size: 23px;">In 2005 Steve Jobs tried to create an operative system for our mobile-phones , His idea was the one to carry the experience of Mac (MacOS) on a mobile phone , when he proposed is idea, he had to discuss with the entire Apple team, and after many discussions, they created the IPhone OS, which is commonly known now as the iOS system, which got placed in the market  on 9th January 2007.
                         In the beginning, the iOS could only support softwares developed by the Apple, because Steve Jobs said that he didn’ t want the iOS to support softwares created by other agencies, just to protect the system. In October 2007, Jobs changed idea, and he gaves the chance to create a native SDK for the Iphone.
                         The Apple store was created on the 10th July 2008 with 500 softwares/applications, available.
                         Actually in 2020 there are 1 milion softwares/applications available on the Apple store.
@@ -143,7 +148,7 @@ style="display: block; width: 100%;" data-height="200">
                     <hr style=" border: 2px solid #fafafa;
             border-radius: 3px; width: 50%;">
                     
-                    <p style="font-family: 'Roboto', sans-serif; font-size: 23px;">The iOS system has got many advantages, that we are going to describe: <br>
+                    <p  id="p2" style="font-family: 'Roboto', sans-serif; font-size: 23px;">The iOS system has got many advantages, that we are going to describe: <br>
                         •The APPs are always optimized, because the model that iOS use aren’t that much. And for the APP’s developers is really simple to creat adapted models, that’ s becuase we never have resolution problems.
                        <br> •It’ s really safe, because the APPs that you can download are the only ones placed in the APP store which always checks them to see if they ve got some malwares inside the programming code.
                        <br> •The updates are very fast and every year a new update for the system gets released. And the users can update it instantly and fast.
@@ -170,7 +175,7 @@ style="display: block; width: 100%;" data-height="200">
                         <hr style=" border: 2px solid #fafafa;
             border-radius: 3px; width: 50%;">
                     
-                    <p style="font-family: 'Roboto', sans-serif; font-size: 23px;">1. Apple Ecosystem<br>
+                    <p  id="p3" style="font-family: 'Roboto', sans-serif; font-size: 23px;">1. Apple Ecosystem<br>
                         The Apple ecosystem is both a boon and a curse. Once you get in, it's really hard to get out. Because there are so many differences between android and ios that people prefer not to change it.
                        <br> 2. Interactive<br>
                         Unfortunaly there’s a limited interactivity in the homescreen because we can’ t use that we would like to have like, having buttons for (play/pause, weather location switch buttons).
@@ -203,7 +208,7 @@ style="display: block; width: 100%;" data-height="200">
                     <hr style=" border: 2px solid #fafafa;
             border-radius: 3px; width: 50%;">
                     
-                    <p style="font-family: 'Roboto', sans-serif; font-size: 23px;">Siri is a virtual vocal helper of iOS which permits to use the operative system with a vocal system, and because it is an “AI”, it’ s always updated ì
+                    <p id="p4" style="font-family: 'Roboto', sans-serif; font-size: 23px;">Siri is a virtual vocal helper of iOS which permits to use the operative system with a vocal system, and because it is an “AI”, it’ s always updated ì
                         iCloud is an iOS service used as a backing storage placed in a cloud server.
                         The design is common to every iOS system.
                         iOS only permits the use of hardwares authorized by Apple.
@@ -229,7 +234,7 @@ style="display: block; width: 100%;" data-height="200">
                          <hr style=" border: 2px solid #fafafa;
             border-radius: 3px; width: 50%;">
                    
-                    <p style="font-family: 'Roboto', sans-serif; font-size: 23px;">If we have to comparize the iOS system with the Android system, we can say that differently from Android, ios is way more safe, because the iOS system can' t be modified or corrupted, and the apps are always checked before they get exposed in the App Store, the programming language which is called Swift is faster than android, while Android uses javascript which is really slow, the UI design  has got a user friendly interface which is really simple to use, the updates are always on point, the iOS system gets updated every year, and also Android but iOS always includes new functionalities, finally but not less important is the Apple' s ecosystem which permits to every Apple devices to shares data with another Apple device, with a fast execution.
+                    <p id="p5" style="font-family: 'Roboto', sans-serif; font-size: 23px;">If we have to comparize the iOS system with the Android system, we can say that differently from Android, ios is way more safe, because the iOS system can' t be modified or corrupted, and the apps are always checked before they get exposed in the App Store, the programming language which is called Swift is faster than android, while Android uses javascript which is really slow, the UI design  has got a user friendly interface which is really simple to use, the updates are always on point, the iOS system gets updated every year, and also Android but iOS always includes new functionalities, finally but not less important is the Apple' s ecosystem which permits to every Apple devices to shares data with another Apple device, with a fast execution.
                     </p>
                     <hr style=" border: 2px solid #fafafa;
             border-radius: 3px; width: 50%;">
@@ -364,6 +369,16 @@ style="display: block; width: 100%;" data-height="200">
             hr1.style.width = uno + "%";
             hr2.style.width = due+ "%";
             
+        }
+
+        
+        function remove()
+        {
+            document.getElementById("p1").style.display = "none";
+            document.getElementById("p2").style.display = "none";
+            document.getElementById("p3").style.display = "none";
+            document.getElementById("p4").style.display = "none";
+            document.getElementById("p5").style.display = "none";
         }
 
         
