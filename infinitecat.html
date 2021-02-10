@@ -106,6 +106,9 @@
     <script>
 
 
+
+
+
         /* $(window).bind('mousewheel DOMMouseScroll', function (event) {
              if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) 
              {
@@ -127,7 +130,26 @@
         function generate() {
 
 
+            var request2 = new XMLHttpRequest()
 
+            request2.open('GET', 'http://89.40.143.93/', true)
+            request2.onload = function () {
+
+
+
+                if (request2.status >= 200 && request2.status < 400) {
+
+
+
+
+                } else {
+                    console.log('error')
+
+                }
+            }
+
+
+            request2.send()
 
 
 
