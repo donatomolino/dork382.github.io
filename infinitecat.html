@@ -17,7 +17,7 @@
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body style="background-color: #f9f9f9">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Blueprint dependencies -->
     <script src="https://unpkg.com/classnames@^2.2"></script>
@@ -34,7 +34,9 @@
     <script src="https://unpkg.com/@blueprintjs/core@^3.10.0"></script>
 
     <div
+      class="bp3-card bp3-elevation5"
       style="
+        background-color: white;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -79,6 +81,7 @@
       newImg();
       newImg();
       newImg();
+      var oldImg = "";
       function newImg() {
         var request = new XMLHttpRequest();
 
@@ -89,12 +92,17 @@
 
           if (request.status >= 200 && request.status < 400) {
             console.log(data.file);
+            if ((oldImg = "" || oldImg != data.file)) {
+              oldImg = data.file;
 
-            var img = document.createElement("img");
-            img.src = data.file;
-            img.classList.add("imgCat");
-            var element = document.getElementById("mainCat");
-            element.appendChild(img);
+              var img = document.createElement("img");
+              img.src = data.file;
+              img.classList.add("imgCat");
+              var element = document.getElementById("mainCat");
+              element.appendChild(img);
+            } else {
+              console.log("DOPPIONE");
+            }
           } else {
             console.log("error");
           }
