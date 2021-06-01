@@ -1,189 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>InfiniteCat</title>
 
-<head>
-    <title>donatomolino.it</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link href="assets/fontawesome/css/all.css" rel="stylesheet">
+    <!-- Style dependencies -->
+    <link href="https://unpkg.com/normalize.css@^7.0.0" rel="stylesheet" />
+    <!-- Blueprint stylesheets -->
+    <link
+      href="https://unpkg.com/@blueprintjs/icons@^3.4.0/lib/css/blueprint-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/@blueprintjs/core@^3.10.0/lib/css/blueprint.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- Blueprint dependencies -->
+    <script src="https://unpkg.com/classnames@^2.2"></script>
+    <script src="https://unpkg.com/dom4@^1.8"></script>
+    <script src="https://unpkg.com/tslib@^1.9.0"></script>
+    <script src="https://unpkg.com/react@^16.2.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@^16.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/react-transition-group@^2.2.1/dist/react-transition-group.min.js"></script>
+    <script src="https://unpkg.com/popper.js@^1.14.1/dist/umd/popper.js"></script>
+    <script src="https://unpkg.com/react-popper@^1.0.0/dist/index.umd.min.js"></script>
+    <script src="https://unpkg.com/resize-observer-polyfill@^1.5.0"></script>
+    <!-- Blueprint packages (note: icons script must come first) -->
+    <script src="https://unpkg.com/@blueprintjs/icons@^3.4.0"></script>
+    <script src="https://unpkg.com/@blueprintjs/core@^3.10.0"></script>
 
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <!-- Icon -->
-    <link rel="stylesheet" href="assets/fonts/line-icons.css">
-    <!-- Owl carousel -->
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/owl.theme.css">
-
-    <!-- Animate -->
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <!-- Main Style -->
-    <link rel="stylesheet" href="assets/css/main.css">
-    <!-- Responsive Style -->
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/newmain.css">
-
-</head>
-
-<body onload="generate()"
-    style="background-color: #ebebed; color: #222222; font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'">
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-inverse fixed-top scrolling-navbar navbar-brand-center"
-        style="background-color: #ffffff">
-        <a class="navbar-brand mb-0 h1" href="index.html">&nbsp;donato<span class="text-primary">molino</span>.it</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="project.html">Project</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/assets/img/mycv.pdf">Curriculum</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="skills.html">Skills <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="aboutme.html">About me</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Navbar End -->
-
-
-
-    <div id="hero-area" class="hero-area-bg text-center">
-        <a href="https://www.instagram.com/donatomolino/" class="text-center">Follow me on Instagram</a>
-        <div class="container align-items-center">
-
-            <img src="" id="img1" style="width: 100%; border: 3px solid black">
-            <br><br>
-
-
-
-        </div>
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <a
+        href="https://donatomolino.it"
+        style="
+          font-size: 25px;
+          font-weight: bold;
+          text-shadow: gray 5px 5px 10px;
+        "
+        >donatomolino.it</a
+      >
+      <a
+        href="https://t.me/donatomolino"
+        style="
+          font-size: 25px;
+          font-weight: bold;
+          text-shadow: gray 5px 5px 10px;
+        "
+        >Telegram Channel</a
+      >
     </div>
 
-    <button class="btn" style="background-color: pink; border-color: pink; width: 100%; position: fixed;
-        bottom: 5px;" id="loveit">&#10084;I LOVE IT&#10084;</button>
-
-
-
-
-
-
-
-
-    <!-- Footer -->
-    <footer class="container-fluid text-center" style="background-color: #222222; color: #ebebed;">
-
-        <!-- Footer Elements -->
-        <div class="container">
-
-            <!-- Social buttons -->
-
-            <!-- Social buttons -->
-
-        </div>
-        <!-- Footer Elements -->
-
-
-
-    </footer>
-    <!-- Footer -->
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+      "
+      id="mainCat"
+    ></div>
 
     <script>
+      newImg();
+      newImg();
+      newImg();
+      newImg();
+      newImg();
+      function newImg() {
+        var request = new XMLHttpRequest();
 
+        request.open("GET", "https://aws.random.cat/meow", true);
+        request.onload = function () {
+          // Begin accessing JSON data here
+          var data = JSON.parse(this.response);
 
+          if (request.status >= 200 && request.status < 400) {
+            console.log(data.file);
 
+            var img = document.createElement("img");
+            img.src = data.file;
+            img.classList.add("imgCat");
+            var element = document.getElementById("mainCat");
+            element.appendChild(img);
+          } else {
+            console.log("error");
+          }
+        };
 
+        request.send();
+      }
 
-        /* $(window).bind('mousewheel DOMMouseScroll', function (event) {
-             if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) 
-             {
-                 generate();
-                 console.log("up");
-             }
-             else {
-                 generate();
-             }
-         });*/
-
-
-        $("#loveit").click(function () {
-            generate();
+      $(window).scroll(function () {
+        if (
+          $(window).scrollTop() + $(window).height() >=
+          $(document).height() / 1.3
+        ) {
+          newImg();
         }
-        )
-
-
-        function generate() {
-
-
-            var request2 = new XMLHttpRequest()
-
-            request2.open('GET', 'https://89.40.143.93:8080', true)
-            request2.onload = function () {
-
-
-
-                if (request2.status >= 200 && request2.status < 400) {
-
-
-
-
-                } else {
-                    console.log('error')
-
-                }
-            }
-
-
-            request2.send()
-
-
-
-            var request = new XMLHttpRequest()
-
-            request.open('GET', 'https://aws.random.cat/meow', true)
-            request.onload = function () {
-                // Begin accessing JSON data here
-                var data = JSON.parse(this.response)
-
-                if (request.status >= 200 && request.status < 400) {
-
-                    console.log(data.file);
-
-                    document.getElementById("img1").src = data.file;
-
-
-                } else {
-                    console.log('error')
-
-                }
-            }
-
-
-            request.send()
-
-        }
-
-        function loop() {
-
-        }
-
-
+      });
     </script>
-</body>
 
+    <style>
+      .imgCat {
+        margin: 10px;
+        box-shadow: rgb(61, 61, 61) 5px 5px 10px;
+        max-width: 90vw;
+        max-height: 90vh;
+      }
+    </style>
+  </body>
 </html>
