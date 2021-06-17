@@ -1,0 +1,26 @@
+Per ottenere informazioni su un Residente:
+http://89.40.143.93:1010/?type=selRes&nome=Federico&cognome=Madame&id=499
+
+Per poter ottenere informazioni su un Amministratore Condominiale:
+http://89.40.143.93:1010/?type=getAc&user=Filippo1
+
+Per poter ottenere informazioni su un Ente:
+http://89.40.143.93:1010/?type=getEnte&user=EnergiaItaliana
+
+Per poter ottenere informazioni su un Consigliere Condominiale:
+http://89.40.143.93:1010/?type=getCons&user=Diego1
+
+Per poter ottenere i consumi giorno per giorno dell'ultimo mese di un appartamento ed il tipo di consumo (gas, water, electricity):
+http://89.40.143.93:1010/?type=getConsumiMese&tipo=water&CodApp=1
+
+Per ottenere informazioni su tutti i condomini:
+http://89.40.143.93:1010/?type=condomini
+
+Per poter ottenere informazioni sugli appartamenti di un condominio:
+http://89.40.143.93:1010/?type=appartamento&CodCondo=1
+
+Per poter ottenere informazioni sui consumi dell'ultimo mese di un condominio specificandone la tipologia (water, gas, electricity):
+http://89.40.143.93:1010/?type=getConsumiCondo&CodCondo=1&tipo=gas
+
+Per poter ottenere informazioni sui residenti di un appartamento: 
+http://89.40.143.93:1010/?type=getResApp&CodApp=1
