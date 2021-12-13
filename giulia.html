@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>donatomolino.it</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="assets/fontawesome/css/all.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Icon -->
+    <link rel="stylesheet" href="assets/fonts/line-icons.css">
+    <!-- Owl carousel -->
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/owl.theme.css">
+
+    <!-- Animate -->
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- Responsive Style -->
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/newmain.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+
+</head>
+
+<body
+    style="background-color: #ebebed; color: #222222; font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'">
+
+   
+
+
+
+
+    
+        <div class="containerBox">
+            <image class="img" id="foto">
+            <button style="position: fixed; bottom: 10px;" onclick="rGiulia()" class="btn btn-primary">RANDOM GIULIA</button>
+        </div>
+   
+
+
+
+
+
+
+
+<script>
+    var foto = ["https://i.imgur.com/ijhQ3CH.png", "https://i.imgur.com/zJ7BvXB.png", "https://i.imgur.com/QqsH7Qv.png", "https://i.imgur.com/ZdlqCRd.png", "https://i.imgur.com/3K1X7xc.png", "https://i.imgur.com/xXGkGtL.png", "https://i.imgur.com/SS9neM9.png", "https://i.imgur.com/cKOvMxF.png", "https://i.imgur.com/KKgh8BJ.png", "https://i.imgur.com/x0hzyZA.png", "https://i.imgur.com/pk3owPx.png", "https://i.imgur.com/6ioOX1k.png", "https://i.imgur.com/is1FVzr.png", "https://i.imgur.com/rDYSFH7.png", "https://i.imgur.com/5t24djd.png"]
+    async function rGiulia()
+    {   
+        var i = Math.floor(Math.random() * foto.length);
+        document.getElementById("foto").src = foto[i];
+        console.log(i);
+    }
+</script>
+
+<style>
+
+    .img
+    {
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
+    .containerBox{
+        display: flex;
+        align-content: center;
+        align-items: center;
+        margin-top: 15%;
+        flex-direction: column;
+    }
+</style>
+
+   
+</body>
+
+</html>
