@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>donatomolino.it</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="assets/fontawesome/css/all.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Icon -->
+    <link rel="stylesheet" href="assets/fonts/line-icons.css">
+    <!-- Owl carousel -->
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/owl.theme.css">
+
+    <!-- Animate -->
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- Responsive Style -->
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/newmain.css">
+
+</head>
+
+<body 
+    style="background-color: #222222; color: #ebebed; font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'">
+
+    
+
+    <!-- Navbar End -->
+
+
+
+    <div id="hero-area" class="hero-area-bg">
+        <div class="containerDK" id="menuStart">
+            <h1>OSU GAME 10S</h1>
+            <h1 id="lastResult"></h1>
+            <button class="btn btn-primary" onclick="startGame()" style="display: flex;">START</button>
+        </div>
+        <div class="menu" id="menuGame" style="display: none; height: 100%; width: 100%;">
+            <h1 id="points" style="width: 100%; text-align: center;"></h1>
+            <h1 id="time" style="width: 100%; text-align: center;"></h1>
+            <button class="point" id="point" onclick="pointAdd()" style="z-index: 1;"></button>
+        </div>
+
+    </div>
+
+
+
+
+<style>
+    h1{
+        color: #ebebed;
+    }
+    .containerDK{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    .point{
+        width: 50px;
+        height: 50px;
+        background-color: tomato;
+        border-radius: 100%;
+        border: 2px;
+        position: absolute;
+        box-shadow: 0 5px 15px rgba(145, 92, 182, 0.658);
+    }
+</style>
+
+<script>
+    var points;
+    var timerInt;
+    var idTimer;
+    function startGame()
+    {   
+        points = 0;
+        timerInt = 10;
+        document.getElementById("menuStart").style = "display: none;"
+        document.getElementById("menuGame").style = "display: block;"
+        var x = Math.floor(Math.random() * 90);
+        var y = Math.floor(Math.random() * 75);
+        document.getElementById("point").style = "left: "+x+"%; bottom: "+y+"%; ";
+        setTimeout(finish, 10000);
+        idTimer = setInterval(timer, 1000);
+    }
+    function timer()
+    {   
+        timerInt= timerInt - 1;
+        document.getElementById("time").innerHTML = timerInt;
+    }
+    function pointAdd()
+    {   
+        var x = Math.floor(Math.random() * 90);
+        var y = Math.floor(Math.random() * 75);
+        points++;
+        document.getElementById("point").style = "left: "+x+"%; bottom: "+y+"%; ";
+        document.getElementById("points").innerHTML = points;
+        document.getElementById("point").style.backgroundColor = getRandomColor();
+    }
+    function lose()
+    {
+        points = 0;
+        document.getElementById("points").innerHTML = points;
+    }
+
+    var ignoreClickOnMeElement = document.getElementById('point');
+
+    document.addEventListener('click', function(event) {
+        var isClickInsideElement = ignoreClickOnMeElement.contains(event.target);
+        if (!isClickInsideElement) {
+            lose();
+        
+        }
+    });
+
+    function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+    }
+
+    function finish()
+    {   
+        clearInterval(idTimer);
+        document.getElementById("menuStart").style = "display: flex;"
+        document.getElementById("menuGame").style = "display: none;"
+        document.getElementById("lastResult").innerHTML = "Your last score was "+points+" ";
+
+    }
+</script>
+
+
+    
+</body>
+
+</html>
