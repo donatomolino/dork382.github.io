@@ -76,67 +76,46 @@
 }
 
 .dk-card {
-  border-radius: 10px;
+  border-radius: 25px;
   background: #ffffff;
   box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #c9c9c981;
-  border-color: transparent;
-
+  max-width: 15%;
   margin: 10px;
   padding: 5px;
-
+  border: 3px solid rgb(0, 0, 0);
+  min-width: 200px;
   width: 100%;
   height: 100%;
+  font-weight: bold;
+  font-family: poppins;
+  overflow: hidden;
+}
+
+.dk-card:hover {
+  border: 3px solid blue;
+  cursor: pointer;
+}
+
+.project-card {
+  border-radius: 25px;
+  background: #ffffff;
+  box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #c9c9c981;
+  max-width: 20%;
+  min-width: 300px;
+  margin: 20px;
+  padding: 0px;
+  border: 0px solid rgb(0, 0, 0);
+  width: 100%;
+
+  font-weight: bold;
+  font-family: poppins;
 
   overflow: hidden;
 }
 
-.dk-card-2 {
-  border-top: 0px solid #222222;
-  border-right: 0px solid #222222;
-  border-left: 10px solid #222222;
-  border-bottom: 10px solid #222222;
-}
-
-.dk-card-3 {
-  border-top: 10px solid #222222;
-  border-right: 10px solid #222222;
-  border-left: 0px solid #222222;
-  border-bottom: 0px solid #222222;
-}
-
-.dk-card-4 {
-  border-top: 0px solid #222222;
-  border-right: 10px solid #222222;
-  border-left: 0px solid #222222;
-  border-bottom: 10px solid #222222;
-}
-
-.dk-card-1:hover {
-  border-top: 10px solid #007bff;
-  border-left: 10px solid #007bff;
-  border-right: 0px solid #007bff;
-  border-bottom: 0px solid #007bff;
-}
-
-.dk-card-2:hover {
-  border-top: 0px solid #007bff;
-  border-right: 0px solid #007bff;
-  border-left: 10px solid #007bff;
-  border-bottom: 10px solid #007bff;
-}
-
-.dk-card-3:hover {
-  border-top: 10px solid #007bff;
-  border-right: 10px solid #007bff;
-  border-left: 0px solid #007bff;
-  border-bottom: 0px solid #007bff;
-}
-
-.dk-card-4:hover {
-  border-top: 0px solid #007bff;
-  border-right: 10px solid #007bff;
-  border-left: 0px solid #007bff;
-  border-bottom: 10px solid #007bff;
+.project-card:hover {
+  transition: transform 0.2s;
+  transform: scale(1.1);
 }
 
 .dk-div-rainbow {
