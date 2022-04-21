@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>donatomolino.it</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="assets/fontawesome/css/all.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Icon -->
+    <link rel="stylesheet" href="assets/fonts/line-icons.css">
+    <!-- Owl carousel -->
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/owl.theme.css">
+
+    <!-- Animate -->
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- Responsive Style -->
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/newmain.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+
+</head>
+
+<body
+    style="background-color: #ebebed; color: #222222; font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-inverse fixed-top scrolling-navbar navbar-brand-center"
+        style="background-color: #ffffff">
+        <a class="navbar-brand mb-0 h1" style="font-family: 'poppins', sans-serif; font-weight: bold;"
+            href="index.html">&nbsp;donato<span class="text-primary">molino</span>.it</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active borderbt">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item borderbt">
+                    <a class="nav-link" href="project.html">Project</a>
+                </li>
+                <li class="nav-item borderbt">
+                    <a class="nav-link" href="/assets/img/mycv.pdf">Curriculum</a>
+                </li>
+                <li class="nav-item borderbt">
+                    <a class="nav-link" href="skills.html">Skills <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item borderbt">
+                    <a class="nav-link" href="aboutme.html">About me</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Navbar End -->
+
+
+
+    <div id="hero-area" class="hero-area-bg">
+        <div class="container">
+            <div id="div0" style="display:  flex; align-items: center; align-content: center; flex-direction: column;">
+                <p style="font-size: 25px; font-weight: 800;">Come ti senti di solito?</p>
+                <div style="display:  flex; flex-direction: row;">
+                    <button onclick="pizzaCount(0)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Arrabbiato</button>
+                <button onclick="pizzaCount(1)" style="min-width: 200px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Annoiato</button>
+                </div>
+                
+                <div style="display:  flex; flex-direction: row;">
+                    <button onclick="pizzaCount(2)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Infelice</button>
+                     <button onclick="pizzaCount(3)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Tranquillo</button>
+                </div>
+            </div>
+
+            <div id="div1" style="display:  none; align-items: center; align-content: center; flex-direction: column;">
+                <p style="font-size: 25px; font-weight: 800;">Gusto preferito?</p>
+                <div style="display:  flex; flex-direction: row;">
+                    <button onclick="pizzaCount(0)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Dolce</button>
+                <button onclick="pizzaCount(1)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Salato</button>
+                </div>
+                
+                <div style="display:  flex; flex-direction: row;">
+                    <button onclick="pizzaCount(2)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Tutti</button>
+                     <button onclick="pizzaCount(3)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Amaro</button>
+                </div>
+            </div>
+
+            <div id="div2" style="display:  none; align-items: center; align-content: center; flex-direction: column;">
+                <p style="font-size: 25px; font-weight: 800;">Di dove sei?</p>
+                <div style="display:  flex; flex-direction: row;">
+                    <button onclick="pizzaCount(0)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Nord</button>
+                <button onclick="pizzaCount(1)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Sud</button>
+                </div>
+                
+                <div style="display:  flex; flex-direction: row;">
+                    <button onclick="pizzaCount(2)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Centro</button>
+                     <button onclick="pizzaCount(3)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Non te lo dico</button>
+                </div>
+            </div>
+
+            <div id="div3" style="display:  none; align-items: center; align-content: center; flex-direction: column;">
+                <p style="font-size: 25px; font-weight: 800;">In quale animale ti identifichi?</p>
+                <div style="display:  flex; flex-direction: row;">
+                    <button onclick="pizzaCount(0)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Criceto</button>
+                <button onclick="pizzaCount(1)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Coniglio</button>
+                </div>
+                
+                <div style="display:  flex; flex-direction: row;">
+                    <button onclick="pizzaCount(2)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Orso</button>
+                     <button onclick="pizzaCount(3)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">Ornitorinco</button>
+                </div>
+            </div>
+
+            <div id="div4" style="display:  none; align-items: center; align-content: center; flex-direction: column;">
+                <p style="font-size: 25px; font-weight: 800;">Quante volte vai al bagno in un giorno?</p>
+                <div style="display:  flex; flex-direction: row;">
+                    <button onclick="pizzaCount(0)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">0</button>
+                <button onclick="pizzaCount(1)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">1</button>
+                </div>
+                
+                <div style="display:  flex; flex-direction: row;">
+                    <button onclick="pizzaCount(2)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">2</button>
+                     <button onclick="pizzaCount(3)" style="min-width: 150px; min-height: 50px; margin: 15px; border-radius: 15px; font-size: 20px; font-weight: 500; border-color: black;">3</button>
+                </div>
+            </div>
+
+            <div id="div5" style="display:  none; align-items: center; align-content: center; flex-direction: column;">
+                <img id="pizzaIMG" style="max-width: 50%;" src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Eq_it-na_pizza-margherita_sep2005_sml-2.png">
+                <p id="pizza" style="font-size: 50px;"><strong>MARGHERITA</strong></p>
+                <p id="testo" style="font-size: 25px; margin-top: 20px;">Semplice, senza troppe aspettative ma la miglior pizza mai fatta.</p>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        var valore = 0;
+        var pagina = 0;
+        function pizzaCount(x)
+        {
+            valore +=x;
+            change();
+        }
+
+        function change()
+        {
+            pagina++;
+            if(pagina>4)
+            {
+                for(var i = 0; i<=4; i++)
+                {
+                    
+                    document.getElementById("div"+i).style.display = "none";
+                    
+                }
+                document.getElementById("div5").style.display = "flex";
+                changePizza();
+            }
+            else
+            {
+                document.getElementById("div"+pagina).style.display = "flex";
+                for(var i = 0; i<=4; i++)
+                {
+                    if(i!=pagina)
+                    {
+                        document.getElementById("div"+i).style.display = "none";
+                    }
+                }
+            }
+
+
+        }
+
+        function changePizza()
+        {
+            if(valore>12)
+            {   
+                document.getElementById("pizzaIMG").src = "https://upload.wikimedia.org/wikipedia/commons/e/ee/Eq_it-na_pizza-margherita_sep2005_sml-2.png";
+                document.getElementById("pizza").innerHTML = "Margherita";
+                document.getElementById("testo").innerHTML = "Sei Semplice, senza troppe aspettative, vai d'accordo con tutti, ma odi le ingiustizie, come la pizza con l'ananas.";
+            }
+            else if(valore > 10)
+            {   
+                document.getElementById("pizzaIMG").src = "http://www.scattidigusto.it/wp-content/uploads/2015/11/pizza-wurstel-patatine-pomodoro.jpg";
+                document.getElementById("pizza").innerHTML = "Patatine e Würstel";
+                document.getElementById("testo").innerHTML = "Infantile, dentro di te si nasconde una pizza che ti fa vivere il piacere della vita, riesci a cogliere del buono in tutto.";
+            }
+            else if(valore > 8)
+            {   
+                document.getElementById("pizzaIMG").src = "https://www.logisticaiws.com/images/notizie/62.jpg";
+                document.getElementById("pizza").innerHTML = "Quattro Stagioni";
+                document.getElementById("testo").innerHTML = "Sei instabile, puoi cambiare mood da un momento all'altro, tutto ciò ti rende imprevedibile, i tuoi amici ti odiano perchè all'ultimo non esci più.";
+            }
+            else if(valore > 6)
+            {   
+                document.getElementById("pizzaIMG").src = "https://positano.lv/wp-content/uploads/2021/12/Frutti-di-mare-1.png";
+                document.getElementById("pizza").innerHTML = "Frutti di Mare";
+                document.getElementById("testo").innerHTML = "Ti piace il sapore del mare, l'estate, il sole, hai sempre la sensazione di meritare di meglio e ti impegni sempre per ottenerlo.";
+            }
+            else if(valore > 4)
+            {   
+                
+                document.getElementById("pizzaIMG").src = "https://www.silviocicchi.com/pizzachef/wp-content/uploads/2016/05/pizza-hawaii.png";
+                document.getElementById("pizza").innerHTML = "Hawaii";
+                document.getElementById("testo").innerHTML = "Uno scempio umano, molti ti odiano per questo, ma tu vorresti solo qualcuno al tuo fianco.";
+            }
+            else if(valore > 2)
+            {   
+                document.getElementById("pizzaIMG").src = "https://www.saporidellamurgia.com/prodotti/0302501/prosciutto-funghi.jpg";
+                document.getElementById("pizza").innerHTML = "Funghi";
+                document.getElementById("testo").innerHTML = "Hai forza da vendere, non ti arrendi mai, cerchi sempre nuovi obbiettivi nonostante fallisci sempre.";
+            }
+            else if(valore < 2)
+            {   
+                document.getElementById("pizzaIMG").src = "https://www.nordy.it/it/prodotto/gallery/pizza-capricciosa-xl_673_L_capricciosa_olive_xl.jpg";
+                document.getElementById("pizza").innerHTML = "Capricciosa";
+                document.getElementById("testo").innerHTML = "Non ti accontenti mai, vuoi tutto e subito e fai di tutto per ottenerlo, ci stai male quando non ottieni ciò che vuoi.";
+            }
+            console.log(valore);
+            
+        }
+
+        
+    </script>
+
+
+
+
+
+
+
+
+    
+</body>
+
+</html>
