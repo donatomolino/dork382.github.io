@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>donatomolino.it</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="assets/fontawesome/css/all.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Icon -->
+    <link rel="stylesheet" href="assets/fonts/line-icons.css">
+    <!-- Owl carousel -->
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/owl.theme.css">
+
+    <!-- Animate -->
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- Responsive Style -->
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/newmain.css">
+
+</head>
+
+<body
+    style="background-color: #ebebed; color: #222222; font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'">
+
+    
+
+    <div id="hero-area" class="hero-area-bg" style="padding: 50px;">
+        <div style="text-align: center; padding: 50px;">
+            <p class="titleP" style="color: black; font-size: 3em" id="titolo"></p>
+            <hr style="background-color: black;  border: 3px solid #222222;
+            border-radius: 5px; width: 100%;">
+        </div>
+        <div id="idMain" class="container">
+            
+        </div>
+    </div>
+    <div style="position: fixed; bottom: 5px; width: 100%; text-align: center;">
+        <p>Created with <a href="donatomolino.it/createskills.html">donatomolino.it/createskills</a></p>
+    </div>
+    
+
+<script>
+    read()
+
+    function read()
+    {
+        var skillNumber = getParameterByName('skillNumber');
+        var titolo = getParameterByName('titolo');
+
+        document.getElementById("titolo").innerHTML = titolo;
+        
+        for(var i = 1; i<=skillNumber; i++)
+        {   
+            var skill = getParameterByName('skill'+i);
+            console.log(skill);
+            document.getElementById("idMain").innerHTML +=  '<p id="testo" class="titleP">'+skill.split("|")[0] + "<p class='subtitleP'> "+ skill.split("|")[1] +"% </p> "+ '</p> <div class="divhr"> <hr id="value" style="border: none; height: 25px; width: '+skill.split("|")[1]+'%;"> </div><br><br>'
+        }
+
+    }
+
+    function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+</script>
+
+<style>
+    .titleP
+    {   
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        font-size: 2em;
+        color: cornflowerblue;
+        font-family: "Arvo", serif;
+    }
+
+    .subtitleP
+    {   
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.5em;
+        color: #222222;
+        display: none;
+    }
+
+    hr{
+        margin-left:0;
+        background-color: #007bff;
+    }
+
+    .divhr
+    {
+        width: 100%;
+        background-color: #fbfbfb;
+
+    }
+</style>
+
+</script>
+
+</body>
+
+</html>
