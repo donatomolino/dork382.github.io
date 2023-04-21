@@ -1,0 +1,22 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
+        <div class="input-group mb-3" style="max-width: 30vw;">
+            <input type="text" class="form-control rounded-pill" style="border-top-right-radius: 0px !important; border-bottom-right-radius: 0px !important;" placeholder="(5 * 5) / 25 + 38.2" aria-label="Recipient's username" id="input">
+            <button class="btn btn-outline-secondary rounded-pill" type="button"  style="border-top-left-radius: 0px !important; border-bottom-left-radius: 0px !important;" id="button-addon2" onclick="calculate()">Calculate</button>
+        </div>
+        <div>
+            <h1 id="result">38.2</h1>
+        </div>
+    </div>
+
+
+    <script>
+        function calculate()
+        {
+            document.getElementById("result").innerHTML = eval(document.getElementById("input").value);
+        }
+    </script>
+</body>
