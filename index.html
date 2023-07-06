@@ -12,6 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="scss" href="assets/css/main.scss">
@@ -44,7 +45,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-inverse fixed-top scrolling-navbar navbar-brand-center"
         style="background-color: #ffffff00;">
-        <a class="navbar-brand mb-0 h1" style="font-family: 'poppins', sans-serif; font-weight: bold;"
+        <a class="navbar-brand mb-0 h1" style="font-family: 'poppins', sans-serif; font-weight: bold; padding-left: 5px;"
             href="index.html">&nbsp;donato<span class="text-primary">molino</span>.it</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +60,7 @@
                     <a class="nav-link" href="#project">Project</a>
                 </li>
                 <li class="nav-item borderbt">
-                    <a class="nav-link" href="/cv.pdf">Curriculum</a>
+                    <a class="nav-link" href="mailto:donatomolino@europe.com?subject=CV Request&body=Hi, I would like to have access to your curriculum">Ask CV</a>
                 </li>
                 <li class="nav-item borderbt">
                     <a class="nav-link" href="skills.html">Skills <span class="sr-only">(current)</span></a>
@@ -86,9 +87,24 @@
                         <div class="subheading mb-5" style="text-align: left;">full stack developer
                             <a href="mailto:dork3802@gmail.com">donatomolino@europe.com</a>
                         </div>
-                        <p class="animate__animated animate__fadeInLeftBig" style="text-align: left;">Born in Italy, Sicily, 2+ years as a software developer, self-taught
+                        <p class="animate__animated animate__fadeInLeftBig" style="text-align: left;">Born in Italy, Sicily, 3+ years as a software developer, self-taught
                             student of videogame
                             development.</p>
+                        <div class="row d-flex justify-content-center m-2">
+                            <div class="badgeDEV badgeC1">React</div>
+                            <div class="badgeDEV badgeC1">Javascript</div>
+                            <div class="badgeDEV badgeC3">Python</div>
+                            <div class="badgeDEV badgeC3">NodeJS</div>
+                            <div class="badgeDEV badgeC4">UI/UX</div>
+                            <div class="badgeDEV badgeC4">HTML&CSS</div>
+                            <div class="badgeDEV badgeC3">C#</div>
+                            <div class="badgeDEV badgeC3">Unity</div>
+                            <div class="badgeDEV badgeC2">RestAPI</div>
+                            <div class="badgeDEV badgeC2">Docker</div>
+                            <div class="badgeDEV badgeC2">SQL</div>
+                            <div class="badgeDEV badgeC4">GIT</div>
+                            <div class="badgeDEV badgeC2">Linux</div>
+                        </div>
                         <hr style=" border: 3px solid #222222; background-color: #222222;
         border-radius: 5px; width: 100%;">
          <div class="col-sm" style="display: flex; justify-content: center;">
@@ -243,7 +259,10 @@
                 </div>
                 
             </div>
+            
         </div>
+
+        
 
         
 
@@ -269,8 +288,9 @@
 
 
             <div style="display: flex; flex-direction: column;">
-                <p>ETH Address</p>
-                <P>0xbaD657bbD388F92Ba98852D6C74d142002da16b4</P>
+                <div class="d-flex justify-content-center m-3">
+                    <p id="quote" class="text-primary" style="font-size: 20px;"></p>
+                </div>
             </div>
 
         </div>
@@ -280,8 +300,54 @@
     <!-- Footer -->
 
     <style>
+        .badgeDEV{
+           
+            padding-top: 1.5px;
+            padding-bottom: 1.5px;
+            padding-left: 8px;
+            padding-right: 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            font-family: sans-serif;
+            margin: 10px;
+        }
 
+        .badgeC1{
+            background-color: #E5EDFF;
+            color: #42389D;
+        }
+        .badgeC2{
+            background-color: #E1EFFE;
+            color: #1E429F;
+        }
+        .badgeC3{
+            background-color: #DEF7EC;
+            color: #03543F;
+        }
+        .badgeC4{
+            background-color: #FDF6B2;
+            color: #723B13;
+        }
     </style>
+
+    <script>
+
+            //const axios = require('https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'); // browser
+
+            
+            async function getUser() {
+                try {
+                    const response = await axios.get('https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en');
+                    console.log(response.data.quoteText);
+                    document.getElementById("quote").innerHTML = response.data.quoteText
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            getUser()
+    </script>
 
 </body>
 
