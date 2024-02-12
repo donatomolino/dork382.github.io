@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mivi :3</title>
+    <style>
+      #yesButton {
+        position: relative;
+        padding: 10px 20px;
+        font-size: 20px;
+        margin-top: 20px;
+        margin-right: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: height 0.3s ease-in-out;
+        /* Initial height and maximum height (optional) */
+        height: 50px;
+        width: 100px;
+
+        /* Adjust as needed */
+        transition: height 0.3s ease-in-out;
+      }
+
+      #noButton {
+        position: relative;
+        padding: 10px 20px;
+        font-size: 20px;
+        margin-top: 20px;
+        margin-right: 0px;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        height: 50px;
+        width: 100px;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div
+      id="domanda"
+      style="
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 80vh;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        text-align: center;
+      "
+    >
+    <h2 id="text" style="margin: 0;">❤️Per Mivi❤️</h1>
+      <img
+        style="height: 200px"
+        src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif"
+      />
+        <h1 id="text" style="margin: 0; padding: 0;">❤️❤️❤️❤️❤️❤️❤️❤️</h1>
+      <h1 style="margin: 0;" id="text">Vuoi uscire con me per San Valentino?</h1>
+      <h1 id="text" style="margin: 0; padding: 0;">❤️❤️❤️❤️❤️❤️❤️❤️❤️</h1>
+      <div id="buttonContainer" style="position: relative; height: auto">
+        <button id="yesButton">Si❤️</button>
+        <button id="noButton">No</button>
+      </div>
+    </div>
+    <div
+      id="risposta"
+      style="
+        display: none;
+        flex-direction: column;
+        min-height: 80vh;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      "
+    >
+      <img
+        src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
+      />
+      <h1>Aspetto con ansia il tuo sorriso radioso❤️</h1>
+    </div>
+
+    <script>
+      var NoButtonSize = 100;
+      document
+        .getElementById("noButton")
+        .addEventListener("click", function () {
+          var buttonSi = document.getElementById("yesButton");
+          var buttonNo = document.getElementById("noButton");
+          var styleSi = window.getComputedStyle(buttonSi);
+          var currentHeightSi = parseInt(styleSi.getPropertyValue("height"));
+          var currentWidthSi = parseInt(styleSi.getPropertyValue("width"));
+
+          /* Increase height and width by 10px */
+          var sizeIncrease = 50;
+
+          buttonSi.style.height = currentHeightSi + sizeIncrease + 10 + "px";
+          buttonSi.style.width = currentWidthSi + sizeIncrease + "px";
+          buttonNo.style.width = NoButtonSize - 10 + "px";
+          NoButtonSize = NoButtonSize - 10;
+          buttonNo.style.height = NoButtonSize / 2 + "px";
+          buttonNo.style.fontSize = NoButtonSize / 5 + "px";
+
+          if (NoButtonSize <= 0) {
+            buttonNo.style.display = "none";
+          }
+        });
+
+      document
+        .getElementById("yesButton")
+        .addEventListener("click", function () {
+          var domanda = document.getElementById("domanda");
+          domanda.style.display = "none";
+          var risposta = document.getElementById("risposta");
+          risposta.style.display = "flex";
+        });
+    </script>
+  </body>
+</html>
