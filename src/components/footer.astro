@@ -1,0 +1,66 @@
+---
+import { Icon } from "astro-icon/components";
+import HeroImage from "~/components/hero-image.astro";
+import type { FooterLink } from "~/types";
+
+const links: Array<FooterLink> = [
+  {
+    url: "https://t.me/dork382/",
+    description: "Telegram",
+    icon: "fa-brands:telegram-plane",
+  },
+  {
+    url: "https://github.com/donatomolino",
+    description: "Github",
+    icon: "fa-brands:github",
+  },
+  {
+    url: "https://astro.build/chat",
+    description: "Discord",
+    icon: "fa-brands:discord",
+  },
+  {
+    url: "https://x.com/donatomolinox",
+    description: "X Twitter",
+    icon: "social/twitterx",
+  },
+  {
+    url: "https://steamcommunity.com/id/dork382",
+    description: "Steam",
+    icon: "fa-brands:steam",
+  },
+  {
+    url: "https://www.instagram.com/donatomolino/",
+    description: "Instagram",
+    icon: "fa-brands:instagram",
+  },
+];
+---
+
+<footer
+  class="relative flex flex-col items-center justify-center border-t-2 border-black p-4 pb-0"
+  id="footer"
+>
+  <div class="absolute inset-0 overflow-hidden opacity-40"></div>
+  <ul class="row relative flex gap-4">
+    {
+      links.map((link) => (
+        <li>
+          <a
+            class="flex size-8 items-center justify-center border-current"
+            href={link.url}
+          >
+            <span class="sr-only">{link.description}</span>
+            <Icon class="size-full" name={link.icon} />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <div
+    class="flex w-full flex-col items-center p-2 md:flex-row md:justify-between"
+  >
+    <span class="text-gray-500 text-xs"> Made with 🍕</span>
+    <span class="text-gray-500 text-xs"> 100% Lighthouse Score 🎉</span>
+  </div>
+</footer>

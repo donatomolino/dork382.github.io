@@ -1,4 +1,1 @@
-
-donatomolino.it
-
-This is only my website
+This is only my personal website made with Astro!

@@ -1,0 +1,107 @@
+---
+import CompatibilityList from "~/components/compatibility-list.astro";
+import ContentSection from "~/components/content-section.astro";
+import type { CompatibilityItem } from "~/types";
+
+const frameworks: Array<CompatibilityItem> = [
+  {
+    title: "React",
+    icon: "frameworks/react",
+    url: "https://reactjs.org/",
+  },
+  {
+    title: "Angular",
+    icon: "frameworks/angular",
+    url: "https://angular.dev/",
+  },
+  {
+    title: "Astro",
+    icon: "frameworks/astro",
+    url: "https://astro.build/",
+  },
+  {
+    title: "Django",
+    icon: "frameworks/django",
+    url: "https://www.djangoproject.com/",
+  },
+  {
+    title: "Node",
+    icon: "frameworks/node",
+    url: "https://nodejs.org/",
+  },
+  {
+    title: "Next",
+    icon: "frameworks/next",
+    url: "https://nextjs.org/",
+  },
+];
+
+const platforms: Array<CompatibilityItem> = [
+  {
+    title: "Vercel",
+    icon: "platforms/vercel",
+    url: "https://vercel.com/",
+  },
+  {
+    title: "Cloudflare",
+    icon: "fa-brands:cloudflare",
+    url: "https://pages.cloudflare.com/",
+  },
+  {
+    title: "GitHub",
+    icon: "fa-brands:github",
+    url: "https://pages.github.com/",
+  },
+  {
+    title: "Firebase",
+    icon: "platforms/firebase",
+    url: "https://firebase.google.com/",
+  },
+  {
+    title: "Unity",
+    icon: "platforms/unity",
+    url: "https://unity.com/",
+  },
+];
+
+const language: Array<CompatibilityItem> = [
+  {
+    title: "Typescript",
+    icon: "language/typescript",
+    url: "https://www.typescriptlang.org/",
+  },
+  {
+    title: "Javascript",
+    icon: "language/javascript",
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+  },
+  {
+    title: "Python",
+    icon: "language/python",
+    url: "https://www.python.org/",
+  },
+  {
+    title: "C#",
+    icon: "language/csharp",
+    url: "https://docs.microsoft.com/en-us/dotnet/csharp/",
+  },
+];
+---
+
+<ContentSection title="Skills" id="skills">
+  <Fragment slot="lead">
+    These are my favorite <span class="text-primary">frameworks</span> and <span
+      class="text-primary">platforms</span
+    >.
+  </Fragment>
+  <CompatibilityList
+    items={frameworks}
+    title="Frameworks"
+    url="https://docs.astro.build/core-concepts/framework-components/"
+  />
+  <CompatibilityList
+    items={platforms}
+    title="Platforms"
+    url="https://docs.astro.build/guides/deploy/"
+  />
+</ContentSection>
