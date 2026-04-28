@@ -3,16 +3,26 @@ import CompatibilityList from "~/components/compatibility-list.astro";
 import ContentSection from "~/components/content-section.astro";
 import type { CompatibilityItem } from "~/types";
 
-const frameworks: Array<CompatibilityItem> = [
+const frontendSkills: Array<CompatibilityItem> = [
+  {
+    title: "TypeScript",
+    icon: "mdi:language-typescript",
+    url: "https://www.typescriptlang.org/",
+  },
   {
     title: "React",
     icon: "frameworks/react",
     url: "https://reactjs.org/",
   },
   {
-    title: "Angular",
-    icon: "frameworks/angular",
-    url: "https://angular.dev/",
+    title: "Redux",
+    icon: "mdi:state-machine",
+    url: "https://redux.js.org/",
+  },
+  {
+    title: "Next.js",
+    icon: "frameworks/next",
+    url: "https://nextjs.org/",
   },
   {
     title: "Astro",
@@ -20,42 +30,119 @@ const frameworks: Array<CompatibilityItem> = [
     url: "https://astro.build/",
   },
   {
-    title: "Django",
-    icon: "frameworks/django",
-    url: "https://www.djangoproject.com/",
+    title: "Tailwind CSS",
+    icon: "mdi:tailwind",
+    url: "https://tailwindcss.com/",
   },
   {
-    title: "Node",
+    title: "Core Web Vitals",
+    icon: "mdi:speedometer",
+    url: "https://web.dev/articles/vitals",
+  },
+];
+
+const backendSkills: Array<CompatibilityItem> = [
+  {
+    title: "Node.js",
     icon: "frameworks/node",
     url: "https://nodejs.org/",
   },
   {
-    title: "Next",
-    icon: "frameworks/next",
-    url: "https://nextjs.org/",
+    title: "Python",
+    icon: "mdi:language-python",
+    url: "https://www.python.org/",
+  },
+  {
+    title: "Rust",
+    icon: "mdi:language-rust",
+    url: "https://www.rust-lang.org/",
+  },
+  {
+    title: "PostgreSQL",
+    icon: "mdi:database",
+    url: "https://www.postgresql.org/",
+  },
+  {
+    title: "REST & GraphQL",
+    icon: "mdi:api",
+    url: "https://graphql.org/",
   },
 ];
 
-const platforms: Array<CompatibilityItem> = [
+const cloudAndDevOpsSkills: Array<CompatibilityItem> = [
   {
-    title: "Vercel",
-    icon: "platforms/vercel",
-    url: "https://vercel.com/",
+    title: "AWS",
+    icon: "fa-brands:aws",
+    url: "https://aws.amazon.com/",
   },
   {
-    title: "Cloudflare",
-    icon: "fa-brands:cloudflare",
-    url: "https://pages.cloudflare.com/",
+    title: "GCP",
+    icon: "mdi:google-cloud",
+    url: "https://cloud.google.com/",
   },
   {
-    title: "GitHub",
+    title: "Docker",
+    icon: "fa-brands:docker",
+    url: "https://www.docker.com/",
+  },
+  {
+    title: "CI/CD with GitHub Actions",
     icon: "fa-brands:github",
-    url: "https://pages.github.com/",
+    url: "https://github.com/features/actions",
+  },
+];
+
+const architectureSkills: Array<CompatibilityItem> = [
+  {
+    title: "System Design",
+    icon: "mdi:sitemap",
+    url: "https://martinfowler.com/architecture/",
   },
   {
-    title: "Firebase",
-    icon: "platforms/firebase",
-    url: "https://firebase.google.com/",
+    title: "Multi-tenant Architecture",
+    icon: "mdi:domain",
+    url: "https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/overview",
+  },
+  {
+    title: "Microservices",
+    icon: "mdi:graph-outline",
+    url: "https://microservices.io/",
+  },
+];
+
+const testingSkills: Array<CompatibilityItem> = [
+  {
+    title: "Jest",
+    icon: "mdi:test-tube",
+    url: "https://jestjs.io/",
+  },
+  {
+    title: "Cypress",
+    icon: "mdi:test-tube-empty",
+    url: "https://www.cypress.io/",
+  },
+];
+
+const productAndToolingSkills: Array<CompatibilityItem> = [
+  {
+    title: "Figma",
+    icon: "fa-brands:figma",
+    url: "https://www.figma.com/",
+  },
+  {
+    title: "Cursor",
+    icon: "mdi:cursor-default-click-outline",
+    url: "https://www.cursor.com/",
+  },
+  {
+    title: "Strapi",
+    icon: "mdi:file-document-outline",
+    url: "https://strapi.io/",
+  },
+  {
+    title: "Salesforce Commerce Cloud",
+    icon: "fa-brands:salesforce",
+    url: "https://www.salesforce.com/commerce/",
   },
   {
     title: "Unity",
@@ -64,44 +151,46 @@ const platforms: Array<CompatibilityItem> = [
   },
 ];
 
-const language: Array<CompatibilityItem> = [
-  {
-    title: "Typescript",
-    icon: "language/typescript",
-    url: "https://www.typescriptlang.org/",
-  },
-  {
-    title: "Javascript",
-    icon: "language/javascript",
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
-  },
-  {
-    title: "Python",
-    icon: "language/python",
-    url: "https://www.python.org/",
-  },
-  {
-    title: "C#",
-    icon: "language/csharp",
-    url: "https://docs.microsoft.com/en-us/dotnet/csharp/",
-  },
-];
 ---
 
 <ContentSection title="Skills" id="skills">
   <Fragment slot="lead">
-    These are my favorite <span class="text-primary">frameworks</span> and <span
-      class="text-primary">platforms</span
+    A cleaner map of the stack I use across <span class="text-primary">product
+      UI</span>, <span class="text-primary">backend systems</span>, <span
+      class="text-primary">cloud delivery</span>, and <span class="text-primary"
+      >hands-on tooling</span
     >.
   </Fragment>
-  <CompatibilityList
-    items={frameworks}
-    title="Frameworks"
-    url="https://docs.astro.build/core-concepts/framework-components/"
-  />
-  <CompatibilityList
-    items={platforms}
-    title="Platforms"
-    url="https://docs.astro.build/guides/deploy/"
-  />
+  <div class="grid w-full max-w-6xl gap-8 lg:grid-cols-2 2xl:grid-cols-3">
+    <CompatibilityList
+      items={frontendSkills}
+      title="Frontend"
+      description="UI architecture, rendering strategy, state flow, and performance-sensitive delivery."
+    />
+    <CompatibilityList
+      items={backendSkills}
+      title="Backend"
+      description="Service APIs, language runtime choices, persistence, and systems-facing implementation."
+    />
+    <CompatibilityList
+      items={productAndToolingSkills}
+      title="Product & Tools"
+      description="Design workflow, CMS and commerce tooling, editor workflow, and interactive build tools."
+    />
+    <CompatibilityList
+      items={cloudAndDevOpsSkills}
+      title="Cloud & DevOps"
+      description="Runtime infrastructure, containerization, and release automation for shipping reliably."
+    />
+    <CompatibilityList
+      items={architectureSkills}
+      title="Architecture"
+      description="How systems are shaped for scale, separation of concerns, and long-lived product evolution."
+    />
+    <CompatibilityList
+      items={testingSkills}
+      title="Testing"
+      description="Fast feedback loops from unit-level validation to browser-level regression coverage."
+    />
+  </div>
 </ContentSection>

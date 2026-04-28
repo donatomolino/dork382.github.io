@@ -4,7 +4,6 @@ import { Icon } from "astro-icon/components";
 import astronautImage from "~/assets/astronaut.png";
 import HeroImage from "~/components/hero-image.astro";
 import Starfield from "~/components/starfield.astro";
-import GitHubCorner from "./github-corner.astro";
 
 const widths = [450, 800];
 const sizes = "(min-width: 640px) 42vw, 67vw";
@@ -29,13 +28,23 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
       >
         Full Stack Developer
       </div>
-      <div>
+      <div class="flex items-center justify-center gap-3">
         <a
           href="mailto:donatomolino@europe.com"
           class="btn btn-primary rounded-full border-2 border-secondary p-2 text-secondary hover:bg-secondary hover:!text-white"
           aria-label="Contact me for more information"
         >
           Contact Me
+        </a>
+        <a
+          href="https://www.linkedin.com/in/donatomolino-full-stack/"
+          class="inline-flex size-11 items-center justify-center rounded-full border-2 border-secondary p-2 text-secondary hover:bg-secondary hover:!text-white"
+          aria-label="Visit my LinkedIn profile"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span class="sr-only">LinkedIn</span>
+          <Icon class="size-full" name="fa-brands:linkedin-in" />
         </a>
       </div>
     </h2>

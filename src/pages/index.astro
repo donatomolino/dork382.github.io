@@ -1,7 +1,6 @@
 ---
 import "@fontsource-variable/inter";
 import Compatibility from "~/components/compatibility.astro";
-import Features from "~/components/features.astro";
 import Footer from "~/components/footer.astro";
 import Header from "~/components/header.astro";
 import Intro from "~/components/intro.astro";
@@ -12,7 +11,7 @@ import "~/styles/index.css";
 const { generator, site } = Astro;
 const image = new URL("social.jpg", site);
 const description =
-  "A disciplined and enthusiastic full stack developer. I like to bring ideas to life and make them accessible to everyone. I am passionate about technology and I am always looking for new challenges.";
+  "A full stack developer focused on turning ideas into products through open collaboration, sound architecture, and measurable performance.";
 ---
 
 <!doctype html>
@@ -65,7 +64,8 @@ const description =
     <Splash />
     <div class="space-y-24 px-8 py-32">
       <Showcase />
-      <!-- <Intro />
+      <Intro />
+      <!--
       <Features />
       -->
       <Compatibility />

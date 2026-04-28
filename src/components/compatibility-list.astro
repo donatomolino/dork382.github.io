@@ -5,28 +5,42 @@ import type { CompatibilityItem } from "~/types";
 export interface Props {
   items: Array<CompatibilityItem>;
   title: string;
-  url: string;
+  description?: string;
 }
 
-const { items, title, url } = Astro.props;
+const { items, title, description } = Astro.props;
 ---
 
-<div class="w-full max-w-6xl space-y-2">
-  <div class="relative border border-default bg-offset px-6 pb-4 pt-8">
-    <h3
-      class="absolute right-4 top-0 -translate-y-1/2 rounded-full border border-current bg-default px-4 py-1 uppercase tracking-tight text-xs"
-    >
-      {title}
-    </h3>
-    <ul
-      class="mx-auto flex grid-cols-2 flex-wrap justify-between gap-8 sm:grid-cols-3 md:grid-cols-6"
-    >
+<div class="h-full w-full">
+  <div class="relative h-full overflow-hidden border border-default bg-offset px-6 pb-6 pt-6">
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-80"></div>
+    <div class="mb-6 flex items-start justify-between gap-4 border-b border-default pb-4">
+      <div class="space-y-2">
+        <h3
+          class="inline-flex rounded-full border border-default bg-default px-4 py-1 uppercase tracking-tight text-xs"
+        >
+          {title}
+        </h3>
+        {
+          description && (
+            <p class="max-w-sm text-sm leading-relaxed text-offset">{description}</p>
+          )
+        }
+      </div>
+      <span class="mt-2 block size-2.5 shrink-0 rounded-full bg-primary"></span>
+    </div>
+    <ul class="space-y-3">
       {
         items.map((item) => (
           <li>
-            <a class="flex flex-col items-center gap-2" href={item.url}>
-              <Icon class="size-12" name={item.icon} />
-              <span>{item.title}</span>
+            <a
+              class="flex items-center gap-3 rounded-2xl border border-default bg-default px-4 py-3 text-left hover:border-secondary hover:bg-offset"
+              href={item.url}
+            >
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-full border border-default bg-offset text-secondary">
+                <Icon class="size-5" name={item.icon} />
+              </span>
+              <span class="text-sm font-semibold leading-snug">{item.title}</span>
             </a>
           </li>
         ))
