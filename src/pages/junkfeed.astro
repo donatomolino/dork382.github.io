@@ -1,0 +1,149 @@
+---
+import "@fontsource-variable/inter";
+import Footer from "~/components/footer.astro";
+import "~/styles/index.css";
+
+const { generator, site } = Astro;
+const description = "Junk feed — pensieri, link e roba varia dal mio canale Telegram";
+---
+
+<!doctype html>
+<html lang="it" class="h-full motion-safe:scroll-smooth" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="generator" content={generator} />
+
+    <title>Junk Feed | Donato Molino</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:title" content="Junk Feed | Donato Molino" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL("/junkfeed", site).toString()} />
+
+    <script is:inline>
+      const themeSaved = localStorage.getItem("theme");
+      if (themeSaved) {
+        document.documentElement.dataset.theme = themeSaved;
+      } else {
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        document.documentElement.dataset.theme = prefersDark ? "dark" : "light";
+      }
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (event) => {
+          if (!localStorage.getItem("theme")) {
+            document.documentElement.dataset.theme = event.matches
+              ? "dark"
+              : "light";
+          }
+        });
+    </script>
+  </head>
+  <body
+    class="h-full overflow-x-hidden bg-default text-default text-base selection:bg-secondary selection:text-white"
+  >
+    <div class="fixed inset-0 -z-10 opacity-30">
+      <div class="absolute inset-0 bg-radial from-indigo-900/40 via-transparent to-transparent"></div>
+    </div>
+
+    <div class="mx-auto max-w-4xl px-6 py-12 sm:px-8 sm:py-24">
+      <a
+        href="/"
+        class="btn mb-16 inline-flex items-center gap-2 text-offset text-sm transition-colors hover:text-secondary"
+      >
+        <svg class="size-4 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+        Back Home
+      </a>
+
+      <h1
+        class="gradient-text mb-4 text-center font-extrabold tracking-tighter text-5xl sm:text-7xl"
+      >
+        Junk Feed
+      </h1>
+      <p class="mb-16 text-center text-offset text-lg">
+        Pensieri, link e roba varia da{" "}
+        <a
+          href="https://t.me/donniejunkfeed"
+          target="_blank"
+          rel="noreferrer"
+          class="text-secondary underline underline-offset-2 hover:text-indigo-300"
+        >
+          @donniejunkfeed
+        </a>
+      </p>
+
+      <div id="junkfeed-posts"></div>
+    </div>
+
+    <Footer />
+  </body>
+</html>
+
+<script>
+  import { parsePosts } from "../lib/telegram";
+
+  const PROXY = "https://corsproxy.io/?";
+
+  async function fetchFeed(channel: string): Promise<string> {
+    const res = await fetch(`${PROXY}${encodeURIComponent(`https://t.me/s/${channel}`)}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.text();
+  }
+
+  function renderPosts(posts: ReturnType<typeof parsePosts>) {
+    const container = document.getElementById("junkfeed-posts")!;
+
+    if (posts.length === 0) {
+      container.innerHTML = `
+        <div class="text-center text-offset">
+          <p class="text-lg">Nessun post disponibile.</p>
+          <p class="mt-2 text-sm">Impossibile caricare i post da @donniejunkfeed.</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = `
+      <div class="space-y-8">
+        ${posts
+          .map(
+            (post) => `
+          <article class="rounded-2xl border border-default bg-offset/50 p-6 shadow-lg transition-shadow hover:shadow-xl sm:p-8">
+            <div class="mb-4 flex items-center gap-3">
+              <div class="flex size-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-pink-500 font-bold text-white text-xs">JF</div>
+              <div>
+                <span class="font-semibold text-sm">donniejunkfeed</span>
+                <span class="ml-2 text-offset text-xs">${post.date}</span>
+              </div>
+            </div>
+            ${post.text ? `<div class="prose prose-invert max-w-none"><p class="whitespace-pre-wrap text-default leading-relaxed">${post.text}</p></div>` : ""}
+            ${post.imageUrl ? `<div class="mt-4 overflow-hidden rounded-xl"><img src="${post.imageUrl}" alt="Post image" loading="lazy" class="h-auto max-h-96 w-full rounded-xl object-cover" /></div>` : ""}
+            ${post.videoThumb ? `<a href="https://t.me/donniejunkfeed/${post.id}" target="_blank" rel="noreferrer" class="mt-4 block overflow-hidden rounded-xl relative group"><img src="${post.videoThumb}" alt="Video thumbnail" loading="lazy" class="h-auto max-h-96 w-full rounded-xl object-cover" /><div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors"><div class="flex size-14 items-center justify-center rounded-full bg-white/80 text-black"><svg class="ml-1 size-6" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div></a>` : ""}
+            <a href="https://t.me/donniejunkfeed/${post.id}" target="_blank" rel="noreferrer" class="btn mt-4 inline-block text-offset text-xs transition-colors hover:text-secondary">Apri su Telegram &rarr;</a>
+          </article>`
+          )
+          .join("")}
+      </div>`;
+  }
+
+  const channel = (window as any).__JUNKFEED_CHANNEL__ || "donniejunkfeed";
+
+  fetchFeed(channel)
+    .then(parsePosts)
+    .then(renderPosts)
+    .catch((err) => {
+      console.error("Junkfeed fetch failed:", err);
+      const container = document.getElementById("junkfeed-posts")!;
+      container.innerHTML = `
+        <div class="text-center text-offset">
+          <p class="text-lg">Errore nel caricamento.</p>
+          <p class="mt-2 text-sm">Riprova più tardi o visita <a href="https://t.me/donniejunkfeed" target="_blank" rel="noreferrer" class="text-secondary underline">@donniejunkfeed</a> su Telegram.</p>
+        </div>`;
+    });
+</script>
