@@ -79,7 +79,15 @@ const description = "Junk feed — pensieri, link e roba varia dal mio canale Te
         </a>
       </p>
 
-      <div id="junkfeed-posts"></div>
+      <div id="junkfeed-posts">
+        <div id="junkfeed-loading" class="flex flex-col items-center justify-center gap-4 py-20 text-offset">
+          <svg class="size-8 animate-spin" viewBox="0 0 24 24" fill="none">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+          </svg>
+          <p class="text-lg">Recuperando gli ultimi junk...</p>
+        </div>
+      </div>
     </div>
 
     <Footer />
@@ -87,24 +95,45 @@ const description = "Junk feed — pensieri, link e roba varia dal mio canale Te
 </html>
 
 <script>
-  import { parsePosts } from "../lib/telegram";
-
-  const PROXY = "https://corsproxy.io/?";
-
-  async function fetchFeed(channel: string): Promise<string> {
-    const res = await fetch(`${PROXY}${encodeURIComponent(`https://t.me/s/${channel}`)}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.text();
+  interface Post {
+    text?: string;
+    date: string;
+    link: string;
   }
 
-  function renderPosts(posts: ReturnType<typeof parsePosts>) {
+  const API_URL = "https://junk-api.dork3802.workers.dev/posts";
+
+  function formatDate(raw: string): string {
+    const d = new Date(raw);
+    if (isNaN(d.getTime())) return raw;
+    return d.toLocaleDateString("it-IT", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "Europe/Rome",
+    });
+  }
+
+  function linkify(text: string): string {
+    return text.replace(
+      /(https?:\/\/[^\s<]+)/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-secondary underline underline-offset-2 hover:text-indigo-300">$1</a>',
+    );
+  }
+
+  function renderPosts(posts: Post[]) {
     const container = document.getElementById("junkfeed-posts")!;
 
     if (posts.length === 0) {
       container.innerHTML = `
-        <div class="text-center text-offset">
+        <div class="flex flex-col items-center justify-center gap-3 py-20 text-offset">
+          <svg class="size-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+          </svg>
           <p class="text-lg">Nessun post disponibile.</p>
-          <p class="mt-2 text-sm">Impossibile caricare i post da @donniejunkfeed.</p>
+          <p class="text-sm">Torna più tardi o segui <a href="https://t.me/donniejunkfeed" target="_blank" rel="noreferrer" class="text-secondary underline">@donniejunkfeed</a> su Telegram.</p>
         </div>`;
       return;
     }
@@ -119,31 +148,33 @@ const description = "Junk feed — pensieri, link e roba varia dal mio canale Te
               <div class="flex size-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-pink-500 font-bold text-white text-xs">JF</div>
               <div>
                 <span class="font-semibold text-sm">donniejunkfeed</span>
-                <span class="ml-2 text-offset text-xs">${post.date}</span>
+                <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="ml-2 text-offset text-xs transition-colors hover:text-secondary inline-flex items-center gap-1">${formatDate(post.date)}<svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></a>
               </div>
             </div>
-            ${post.text ? `<div class="prose prose-invert max-w-none"><p class="whitespace-pre-wrap text-default leading-relaxed">${post.text}</p></div>` : ""}
-            ${post.imageUrl ? `<div class="mt-4 overflow-hidden rounded-xl"><img src="${post.imageUrl}" alt="Post image" loading="lazy" class="h-auto max-h-96 w-full rounded-xl object-cover" /></div>` : ""}
-            ${post.videoThumb ? `<a href="https://t.me/donniejunkfeed/${post.id}" target="_blank" rel="noreferrer" class="mt-4 block overflow-hidden rounded-xl relative group"><img src="${post.videoThumb}" alt="Video thumbnail" loading="lazy" class="h-auto max-h-96 w-full rounded-xl object-cover" /><div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors"><div class="flex size-14 items-center justify-center rounded-full bg-white/80 text-black"><svg class="ml-1 size-6" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div></a>` : ""}
-            <a href="https://t.me/donniejunkfeed/${post.id}" target="_blank" rel="noreferrer" class="btn mt-4 inline-block text-offset text-xs transition-colors hover:text-secondary">Apri su Telegram &rarr;</a>
+            ${post.text ? `<div class="prose prose-invert max-w-none"><p class="whitespace-pre-wrap text-default leading-relaxed">${linkify(post.text.replace(/\n/g, "<br>"))}</p></div>` : ""}
           </article>`
           )
           .join("")}
       </div>`;
   }
 
-  const channel = (window as any).__JUNKFEED_CHANNEL__ || "donniejunkfeed";
-
-  fetchFeed(channel)
-    .then(parsePosts)
-    .then(renderPosts)
+  fetch(API_URL)
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then((data: Post[]) => renderPosts(data))
     .catch((err) => {
       console.error("Junkfeed fetch failed:", err);
       const container = document.getElementById("junkfeed-posts")!;
       container.innerHTML = `
-        <div class="text-center text-offset">
+        <div class="flex flex-col items-center justify-center gap-3 py-20 text-offset">
+          <svg class="size-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 8v4M12 16h.01" />
+          </svg>
           <p class="text-lg">Errore nel caricamento.</p>
-          <p class="mt-2 text-sm">Riprova più tardi o visita <a href="https://t.me/donniejunkfeed" target="_blank" rel="noreferrer" class="text-secondary underline">@donniejunkfeed</a> su Telegram.</p>
+          <p class="text-sm">Riprova più tardi o visita <a href="https://t.me/donniejunkfeed" target="_blank" rel="noreferrer" class="text-secondary underline">@donniejunkfeed</a> su Telegram.</p>
         </div>`;
     });
 </script>
