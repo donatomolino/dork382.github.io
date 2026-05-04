@@ -1,0 +1,24 @@
+
+> astro-landing-page@0.0.1 dev
+> astro dev --host 0.0.0.0 --port 4321
+
+▶ Astro collects anonymous usage data.
+  This information helps us improve Astro.
+  Run "astro telemetry disable" to opt-out.
+  https://astro.build/telemetry
+
+(node:4470) [DEP0180] DeprecationWarning: fs.Stats constructor is deprecated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[vite] connected.
+16:02:11 [types] Generated 1ms
+[vite] connected.
+
+ update  ▶ New version of Astro available: 6.2.2
+  Run npx @astrojs/upgrade to update
+
+16:02:12 [content] Syncing content
+16:02:12 [content] Synced content
+ astro  v6.1.10 ready in 2994 ms
+┃ Local    http://localhost:4321/
+┃ Network  http://10.0.0.1:4321/
+16:02:12 watching for file changes...
