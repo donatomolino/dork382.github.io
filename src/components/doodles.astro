@@ -1,0 +1,106 @@
+---
+// Component for randomly generated interactive doodles
+---
+<div id="doodle-container" class="absolute inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+<script>
+  function initDoodles() {
+    const container = document.getElementById('doodle-container');
+    if (!container) return;
+
+    // Clear existing to prevent duplicates on Astro page navigation/refresh
+    container.innerHTML = '';
+
+    const doodlePaths = [
+      "M15 15c-3-3 8-10 10-2 2 8-10 7-10 2z", // squiggly
+      "M95 30l8 8-8 8m8-8H85", // arrow
+      "M45 95a5 5 0 1 0 10 0a5 5 0 1 0 -10 0", // circle
+      "M30 60 l3 -3 l3 3 l3 -3", // zigzag
+      "M10 10l10 10m0-10l-10 10", // cross
+      "M10 30 Q 30 10 50 30 T 90 30", // wave
+      "M50 10 L60 40 L90 50 L60 60 L50 90 L40 60 L10 50 L40 40 Z" // star
+    ];
+
+    const numDoodles = 120; // Adjust density of doodles
+    const doodles: HTMLDivElement[] = [];
+
+    for (let i = 0; i < numDoodles; i++) {
+      const path = doodlePaths[Math.floor(Math.random() * doodlePaths.length)];
+      const doodle = document.createElement('div');
+      
+      // CSS classes for styling and smooth transition
+      doodle.className = 'absolute text-offset opacity-20 transition-transform duration-300 ease-out';
+      
+      // Random positions
+      const left = Math.random() * 100;
+      const top = Math.random() * 100;
+      const rotate = Math.random() * 360;
+      const scale = 0.5 + Math.random() * 1;
+      
+      doodle.style.left = `${left}%`;
+      doodle.style.top = `${top}%`;
+      
+      doodle.innerHTML = `<svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="${path}" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`;
+      
+      const baseTransform = `translate(-50%, -50%) rotate(${rotate}deg) scale(${scale})`;
+      doodle.style.transform = baseTransform;
+      doodle.dataset.baseTransform = baseTransform;
+      doodle.dataset.rotate = rotate.toString();
+      doodle.dataset.scale = scale.toString();
+
+      container.appendChild(doodle);
+      doodles.push(doodle);
+    }
+
+    // Animation variables
+    let isAnimating = false;
+    let mouseX = 0;
+    let mouseY = 0;
+
+    const updateDoodles = () => {
+      doodles.forEach(doodle => {
+        const rect = doodle.getBoundingClientRect();
+        // Calculate center of the individual doodle
+        const doodleX = rect.left + rect.width / 2;
+        const doodleY = rect.top + rect.height / 2;
+        
+        const dx = mouseX - doodleX;
+        const dy = mouseY - doodleY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        const maxDistance = 200; // Hover interaction radius
+
+        if (distance < maxDistance) {
+          // Calculate force (closer = stronger force)
+          const force = (maxDistance - distance) / maxDistance; 
+          
+          const moveX = -(dx / distance) * force * 50; 
+          const moveY = -(dy / distance) * force * 50;
+          
+          const baseScale = parseFloat(doodle.dataset.scale || '1');
+          const baseRotate = parseFloat(doodle.dataset.rotate || '0');
+          
+          doodle.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px)) rotate(${baseRotate + force * 90}deg) scale(${baseScale + force * 0.4})`;
+        } else {
+          // Revert to original position when mouse is far away
+          doodle.style.transform = doodle.dataset.baseTransform || '';
+        }
+      });
+      isAnimating = false;
+    };
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!isAnimating) {
+        isAnimating = true;
+        requestAnimationFrame(updateDoodles);
+      }
+    });
+  }
+
+  // Initialize script (runs in client)
+  initDoodles();
+  // To re-trigger properly on astro page transitions if view transitions are used:
+  document.addEventListener('astro:page-load', initDoodles);
+</script>

@@ -13,10 +13,10 @@ const navItems: Array<NavItem> = [
   id="page-header"
   class="absolute bottom-0 z-20 flex w-full items-center justify-between border-b border-transparent px-8 py-4 text-white"
 >
-  <span id="CTASocial" class="block text-center text-gray-400 text-xs"
+  <span id="CTASocial" class="block text-center text-gray-400 text-xs hidden"
     >Remember to look up to the stars</span
   >
-  <div class="flex items-center gap-3 hover:!text-default">
+  <div class="flex items-center gap-3 pl-6 hover:!text-default">
     <h1 class="sr-only">Donato Molino</h1>
     <span id="brandName" class="hidden font-bold text-xl">Donato Molino</span>
   </div>
@@ -122,6 +122,69 @@ const navItems: Array<NavItem> = [
       closeMenu();
     }
   });
+
+  const initBubbleTextEffect = () => {
+    const textElements = Array.from(document.body.querySelectorAll("*")).filter(
+      (element) => {
+        if (!(element instanceof HTMLElement)) {
+          return false;
+        }
+
+        const excludedTags = [
+          "SCRIPT",
+          "STYLE",
+          "NOSCRIPT",
+          "SVG",
+          "CANVAS",
+          "CODE",
+          "PRE",
+          "INPUT",
+          "BUTTON",
+          "TEXTAREA",
+          "SELECT",
+        ];
+
+        if (excludedTags.includes(element.tagName)) {
+          return false;
+        }
+
+        const text = element.textContent?.trim() ?? "";
+        return text.length > 0 && element.childElementCount === 0;
+      },
+    );
+
+    const updateBubble = (element: HTMLElement, event: PointerEvent) => {
+      const rect = element.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+      const dx = x - 50;
+      const dy = y - 50;
+      const distance = Math.min(Math.sqrt(dx * dx + dy * dy) / 50, 1);
+      const strength = Math.max(0, 1 - distance);
+      const opacity = Math.max(0, 0.7 - distance * 0.65);
+
+      element.style.setProperty("--bubble-x", `${x}%`);
+      element.style.setProperty("--bubble-y", `${y}%`);
+      element.style.setProperty("--bubble-strength", `${strength}`);
+      element.style.setProperty("--bubble-opacity", `${opacity}`);
+    };
+
+    textElements.forEach((element) => {
+      element.classList.add("bubble-text");
+      element.style.setProperty("--bubble-x", "50%");
+      element.style.setProperty("--bubble-y", "50%");
+      element.style.setProperty("--bubble-strength", "0");
+      element.style.setProperty("--bubble-opacity", "0");
+
+      element.addEventListener("pointermove", (event) => updateBubble(element, event));
+      element.addEventListener("pointerleave", () => {
+        element.style.setProperty("--bubble-strength", "0");
+        element.style.setProperty("--bubble-opacity", "0");
+      });
+    });
+  };
+
+  document.addEventListener("DOMContentLoaded", initBubbleTextEffect);
 </script>
 
 <noscript>

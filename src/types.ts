@@ -2,6 +2,7 @@ export interface CompatibilityItem {
   icon: string;
   title: string;
   url: string;
+  hoverInfo?: string;
 }
 
 export interface FeatureItem {

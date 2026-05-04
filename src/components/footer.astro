@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import VisitorCounter from "~/components/visitor-counter.astro";
 import type { FooterLink } from "~/types";
 
 const links: Array<FooterLink> = [
@@ -37,29 +38,31 @@ const links: Array<FooterLink> = [
 ---
 
 <footer
-  class="relative flex flex-col items-center justify-center border-t-2 border-black p-4 pb-0"
+  class="relative w-full border-t-2 border-black bg-slate-950/5 px-4 py-5 text-gray-500"
   id="footer"
 >
-  <div class="absolute inset-0 overflow-hidden opacity-40"></div>
-  <ul class="row relative flex gap-4">
-    {
-      links.map((link) => (
-        <li>
-          <a
-            class="flex size-8 items-center justify-center border-current"
-            href={link.url}
-          >
-            <span class="sr-only">{link.description}</span>
-            <Icon class="size-full" name={link.icon} />
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-  <div
-    class="flex w-full flex-col items-center p-2 md:flex-row md:justify-between"
-  >
-    <span class="text-gray-500 text-xs"> Made with 🍕</span>
-    <span class="text-gray-500 text-xs"> 100% Lighthouse Score 🎉</span>
+  <div class="relative z-10 mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 text-xs text-gray-500">
+    <div class="flex items-center gap-2">
+      <span class="font-medium text-gray-500">Made with 🍕</span>
+      <VisitorCounter />
+    </div>
+
+    <ul class="flex flex-wrap items-center justify-center gap-2 text-gray-500">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              class="flex h-9 w-9 items-center justify-center rounded-full text-current transition hover:text-secondary"
+              href={link.url}
+            >
+              <span class="sr-only">{link.description}</span>
+              <Icon class="size-full" name={link.icon} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <span class="whitespace-nowrap text-xs text-gray-500">100% Lighthouse Score 🎉</span>
   </div>
 </footer>

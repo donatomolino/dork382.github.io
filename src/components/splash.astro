@@ -4,6 +4,7 @@ import { Icon } from "astro-icon/components";
 import astronautImage from "~/assets/astronaut.png";
 import HeroImage from "~/components/hero-image.astro";
 import Starfield from "~/components/starfield.astro";
+import FloatingCube from "~/components/floating-cube.astro";
 
 const widths = [450, 800];
 const sizes = "(min-width: 640px) 42vw, 67vw";
@@ -19,7 +20,8 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
       class="mb-10 flex flex-col items-center gap-4 self-end sm:self-auto sm:justify-self-end"
     >
       <div
-        class="gradient-text text-center font-extrabold tracking-tighter text-6xl md:text-8xl"
+        class="gradient-text title-bubble text-center font-extrabold tracking-tighter text-6xl md:text-8xl"
+        style="--bubble-x: 50%; --bubble-y: 50%; --bubble-strength: 0;"
       >
         Donato Molino
       </div>
@@ -61,6 +63,8 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
         alt="A floating astronaut in a space suit"
       />
     </div>
+    
+    <FloatingCube />
   </div>
 
   <noscript>
@@ -70,6 +74,38 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
       }
     </style>
   </noscript>
+
+  <script is:inline>
+    const gradientTextItems = document.querySelectorAll('.gradient-text');
+    const updateBubbleFor = (element, event) => {
+      const rect = element.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+      const dx = x - 50;
+      const dy = y - 50;
+      const distance = Math.min(Math.sqrt(dx * dx + dy * dy) / 50, 1);
+      const strength = Math.max(0, 1 - distance);
+      const opacity = Math.max(0, 0.7 - distance * 0.65);
+
+      element.style.setProperty('--bubble-x', `${x}%`);
+      element.style.setProperty('--bubble-y', `${y}%`);
+      element.style.setProperty('--bubble-strength', `${strength}`);
+      element.style.setProperty('--bubble-opacity', `${opacity}`);
+    };
+
+    gradientTextItems.forEach((element) => {
+      element.style.setProperty('--bubble-x', '50%');
+      element.style.setProperty('--bubble-y', '50%');
+      element.style.setProperty('--bubble-strength', '0');
+      element.style.setProperty('--bubble-opacity', '0');
+
+      element.addEventListener('pointermove', (event) => updateBubbleFor(element, event));
+      element.addEventListener('pointerleave', () => {
+        element.style.setProperty('--bubble-strength', '0');
+        element.style.setProperty('--bubble-opacity', '0');
+      });
+    });
+  </script>
 
   <style>
     @keyframes float {

@@ -34,11 +34,6 @@ const frontendSkills: Array<CompatibilityItem> = [
     icon: "mdi:tailwind",
     url: "https://tailwindcss.com/",
   },
-  {
-    title: "Core Web Vitals",
-    icon: "mdi:speedometer",
-    url: "https://web.dev/articles/vitals",
-  },
 ];
 
 const backendSkills: Array<CompatibilityItem> = [
@@ -71,14 +66,27 @@ const backendSkills: Array<CompatibilityItem> = [
 
 const cloudAndDevOpsSkills: Array<CompatibilityItem> = [
   {
+    title: "Supabase",
+    icon: "mdi:database",
+    url: "https://supabase.com/",
+    hoverInfo: "Realtime DB, Auth, Storage, edge functions",
+  },
+  {
+    title: "Cloudflare",
+    icon: "fa-brands:cloudflare",
+    url: "https://www.cloudflare.com/",
+    hoverInfo: "Workers, KV, D1",
+  },
+  {
     title: "AWS",
     icon: "fa-brands:aws",
     url: "https://aws.amazon.com/",
+    hoverInfo: "Lambda, DynamoDB, CloudWatch",
   },
   {
-    title: "GCP",
+    title: "Google Console",
     icon: "mdi:google-cloud",
-    url: "https://cloud.google.com/",
+    url: "https://console.cloud.google.com/",
   },
   {
     title: "Docker",
@@ -117,9 +125,9 @@ const testingSkills: Array<CompatibilityItem> = [
     url: "https://jestjs.io/",
   },
   {
-    title: "Cypress",
-    icon: "mdi:test-tube-empty",
-    url: "https://www.cypress.io/",
+    title: "Playwright",
+    icon: "mdi:play",
+    url: "https://playwright.dev/",
   },
 ];
 
@@ -128,6 +136,26 @@ const productAndToolingSkills: Array<CompatibilityItem> = [
     title: "Figma",
     icon: "fa-brands:figma",
     url: "https://www.figma.com/",
+  },
+  {
+    title: "Jira",
+    icon: "mdi:clipboard-text",
+    url: "https://www.atlassian.com/software/jira",
+  },
+  {
+    title: "TelegramBot",
+    icon: "mdi:telegram",
+    url: "https://core.telegram.org/bots",
+  },
+  {
+    title: "DiscordBot",
+    icon: "mdi:discord",
+    url: "https://discord.com/developers/applications",
+  },
+  {
+    title: "SteamWorks",
+    icon: "fa-brands:steam",
+    url: "https://partner.steamgames.com/",
   },
   {
     title: "Cursor",
@@ -161,7 +189,7 @@ const productAndToolingSkills: Array<CompatibilityItem> = [
       >hands-on tooling</span
     >.
   </Fragment>
-  <div class="grid w-full max-w-6xl gap-8 lg:grid-cols-2 2xl:grid-cols-3">
+  <div class="grid w-full max-w-6xl gap-10 grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
     <CompatibilityList
       items={frontendSkills}
       title="Frontend"
