@@ -159,6 +159,7 @@ const description = "Junk feed — pensieri, link e roba varia dal mio canale Te
               </div>
             </div>
             ${post.text ? `<div class="prose prose-invert max-w-none"><p class="whitespace-pre-wrap text-default leading-relaxed">${linkify(post.text.replace(/\n/g, "<br>"))}</p></div>` : ""}
+            <dymol-reactions target-id="junk_${post.link.split('/').pop()}"></dymol-reactions>
           </article>`
           )
           .join("")}
@@ -184,4 +185,125 @@ const description = "Junk feed — pensieri, link e roba varia dal mio canale Te
           <p class="text-sm">Riprova più tardi o visita <a href="https://t.me/donniejunkfeed" target="_blank" rel="noreferrer" class="text-secondary underline">@donniejunkfeed</a> su Telegram.</p>
         </div>`;
     });
+
+  // Dymol Reaction API Web Component
+  class DymolReactions extends HTMLElement {
+    targetId: string;
+    apiKey: string;
+    baseUrl: string;
+    userId: string;
+
+    constructor() {
+      super();
+      this.targetId = this.getAttribute('target-id') || 'unknown';
+      this.apiKey = "3ZZY8mtaXf6mpM8PNYXWmNg1"; // Dymol public test key
+      this.baseUrl = "https://dymol-backend.dork3802.workers.dev";
+      
+      this.userId = localStorage.getItem('dymol_user_id') || '';
+      if (!this.userId) {
+        this.userId = 'usr_' + Math.random().toString(36).substring(2, 11);
+        localStorage.setItem('dymol_user_id', this.userId);
+      }
+    }
+
+    async connectedCallback() {
+      this.renderLoading();
+      await this.fetchReactions();
+    }
+
+    async fetchReactions() {
+      try {
+        const res = await fetch(`${this.baseUrl}/v1/reactions/${this.targetId}`, {
+          headers: { 'Authorization': `Bearer ${this.apiKey}` }
+        });
+        const json = await res.json();
+        if (json.success) {
+          // Let's also keep track of what the user voted for if we can, but since our API
+          // doesn't return the user's specific vote, we'll store their local votes in localStorage
+          this.render(json.data.distribution || {});
+        } else {
+          this.render({});
+        }
+      } catch (e) {
+        this.render({});
+      }
+    }
+
+    async react(type: string) {
+      const btns = this.querySelectorAll('.reaction-btn');
+      btns.forEach(b => b.classList.add('opacity-50', 'pointer-events-none'));
+      
+      try {
+        // Save the local vote state
+        const storedVotes = JSON.parse(localStorage.getItem('dymol_votes') || '{}');
+        storedVotes[this.targetId] = type;
+        localStorage.setItem('dymol_votes', JSON.stringify(storedVotes));
+
+        await fetch(`${this.baseUrl}/v1/react`, {
+          method: 'POST',
+          headers: { 
+            'Authorization': `Bearer ${this.apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            target_id: this.targetId,
+            type: type,
+            user_id: this.userId
+          })
+        });
+        await this.fetchReactions();
+      } catch(e) {
+        console.error(e);
+        btns.forEach(b => b.classList.remove('opacity-50', 'pointer-events-none'));
+      }
+    }
+
+    renderLoading() {
+      this.innerHTML = `<div class="flex gap-3 mt-5 pt-4 border-t border-offset/10"><div class="h-9 w-20 bg-offset/20 rounded-full animate-pulse"></div><div class="h-9 w-20 bg-offset/20 rounded-full animate-pulse"></div></div>`;
+    }
+
+    render(distribution: Record<string, number>) {
+      const types = ['like', 'dislike'];
+      
+      const storedVotes = JSON.parse(localStorage.getItem('dymol_votes') || '{}');
+      const userVote = storedVotes[this.targetId]; // Check if user voted for this target
+
+      const icons = {
+        like: {
+          outline: `<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>`,
+          filled: `<svg class="size-5" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>`
+        },
+        dislike: {
+          outline: `<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>`,
+          filled: `<svg class="size-5" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>`
+        }
+      };
+      
+      const html = types.map(t => {
+        const count = distribution[t] || 0;
+        const isActive = userVote === t;
+        
+        const activeClasses = isActive 
+          ? (t === 'like' ? 'bg-green-500/20 text-green-400 border-green-500/50 ring-1 ring-green-500/50' : 'bg-red-500/20 text-red-400 border-red-500/50 ring-1 ring-red-500/50')
+          : 'bg-offset/5 text-offset border-offset/10 hover:bg-secondary/10 hover:text-secondary hover:border-secondary/30';
+
+        const iconHtml = isActive ? icons[t as keyof typeof icons].filled : icons[t as keyof typeof icons].outline;
+
+        return `<button data-type="${t}" class="reaction-btn flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 text-sm font-semibold border hover:scale-105 active:scale-95 ${activeClasses}">
+          ${iconHtml}
+          ${count > 0 ? `<span>${count}</span>` : ''}
+        </button>`;
+      }).join('');
+
+      this.innerHTML = `<div class="flex gap-3 mt-5 pt-4 border-t border-offset/10">${html}</div>`;
+
+      this.querySelectorAll('.reaction-btn').forEach(btn => {
+        btn.addEventListener('click', () => this.react(btn.getAttribute('data-type')!));
+      });
+    }
+  }
+
+  if (!customElements.get('dymol-reactions')) {
+    customElements.define('dymol-reactions', DymolReactions);
+  }
 </script>
