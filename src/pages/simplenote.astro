@@ -1,0 +1,378 @@
+---
+const title = "SimpleNote | Donato Molino";
+const description = "Un editor di testo minimale, distraction-free. Scrivi e basta.";
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <style>
+      :root {
+        --bg: #fafaf9;
+        --surface: #ffffff;
+        --text: #1c1917;
+        --muted: #a8a29e;
+        --border: rgba(28, 25, 23, 0.08);
+        --accent: #2563eb;
+        --danger: #dc2626;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0c0a09;
+          --surface: #0c0a09;
+          --text: #e7e5e4;
+          --muted: #78716c;
+          --border: rgba(231, 229, 228, 0.08);
+          --accent: #60a5fa;
+          --danger: #f87171;
+        }
+      }
+
+      html[data-theme="dark"] {
+        --bg: #0c0a09;
+        --surface: #0c0a09;
+        --text: #e7e5e4;
+        --muted: #78716c;
+        --border: rgba(231, 229, 228, 0.08);
+        --accent: #60a5fa;
+        --danger: #f87171;
+      }
+      html[data-theme="light"] {
+        --bg: #fafaf9;
+        --surface: #ffffff;
+        --text: #1c1917;
+        --muted: #a8a29e;
+        --border: rgba(28, 25, 23, 0.08);
+        --accent: #2563eb;
+        --danger: #dc2626;
+      }
+
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow: hidden;
+      }
+
+      #app {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        height: 100dvh;
+      }
+
+      .editor-wrap {
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: center;
+        padding: 1rem;
+        overflow: hidden;
+      }
+
+      @media (min-width: 640px) {
+        .editor-wrap {
+          padding: 2rem;
+        }
+      }
+
+      #editor {
+        width: 100%;
+        max-width: 70ch;
+        height: 100%;
+        resize: none;
+        border: none;
+        outline: none;
+        background: transparent;
+        color: inherit;
+        font-family: inherit;
+        font-size: clamp(1.05rem, 1rem + 0.4vw, 1.25rem);
+        line-height: 1.75;
+        caret-color: var(--accent);
+      }
+
+      #editor::placeholder {
+        color: var(--muted);
+        opacity: 0.6;
+      }
+
+      .statusbar {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.5rem 1rem;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.01em;
+        color: var(--muted);
+        border-top: 1px solid var(--border);
+        user-select: none;
+        background: var(--surface);
+      }
+
+      @media (min-width: 640px) {
+        .statusbar {
+          padding: 0.6rem 2rem;
+        }
+      }
+
+      .status-left,
+      .status-right {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .save-indicator {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        min-width: 3.5rem;
+        text-align: center;
+      }
+
+      .save-indicator.visible {
+        opacity: 1;
+      }
+
+      .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        padding: 0.35rem 0.6rem;
+        border: 1px solid var(--border);
+        border-radius: 0.35rem;
+        background: transparent;
+        color: inherit;
+        font-family: inherit;
+        font-size: inherit;
+        cursor: pointer;
+        transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+        line-height: 1;
+      }
+
+      .btn-icon:hover {
+        background: var(--border);
+        border-color: var(--muted);
+        color: var(--text);
+      }
+
+      .btn-icon.danger:hover {
+        border-color: var(--danger);
+        color: var(--danger);
+        background: rgba(220, 38, 38, 0.06);
+      }
+
+      .btn-icon svg {
+        width: 0.9rem;
+        height: 0.9rem;
+        flex-shrink: 0;
+      }
+
+      .hidden-sm {
+        display: none;
+      }
+
+      @media (min-width: 640px) {
+        .hidden-sm {
+          display: inline;
+        }
+      }
+    </style>
+
+    <script is:inline>
+      const themeSaved = localStorage.getItem("theme");
+      if (themeSaved) {
+        document.documentElement.dataset.theme = themeSaved;
+      } else {
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = prefersDark ? "dark" : "light";
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="editor-wrap">
+        <textarea
+          id="editor"
+          placeholder="Write here…"
+          autofocus
+          spellcheck="false"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+        ></textarea>
+      </div>
+
+      <div class="statusbar">
+        <div class="status-left">
+          <span id="word-count">0 parole · 0 caratteri</span>
+        </div>
+
+        <div class="save-indicator" id="save-indicator" aria-live="polite"></div>
+
+        <div class="status-right">
+          <button class="btn-icon" id="btn-download" title="Scarica come .txt" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span class="hidden-sm">Scarica</span>
+          </button>
+
+          <button class="btn-icon danger" id="btn-clear" title="Cancella tutto" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+            <span class="hidden-sm">Pulisci</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        const STORAGE_KEY = "donatomolino:simplenote";
+        const editor = document.getElementById("editor");
+        const wordCountEl = document.getElementById("word-count");
+        const saveIndicator = document.getElementById("save-indicator");
+
+        function canUseStorage() {
+          try {
+            const x = "__test__";
+            localStorage.setItem(x, x);
+            localStorage.removeItem(x);
+            return true;
+          } catch (e) {
+            return false;
+          }
+        }
+
+        const storageAvailable = canUseStorage();
+
+        function loadText() {
+          if (!storageAvailable) return;
+          try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved !== null) editor.value = saved;
+          } catch (e) {
+            // ignore
+          }
+        }
+
+        function saveText() {
+          if (!storageAvailable) return;
+          try {
+            localStorage.setItem(STORAGE_KEY, editor.value);
+            showSaved();
+          } catch (e) {
+            // ignore
+          }
+        }
+
+        let debounceTimer = null;
+        function debouncedSave() {
+          if (debounceTimer) clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(saveText, 500);
+        }
+
+        function updateCounter() {
+          const text = editor.value;
+          const chars = text.length;
+          const words = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
+          wordCountEl.textContent = `${words} parole · ${chars} caratteri`;
+        }
+
+        let saveIndicatorTimer = null;
+        function showSaved() {
+          saveIndicator.textContent = "Salvato";
+          saveIndicator.classList.add("visible");
+          if (saveIndicatorTimer) clearTimeout(saveIndicatorTimer);
+          saveIndicatorTimer = setTimeout(() => {
+            saveIndicator.classList.remove("visible");
+          }, 2000);
+        }
+
+        function downloadTxt() {
+          const text = editor.value;
+          const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "simplenote.txt";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }
+
+        function clearAll() {
+          const confirmed = confirm("Sei sicuro di voler cancellare tutto il testo? Questa azione non può essere annullata.");
+          if (confirmed) {
+            editor.value = "";
+            saveText();
+            updateCounter();
+            editor.focus();
+          }
+        }
+
+        editor.addEventListener("input", () => {
+          debouncedSave();
+          updateCounter();
+        });
+
+        document.addEventListener("keydown", (e) => {
+          const isCmd = e.ctrlKey || e.metaKey;
+
+          if (isCmd && e.key.toLowerCase() === "s") {
+            e.preventDefault();
+            if (debounceTimer) clearTimeout(debounceTimer);
+            saveText();
+            return;
+          }
+
+          if (isCmd && e.key === "Backspace") {
+            e.preventDefault();
+            clearAll();
+            return;
+          }
+
+          if (e.key === "Escape") {
+            editor.blur();
+            return;
+          }
+        });
+
+        document.getElementById("btn-download").addEventListener("click", downloadTxt);
+        document.getElementById("btn-clear").addEventListener("click", clearAll);
+
+        loadText();
+        updateCounter();
+      })();
+    </script>
+  </body>
+</html>
