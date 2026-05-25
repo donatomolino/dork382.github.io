@@ -1,6 +1,6 @@
 ---
 const title = "SimpleNote | Donato Molino";
-const description = "Un editor di testo minimale, distraction-free. Scrivi e basta.";
+const description = "Un editor minimale stile Notion. Scrivi, formatta e organizza le tue note.";
 ---
 
 <!doctype html>
@@ -15,6 +15,18 @@ const description = "Un editor di testo minimale, distraction-free. Scrivi e bas
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
     <style>
+      :root {
+        --bg: #ffffff;
+        --sidebar-bg: #f7f6f3;
+        --sidebar-hover: #efedeb;
+        --text: #1a1a1a;
+        --muted: #888;
+        --border: #e9e9e7;
+        --accent: #2eaadc;
+        --danger: #e16259;
+        --todo-check: #2eaadc;
+      }
+
       *, *::before, *::after {
         box-sizing: border-box;
       }
@@ -26,250 +38,588 @@ const description = "Un editor di testo minimale, distraction-free. Scrivi e bas
       }
 
       body {
-        background: #ffffff;
-        color: #1a1a1a;
-        font-family: Georgia, "Times New Roman", Times, ui-serif, serif;
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
         -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden;
       }
 
       #app {
-        min-height: 100vh;
+        display: flex;
+        height: 100vh;
+        height: 100dvh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 260px;
+        flex-shrink: 0;
+        background: var(--sidebar-bg);
+        border-right: 1px solid var(--border);
         display: flex;
         flex-direction: column;
+        transition: transform 0.25s ease;
       }
 
-      .editor-wrap {
+      .sidebar-header {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .sidebar-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--muted);
+        letter-spacing: 0.02em;
+      }
+
+      .btn-sidebar {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.35rem 0.6rem;
+        border: none;
+        border-radius: 4px;
+        background: transparent;
+        color: var(--muted);
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+      }
+
+      .btn-sidebar:hover {
+        background: var(--sidebar-hover);
+        color: var(--text);
+      }
+
+      .notes-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0.5rem;
+      }
+
+      .note-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.6rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        color: var(--text);
+        transition: background 0.15s;
+        word-break: break-word;
+        min-height: 2rem;
+      }
+
+      .note-item:hover {
+        background: var(--sidebar-hover);
+      }
+
+      .note-item.active {
+        background: #e3f0fc;
+        color: #2eaadc;
+        font-weight: 500;
+      }
+
+      .note-item svg {
+        flex-shrink: 0;
+        width: 0.9rem;
+        height: 0.9rem;
+        color: var(--muted);
+      }
+
+      .note-item.active svg {
+        color: var(--accent);
+      }
+
+      /* Main */
+      .main {
         flex: 1;
         display: flex;
-        justify-content: center;
-        padding: 2rem 1.5rem 6rem;
+        flex-direction: column;
+        min-width: 0;
+        overflow: hidden;
       }
 
-      @media (min-width: 640px) {
-        .editor-wrap {
-          padding: 3rem 2rem 8rem;
-        }
+      .topbar {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.6rem 1rem;
+        border-bottom: 1px solid var(--border);
+        gap: 0.75rem;
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(8px);
+      }
+
+      .toolbar-left {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .toolbar-right {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      .btn-toggle {
+        display: none;
+        padding: 0.3rem;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        color: var(--muted);
+        border-radius: 4px;
+      }
+
+      .btn-toggle:hover {
+        background: #f0f0f0;
+      }
+
+      .btn-toggle svg {
+        width: 1.1rem;
+        height: 1.1rem;
+      }
+
+      .btn-tool {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.8rem;
+        height: 1.8rem;
+        border: none;
+        border-radius: 4px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: background 0.15s, color 0.15s;
+        line-height: 1;
+      }
+
+      .btn-tool:hover {
+        background: #f0f0f0;
+        color: var(--text);
+      }
+
+      .btn-tool.active {
+        background: #e3f0fc;
+        color: var(--accent);
+      }
+
+      .btn-tool svg {
+        width: 0.85rem;
+        height: 0.85rem;
+      }
+
+      .color-wrap {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      #color-picker {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        padding: 0;
+        border: none;
+      }
+
+      /* Editor */
+      .editor-scroll {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 1.5rem 1rem 5rem;
       }
 
       #editor {
-        width: 100%;
         max-width: 720px;
-        min-height: 100%;
-        border: none;
+        margin: 0 auto;
+        min-height: 60vh;
         outline: none;
-        background: transparent;
-        color: inherit;
-        font-family: inherit;
+        font-family: Georgia, "Times New Roman", Times, ui-serif, serif;
         font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
         line-height: 1.8;
-        caret-color: #1a1a1a;
-        white-space: pre-wrap;
-        word-wrap: break-word;
+        color: var(--text);
+        caret-color: var(--text);
       }
 
       #editor:empty::before {
         content: "Write here\u2026";
-        color: #bbb;
+        color: #ccc;
         pointer-events: none;
       }
 
-      #editor b, #editor strong {
-        font-weight: 700;
+      #editor p {
+        margin: 0 0 0.5em;
+        min-height: 1.8em;
       }
 
-      #editor i, #editor em {
-        font-style: italic;
+      #editor h1, #editor h2, #editor h3 {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+        font-weight: 600;
+        margin: 0.8em 0 0.3em;
+        line-height: 1.3;
       }
 
-      #editor u {
-        text-decoration: underline;
+      #editor h1 { font-size: 1.8em; }
+      #editor h2 { font-size: 1.4em; }
+      #editor h3 { font-size: 1.15em; }
+
+      #editor ul, #editor ol {
+        margin: 0 0 0.5em 1.2em;
+        padding: 0;
       }
 
-      .statusbar {
+      #editor li {
+        margin: 0.15em 0;
+      }
+
+      #editor hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 1em 0;
+      }
+
+      #editor blockquote {
+        border-left: 3px solid var(--border);
+        padding-left: 1em;
+        margin: 0.5em 0;
+        color: var(--muted);
+      }
+
+      /* Todo block */
+      .block-todo {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5em;
+        margin: 0.2em 0;
+        min-height: 1.8em;
+      }
+
+      .block-todo input[type="checkbox"] {
+        margin-top: 0.35em;
+        accent-color: var(--todo-check);
+        cursor: default;
+      }
+
+      .block-todo span {
+        flex: 1;
+      }
+
+      .block-todo.done span {
+        text-decoration: line-through;
+        color: var(--muted);
+      }
+
+      /* Slash popup */
+      #slash-popup {
+        display: none;
         position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        z-index: 200;
+        min-width: 220px;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+      }
+
+      .slash-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.55rem 0.8rem;
+        cursor: pointer;
+        font-size: 0.85rem;
+        color: var(--text);
+        transition: background 0.1s;
+      }
+
+      .slash-item:hover, .slash-item.selected {
+        background: #f0f0f0;
+      }
+
+      .slash-item .icon {
+        width: 1.4rem;
+        height: 1.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        background: #f5f5f5;
+        font-size: 0.9rem;
+      }
+
+      .slash-item .label {
+        font-weight: 500;
+      }
+
+      .slash-item .hint {
+        margin-left: auto;
+        font-size: 0.7rem;
+        color: var(--muted);
+      }
+
+      /* Statusbar */
+      .statusbar {
+        flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 1rem;
-        padding: 0.5rem 1.5rem;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
-        font-size: 0.75rem;
-        color: #aaa;
-        background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 0.4rem 1rem;
+        font-size: 0.7rem;
+        color: var(--muted);
+        border-top: 1px solid var(--border);
+        background: rgba(255,255,255,0.92);
+        backdrop-filter: blur(6px);
         user-select: none;
-        z-index: 100;
-      }
-
-      @media (min-width: 640px) {
-        .statusbar {
-          padding: 0.6rem 2rem;
-        }
-      }
-
-      .status-left,
-      .status-right {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
       }
 
       .save-indicator {
         opacity: 0;
-        transition: opacity 0.3s ease;
-        min-width: 3.5rem;
-        text-align: center;
-        font-size: 0.7rem;
+        transition: opacity 0.3s;
       }
+      .save-indicator.visible { opacity: 1; }
 
-      .save-indicator.visible {
-        opacity: 1;
-      }
-
-      .btn-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.35rem;
-        padding: 0.3rem 0.55rem;
-        border: none;
-        border-radius: 0.3rem;
-        background: transparent;
-        color: #999;
-        font-family: inherit;
-        font-size: inherit;
-        cursor: pointer;
-        transition: background 0.15s ease, color 0.15s ease;
-        line-height: 1;
-      }
-
-      .btn-icon:hover {
-        background: rgba(0, 0, 0, 0.04);
-        color: #333;
-      }
-
-      .btn-icon.danger:hover {
-        background: rgba(220, 38, 38, 0.06);
-        color: #dc2626;
-      }
-
-      .btn-icon svg {
-        width: 0.9rem;
-        height: 0.9rem;
-        flex-shrink: 0;
-      }
-
-      .hidden-sm {
-        display: none;
-      }
-
-      @media (min-width: 640px) {
-        .hidden-sm {
-          display: inline;
+      /* Mobile */
+      @media (max-width: 768px) {
+        .sidebar {
+          position: fixed;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          z-index: 50;
+          transform: translateX(-100%);
+        }
+        .sidebar.open {
+          transform: translateX(0);
+        }
+        .sidebar-overlay {
+          display: none;
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,0.2);
+          z-index: 40;
+        }
+        .sidebar-overlay.open {
+          display: block;
+        }
+        .btn-toggle {
+          display: inline-flex;
+        }
+        .editor-scroll {
+          padding: 1rem 1rem 4rem;
+        }
+        .topbar {
+          padding: 0.5rem 0.75rem;
         }
       }
 
-      .key-hint {
-        display: none;
+      @media (min-width: 769px) {
+        .sidebar-overlay { display: none !important; }
       }
 
+      /* Responsive toolbar */
+      .toolbar-right .btn-tool span { display: none; }
       @media (min-width: 640px) {
-        .key-hint {
-          display: inline;
-          opacity: 0.5;
-        }
+        .toolbar-right .btn-tool span { display: inline; margin-left: 0.3rem; font-size: 0.7rem; }
       }
     </style>
   </head>
 
   <body>
     <div id="app">
-      <div class="editor-wrap">
-        <div id="editor" contenteditable="true" spellcheck="false" autofocus></div>
-      </div>
+      <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
-      <div class="statusbar">
-        <div class="status-left">
-          <span id="word-count">0 parole · 0 caratteri</span>
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <span class="sidebar-title">SimpleNote</span>
+          <button class="btn-sidebar" id="btn-new-note" title="Nuova nota">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nuova
+          </button>
+        </div>
+        <nav class="notes-list" id="notes-list"></nav>
+      </aside>
+
+      <div class="main">
+        <div class="topbar">
+          <div class="toolbar-left">
+            <button class="btn-toggle" id="btn-toggle-sidebar" title="Note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+            </button>
+          </div>
+          <div class="toolbar-right">
+            <button class="btn-tool" id="btn-bold" title="Bold"><b>B</b></button>
+            <button class="btn-tool" id="btn-italic" title="Italic"><i>I</i></button>
+            <button class="btn-tool" id="btn-underline" title="Underline"><u>U</u></button>
+            <div class="color-wrap">
+              <button class="btn-tool" id="btn-color" title="Colore testo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+              </button>
+              <input type="color" id="color-picker" value="#1a1a1a" />
+            </div>
+            <button class="btn-tool" id="btn-ul" title="Elenco puntato">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            </button>
+            <button class="btn-tool" id="btn-ol" title="Elenco numerato">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+            </button>
+            <button class="btn-tool danger" id="btn-download" title="Scarica .txt">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+            <button class="btn-tool danger" id="btn-clear" title="Cancella nota">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
         </div>
 
-        <div class="save-indicator" id="save-indicator" aria-live="polite"></div>
+        <div class="editor-scroll">
+          <div id="editor" contenteditable="true" spellcheck="false"></div>
+        </div>
 
-        <div class="status-right">
-          <button class="btn-icon" id="btn-download" title="Scarica come .txt" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            <span class="hidden-sm">Scarica</span>
-          </button>
-
-          <button class="btn-icon danger" id="btn-clear" title="Cancella tutto" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="3 6 5 6 21 6"/>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-            </svg>
-            <span class="hidden-sm">Pulisci</span>
-          </button>
+        <div class="statusbar">
+          <span id="word-count">0 parole · 0 caratteri</span>
+          <span class="save-indicator" id="save-indicator">Salvato</span>
+          <span id="active-note-title"></span>
         </div>
       </div>
     </div>
 
+    <div id="slash-popup"></div>
+
     <script>
-      (function () {
-        var STORAGE_KEY = "donatomolino:simplenote";
+      (function() {
+        var STORAGE_KEY = "donatomolino:simplenote:notes";
+        var ACTIVE_KEY = "donatomolino:simplenote:active";
         var editor = document.getElementById("editor");
+        var notesList = document.getElementById("notes-list");
         var wordCountEl = document.getElementById("word-count");
         var saveIndicator = document.getElementById("save-indicator");
+        var sidebar = document.getElementById("sidebar");
+        var sidebarOverlay = document.getElementById("sidebar-overlay");
+        var slashPopup = document.getElementById("slash-popup");
+
+        var notes = [];
+        var activeNoteId = null;
 
         function canUseStorage() {
-          try {
-            var x = "__test__";
-            localStorage.setItem(x, x);
-            localStorage.removeItem(x);
-            return true;
-          } catch (e) {
-            return false;
-          }
+          try { var x = "__test__"; localStorage.setItem(x, x); localStorage.removeItem(x); return true; }
+          catch (e) { return false; }
         }
-
         var storageAvailable = canUseStorage();
 
-        function getPlainText() {
-          return editor.innerText || editor.textContent || "";
+        function generateId() {
+          return "note_" + Date.now() + "_" + Math.random().toString(36).substr(2, 6);
         }
 
-        function loadText() {
+        function getFirstLine(html) {
+          var tmp = document.createElement("div");
+          tmp.innerHTML = html || "";
+          var text = tmp.textContent || tmp.innerText || "";
+          var line = text.split(/\n/)[0].trim() || "Nota senza titolo";
+          return line.length > 40 ? line.slice(0, 40) + "\u2026" : line;
+        }
+
+        function loadNotes() {
           if (!storageAvailable) return;
           try {
-            var saved = localStorage.getItem(STORAGE_KEY);
-            if (saved !== null) {
-              editor.innerHTML = saved;
-            }
+            var raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) notes = JSON.parse(raw);
           } catch (e) {}
+          if (!notes.length) {
+            notes = [{ id: generateId(), title: "Nuova nota", content: "", updatedAt: Date.now() }];
+          }
+          activeNoteId = localStorage.getItem(ACTIVE_KEY) || notes[0].id;
+          var found = notes.find(function(n) { return n.id === activeNoteId; });
+          if (!found) { activeNoteId = notes[0].id; }
         }
 
-        function saveText() {
+        function saveNotes() {
           if (!storageAvailable) return;
           try {
-            localStorage.setItem(STORAGE_KEY, editor.innerHTML);
+            var current = notes.find(function(n) { return n.id === activeNoteId; });
+            if (current) {
+              current.content = editor.innerHTML;
+              current.title = getFirstLine(editor.innerHTML);
+              current.updatedAt = Date.now();
+            }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+            localStorage.setItem(ACTIVE_KEY, activeNoteId);
             showSaved();
           } catch (e) {}
         }
 
-        var debounceTimer = null;
+        var debounceTimer;
         function debouncedSave() {
-          if (debounceTimer) clearTimeout(debounceTimer);
-          debounceTimer = setTimeout(saveText, 500);
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(saveNotes, 500);
+        }
+
+        function renderSidebar() {
+          notesList.innerHTML = "";
+          notes.forEach(function(note) {
+            var el = document.createElement("div");
+            el.className = "note-item" + (note.id === activeNoteId ? " active" : "");
+            el.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
+              '<span>' + (note.title || "Nota").replace(/</g, "&lt;") + '</span>';
+            el.addEventListener("click", function() {
+              switchNote(note.id);
+              if (window.innerWidth <= 768) {
+                sidebar.classList.remove("open");
+                sidebarOverlay.classList.remove("open");
+              }
+            });
+            notesList.appendChild(el);
+          });
+        }
+
+        function switchNote(id) {
+          var current = notes.find(function(n) { return n.id === activeNoteId; });
+          if (current) {
+            current.content = editor.innerHTML;
+            current.title = getFirstLine(editor.innerHTML);
+            current.updatedAt = Date.now();
+          }
+          activeNoteId = id;
+          var next = notes.find(function(n) { return n.id === activeNoteId; });
+          if (next) {
+            editor.innerHTML = next.content || "";
+            updateCounter();
+          }
+          renderSidebar();
+          saveNotes();
+          editor.focus();
+        }
+
+        function createNote() {
+          var newNote = { id: generateId(), title: "Nuova nota", content: "", updatedAt: Date.now() };
+          notes.unshift(newNote);
+          activeNoteId = newNote.id;
+          editor.innerHTML = "";
+          renderSidebar();
+          saveNotes();
+          updateCounter();
+          editor.focus();
+        }
+
+        function getPlainText() {
+          return editor.innerText || editor.textContent || "";
         }
 
         function updateCounter() {
@@ -279,72 +629,274 @@ const description = "Un editor di testo minimale, distraction-free. Scrivi e bas
           wordCountEl.textContent = words + " parole \u00b7 " + chars + " caratteri";
         }
 
-        var saveIndicatorTimer = null;
+        var saveTimer;
         function showSaved() {
-          saveIndicator.textContent = "Salvato";
           saveIndicator.classList.add("visible");
-          if (saveIndicatorTimer) clearTimeout(saveIndicatorTimer);
-          saveIndicatorTimer = setTimeout(function () {
-            saveIndicator.classList.remove("visible");
-          }, 2000);
+          clearTimeout(saveTimer);
+          saveTimer = setTimeout(function() { saveIndicator.classList.remove("visible"); }, 2000);
         }
 
         function downloadTxt() {
+          var current = notes.find(function(n) { return n.id === activeNoteId; });
           var text = getPlainText();
           var blob = new Blob([text], { type: "text/plain;charset=utf-8" });
           var url = URL.createObjectURL(blob);
           var a = document.createElement("a");
           a.href = url;
-          a.download = "simplenote.txt";
+          a.download = (current ? current.title : "simplenote") + ".txt";
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
           URL.revokeObjectURL(url);
         }
 
-        function clearAll() {
-          var confirmed = confirm(
-            "Sei sicuro di voler cancellare tutto il testo? Questa azione non può essere annullata."
-          );
-          if (confirmed) {
+        function clearCurrentNote() {
+          if (confirm("Sei sicuro di voler cancellare tutto il contenuto di questa nota?")) {
             editor.innerHTML = "";
-            saveText();
+            saveNotes();
             updateCounter();
+            renderSidebar();
             editor.focus();
           }
         }
 
-        editor.addEventListener("input", function () {
+        // Slash commands
+        var slashCommands = [
+          { key: "todo", label: "To-do list", icon: "\u2610", hint: "/todo" },
+          { key: "bullet", label: "Elenco puntato", icon: "\u2022", hint: "/bullet" },
+          { key: "h1", label: "Titolo 1", icon: "H1", hint: "/h1" },
+          { key: "h2", label: "Titolo 2", icon: "H2", hint: "/h2" },
+          { key: "h3", label: "Titolo 3", icon: "H3", hint: "/h3" },
+          { key: "divider", label: "Divisore", icon: "\u2014", hint: "/divider" }
+        ];
+
+        function showSlashPopup(query, x, y) {
+          slashPopup.innerHTML = "";
+          var filtered = slashCommands.filter(function(c) {
+            return c.key.indexOf(query) === 0;
+          });
+          if (!filtered.length) { hideSlashPopup(); return; }
+          filtered.forEach(function(cmd, idx) {
+            var item = document.createElement("div");
+            item.className = "slash-item" + (idx === 0 ? " selected" : "");
+            item.innerHTML = '<span class="icon">' + cmd.icon + '</span><span class="label">' + cmd.label + '</span><span class="hint">' + cmd.hint + '</span>';
+            item.addEventListener("click", function() {
+              executeSlashCommand(cmd.key);
+            });
+            slashPopup.appendChild(item);
+          });
+          slashPopup.style.display = "block";
+          slashPopup.style.left = Math.max(8, x - 20) + "px";
+          slashPopup.style.top = (y + 20) + "px";
+        }
+
+        function hideSlashPopup() {
+          slashPopup.style.display = "none";
+        }
+
+        function insertHtmlAtCursor(html) {
+          var sel = window.getSelection();
+          if (!sel.rangeCount) return;
+          var range = sel.getRangeAt(0);
+          var temp = document.createElement("div");
+          temp.innerHTML = html;
+          var fragment = document.createDocumentFragment();
+          while (temp.firstChild) { fragment.appendChild(temp.firstChild); }
+          range.deleteContents();
+          range.insertNode(fragment);
+          range.collapse(false);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+
+        function executeSlashCommand(cmd) {
+          hideSlashPopup();
+          var sel = window.getSelection();
+          if (!sel.rangeCount) return;
+          var range = sel.getRangeAt(0);
+          var node = range.startContainer;
+          var offset = range.startOffset;
+
+          // Rimuovi il testo "/comando"
+          if (node.nodeType === Node.TEXT_NODE) {
+            var text = node.textContent;
+            var slashPos = text.lastIndexOf("/", offset);
+            if (slashPos !== -1) {
+              var delRange = document.createRange();
+              delRange.setStart(node, slashPos);
+              delRange.setEnd(node, offset);
+              delRange.deleteContents();
+            }
+          }
+
+          switch (cmd) {
+            case "todo":
+              insertHtmlAtCursor('<div class="block-todo"><input type="checkbox"><span>Todo</span></div>');
+              break;
+            case "bullet":
+              document.execCommand("insertUnorderedList", false, null);
+              break;
+            case "h1":
+            case "h2":
+            case "h3":
+              document.execCommand("formatBlock", false, cmd.toUpperCase());
+              break;
+            case "divider":
+              insertHtmlAtCursor("<hr>");
+              break;
+          }
+          editor.focus();
+          debouncedSave();
+          updateCounter();
+        }
+
+        // Events
+        editor.addEventListener("input", function() {
           debouncedSave();
           updateCounter();
         });
 
-        document.addEventListener("keydown", function (e) {
-          var isCmd = e.ctrlKey || e.metaKey;
+        editor.addEventListener("keyup", function(e) {
+          var sel = window.getSelection();
+          if (!sel.rangeCount) { hideSlashPopup(); return; }
+          var range = sel.getRangeAt(0);
+          var node = range.startContainer;
+          var offset = range.startOffset;
 
+          if (node.nodeType === Node.TEXT_NODE) {
+            var text = node.textContent;
+            var before = text.substring(0, offset);
+            var slashPos = before.lastIndexOf("/");
+            if (slashPos !== -1 && before.substring(0, slashPos).indexOf(" ") === -1 && before.substring(slashPos).indexOf(" ") === -1) {
+              var query = before.substring(slashPos + 1);
+              var rect = range.getBoundingClientRect();
+              showSlashPopup(query, rect.left, rect.bottom);
+            } else {
+              hideSlashPopup();
+            }
+          } else {
+            hideSlashPopup();
+          }
+
+          if (e.key === "Enter" && slashPopup.style.display === "block") {
+            e.preventDefault();
+            var selected = slashPopup.querySelector(".slash-item.selected");
+            if (selected) {
+              var key = slashCommands.find(function(c) {
+                return selected.querySelector(".hint").textContent === "/" + c.key;
+              });
+              if (key) executeSlashCommand(key.key);
+            }
+          }
+        });
+
+        editor.addEventListener("keydown", function(e) {
+          if (slashPopup.style.display === "block") {
+            if (e.key === "Escape") {
+              e.preventDefault();
+              hideSlashPopup();
+              return;
+            }
+            if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+              e.preventDefault();
+              var items = Array.from(slashPopup.querySelectorAll(".slash-item"));
+              var idx = items.findIndex(function(it) { return it.classList.contains("selected"); });
+              if (e.key === "ArrowDown") idx = Math.min(items.length - 1, idx + 1);
+              else idx = Math.max(0, idx - 1);
+              items.forEach(function(it) { it.classList.remove("selected"); });
+              if (items[idx]) items[idx].classList.add("selected");
+              return;
+            }
+          }
+        });
+
+        document.addEventListener("click", function(e) {
+          if (!slashPopup.contains(e.target)) hideSlashPopup();
+        });
+
+        // Toolbar
+        document.getElementById("btn-bold").addEventListener("click", function() {
+          document.execCommand("bold", false, null); editor.focus(); updateToolbarState();
+        });
+        document.getElementById("btn-italic").addEventListener("click", function() {
+          document.execCommand("italic", false, null); editor.focus(); updateToolbarState();
+        });
+        document.getElementById("btn-underline").addEventListener("click", function() {
+          document.execCommand("underline", false, null); editor.focus(); updateToolbarState();
+        });
+        document.getElementById("btn-ul").addEventListener("click", function() {
+          document.execCommand("insertUnorderedList", false, null); editor.focus(); updateToolbarState();
+        });
+        document.getElementById("btn-ol").addEventListener("click", function() {
+          document.execCommand("insertOrderedList", false, null); editor.focus(); updateToolbarState();
+        });
+        document.getElementById("color-picker").addEventListener("input", function(e) {
+          document.execCommand("foreColor", false, e.target.value); editor.focus();
+        });
+        document.getElementById("color-picker").addEventListener("change", function() {
+          document.getElementById("btn-color").classList.add("active");
+          setTimeout(function() { document.getElementById("btn-color").classList.remove("active"); }, 500);
+        });
+
+        function updateToolbarState() {
+          setTimeout(function() {
+            document.getElementById("btn-bold").classList.toggle("active", document.queryCommandState("bold"));
+            document.getElementById("btn-italic").classList.toggle("active", document.queryCommandState("italic"));
+            document.getElementById("btn-underline").classList.toggle("active", document.queryCommandState("underline"));
+          }, 0);
+        }
+
+        editor.addEventListener("keyup", updateToolbarState);
+        editor.addEventListener("mouseup", updateToolbarState);
+
+        // Sidebar toggle
+        document.getElementById("btn-toggle-sidebar").addEventListener("click", function() {
+          sidebar.classList.toggle("open");
+          sidebarOverlay.classList.toggle("open");
+        });
+        sidebarOverlay.addEventListener("click", function() {
+          sidebar.classList.remove("open");
+          sidebarOverlay.classList.remove("open");
+        });
+
+        document.getElementById("btn-new-note").addEventListener("click", createNote);
+        document.getElementById("btn-download").addEventListener("click", downloadTxt);
+        document.getElementById("btn-clear").addEventListener("click", clearCurrentNote);
+
+        // Shortcuts
+        document.addEventListener("keydown", function(e) {
+          var isCmd = e.ctrlKey || e.metaKey;
           if (isCmd && e.key.toLowerCase() === "s") {
             e.preventDefault();
-            if (debounceTimer) clearTimeout(debounceTimer);
-            saveText();
+            clearTimeout(debounceTimer);
+            saveNotes();
             return;
           }
-
           if (isCmd && e.key === "Backspace") {
             e.preventDefault();
-            clearAll();
-            return;
-          }
-
-          if (e.key === "Escape") {
-            editor.blur();
+            clearCurrentNote();
             return;
           }
         });
 
-        document.getElementById("btn-download").addEventListener("click", downloadTxt);
-        document.getElementById("btn-clear").addEventListener("click", clearAll);
+        // Todo click
+        editor.addEventListener("click", function(e) {
+          if (e.target.tagName === "INPUT" && e.target.type === "checkbox") {
+            var block = e.target.closest(".block-todo");
+            if (block) {
+              block.classList.toggle("done", e.target.checked);
+              debouncedSave();
+            }
+          }
+        });
 
-        loadText();
+        // Init
+        loadNotes();
+        var active = notes.find(function(n) { return n.id === activeNoteId; });
+        if (active) {
+          editor.innerHTML = active.content || "";
+        }
+        renderSidebar();
         updateCounter();
         editor.focus();
       })();
