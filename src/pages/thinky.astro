@@ -1,0 +1,33 @@
+---
+import "@fontsource-variable/inter";
+import ThinkyPlayground from "~/components/ThinkyPlayground";
+import "~/styles/thinky.css";
+
+const { generator, site } = Astro;
+const description =
+  "Thinky is an interactive mood-glow mascot that reacts to your words, movement, clicks, and mood changes.";
+const pageUrl = new URL("thinky", site);
+const image = new URL("social.jpg", site);
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={generator} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <title>Thinky | Donato Molino</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content="Thinky | Donato Molino" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={pageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <ThinkyPlayground client:load />
+  </body>
+</html>

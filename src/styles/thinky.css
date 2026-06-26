@@ -1,0 +1,986 @@
+:root {
+  --thinky-page-bg: #030407;
+  --thinky-text: #f8fbff;
+  --thinky-muted: rgba(248, 251, 255, 0.58);
+  --thinky-line: rgba(255, 255, 255, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  background: var(--thinky-page-bg);
+}
+
+body {
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+}
+
+.thinky-page {
+  position: relative;
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  min-height: 720px;
+  overflow: hidden;
+  color: var(--thinky-text);
+  font-family:
+    "Inter Variable",
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background:
+    radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--mood-color) 15%, transparent) 0, transparent 30%),
+    radial-gradient(circle at 18% 14%, rgba(77, 163, 255, 0.12) 0, transparent 28%),
+    radial-gradient(circle at 82% 17%, rgba(181, 108, 255, 0.1) 0, transparent 28%),
+    linear-gradient(180deg, #05070b 0%, #010203 100%);
+  isolation: isolate;
+  place-items: center;
+  grid-template-rows: minmax(104px, 0.56fr) minmax(270px, 1.38fr) minmax(214px, 0.82fr);
+}
+
+.thinky-ambient {
+  position: absolute;
+  inset: -16%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--mood-color) 20%, transparent) 0, transparent 17%),
+    radial-gradient(circle at 50% 76%, rgba(255, 255, 255, 0.08) 0, transparent 14%);
+  filter: blur(28px);
+  opacity: 0.78;
+  transition: background 420ms ease, opacity 420ms ease;
+}
+
+.thinky-header {
+  align-self: end;
+  width: min(92vw, 760px);
+  text-align: center;
+  transform: translateY(16px);
+}
+
+.thinky-kicker {
+  margin: 0 0 10px;
+  color: color-mix(in srgb, var(--mood-color) 72%, #ffffff);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.thinky-header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2.65rem, 8.5vh, 5.8rem);
+  font-weight: 850;
+  letter-spacing: 0;
+  line-height: 0.9;
+  text-shadow: 0 0 34px color-mix(in srgb, var(--mood-color) 45%, transparent);
+}
+
+.thinky-header p:last-child {
+  margin: 16px 0 0;
+  color: var(--thinky-muted);
+  font-size: clamp(0.95rem, 1.9vw, 1.18rem);
+}
+
+.thinky-stage {
+  position: relative;
+  display: grid;
+  width: min(82vw, 510px);
+  aspect-ratio: 1.1;
+  place-items: center;
+  perspective: 1200px;
+}
+
+.thinky-shell {
+  --mood-color: #4da3ff;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --glow-shift-x: 0px;
+  --glow-shift-y: 0px;
+  position: relative;
+  display: grid;
+  width: min(76vw, 420px);
+  aspect-ratio: 1.16;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  transform: translate3d(0, 0, 0);
+  transform-origin: 50% 78%;
+  transform-style: preserve-3d;
+  animation:
+    thinky-float 5s ease-in-out infinite,
+    thinky-breathe 4s ease-in-out infinite;
+  place-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.thinky-shell::before {
+  position: absolute;
+  inset: 14% 7% 7%;
+  content: "";
+  border-radius: 48%;
+  background: radial-gradient(circle at 50% 36%, color-mix(in srgb, var(--mood-color) 30%, transparent), transparent 57%);
+  filter: blur(38px);
+  opacity: 0.7;
+  transform: translateY(16px);
+  transition: opacity 360ms ease, transform 360ms ease;
+  animation: thinky-glow-pulse 3s ease-in-out infinite;
+}
+
+.thinky-shell:focus-visible {
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.76), 0 0 0 9px color-mix(in srgb, var(--mood-color) 48%, transparent);
+}
+
+.thinky-shell.is-near::before {
+  opacity: 1;
+  transform: translateY(12px) scale(1.05);
+}
+
+.thinky-shell.is-near .thinky-svg {
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) scale(1.035);
+}
+
+.thinky-shell.is-pressed .thinky-svg {
+  animation: thinky-squash 420ms cubic-bezier(0.2, 1.5, 0.36, 1);
+}
+
+.thinky-shell--determinato {
+  animation-duration: 5.6s, 4.5s;
+}
+
+.thinky-shell--curioso .thinky-svg {
+  rotate: -2deg;
+}
+
+.thinky-shell--pensieroso {
+  animation-duration: 6.2s, 5.6s;
+}
+
+.thinky-shell--wow .thinky-svg,
+.thinky-shell--entusiasta .thinky-svg {
+  animation: thinky-mood-pop 1.35s ease-in-out infinite;
+}
+
+.thinky-shell--felice {
+  animation-duration: 4.2s, 3.4s;
+}
+
+.thinky-shell--determinato .thinky-svg {
+  animation: thinky-determined 0.9s ease-in-out infinite;
+}
+
+.thinky-svg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  transform-origin: 50% 78%;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  transition: transform 360ms ease;
+}
+
+.thinky-ground {
+  fill: rgba(0, 0, 0, 0.5);
+  filter: blur(3px);
+  transform-origin: 50% 50%;
+  animation: thinky-shadow 4s ease-in-out infinite;
+}
+
+.thinky-body-group {
+  transform-origin: 50% 76%;
+  transform: translate3d(0, 0, 28px);
+}
+
+.thinky-body {
+  stroke: rgba(255, 255, 255, 0.65);
+  stroke-width: 1.2;
+  filter: drop-shadow(0 18px 18px rgba(0, 0, 0, 0.22));
+}
+
+.thinky-body-rim {
+  opacity: 0.82;
+  stroke-width: 2.4;
+}
+
+.thinky-body-soft-shadow {
+  fill: rgba(116, 130, 153, 0.24);
+  filter: blur(2px);
+}
+
+.thinky-ear {
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: 50% 86%;
+  animation: thinky-ear-wiggle 4.8s ease-in-out infinite;
+}
+
+.thinky-ear--right {
+  animation-delay: 180ms;
+}
+
+.thinky-ear-occlusion {
+  fill: rgba(104, 118, 140, 0.12);
+  filter: blur(7px);
+}
+
+.thinky-forehead-glow {
+  mix-blend-mode: multiply;
+  opacity: 0.68;
+  transform-origin: 50% 37%;
+  transition: fill 440ms ease, opacity 440ms ease, transform 440ms ease;
+  animation: thinky-forehead 3s ease-in-out infinite;
+}
+
+.thinky-shell.is-near .thinky-forehead-glow {
+  opacity: 0.86;
+  transform: scale(1.05);
+}
+
+.thinky-shell--neutrale .thinky-forehead-glow {
+  opacity: 0.34;
+  mix-blend-mode: normal;
+}
+
+.thinky-highlight {
+  fill: rgba(255, 255, 255, 0.34);
+  filter: blur(0.4px);
+}
+
+.thinky-cheek-light {
+  fill: rgba(255, 255, 255, 0.18);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.thinky-foot {
+  stroke: rgba(255, 255, 255, 0.54);
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: 50% 82%;
+  animation: thinky-foot-weight 4s ease-in-out infinite;
+}
+
+.thinky-foot--right {
+  animation-delay: 120ms;
+}
+
+.thinky-paw {
+  transform-origin: 128px 264px;
+  animation: thinky-paw 4s ease-in-out infinite;
+}
+
+.thinky-paw-line {
+  fill: none;
+  stroke: #111219;
+  stroke-linecap: round;
+  stroke-width: 6;
+}
+
+.thinky-eye,
+.thinky-mouth ellipse {
+  fill: #050506;
+  transition: cx 80ms linear, cy 80ms linear, rx 260ms ease, ry 260ms ease;
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.28));
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+.thinky-shell.is-blinking .thinky-eye {
+  transform: scaleY(0.08);
+}
+
+.thinky-eye-shine {
+  fill: rgba(255, 255, 255, 0.88);
+  pointer-events: none;
+  filter: blur(0.2px);
+}
+
+.thinky-shell.is-blinking .thinky-eye-shine {
+  opacity: 0;
+}
+
+.thinky-smile-eye,
+.thinky-wink,
+.thinky-brows path,
+.thinky-mouth path {
+  fill: none;
+  stroke: #050506;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.thinky-smile-eye,
+.thinky-wink {
+  stroke-width: 8;
+}
+
+.thinky-brows path {
+  stroke-width: 8;
+}
+
+.thinky-mouth path {
+  stroke-width: 8;
+}
+
+.thinky-mouth path:first-child:not(:only-child) {
+  stroke-width: 0;
+}
+
+.thinky-shell--felice .thinky-mouth path,
+.thinky-shell--entusiasta .thinky-mouth path {
+  fill: #050506;
+  stroke-width: 0;
+}
+
+.thinky-shell--entusiasta .thinky-mouth path {
+  filter: drop-shadow(0 8px 0 color-mix(in srgb, var(--mood-color) 55%, #65d9ff));
+}
+
+.thinky-code-panel rect {
+  fill: #202126;
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 2;
+  filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.28));
+}
+
+.thinky-code-panel path {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.92);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 8;
+}
+
+.thinky-accent-lines path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 8;
+}
+
+.thinky-burst {
+  position: absolute;
+  z-index: 2;
+  inset: 50% auto auto 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.thinky-burst span {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 30%, #ffffff 0 18%, var(--mood-color) 20% 70%, transparent 100%);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--mood-color) 72%, transparent);
+  opacity: 0;
+  animation: thinky-burst 680ms ease-out forwards;
+}
+
+.thinky-burst span:nth-child(1) {
+  --burst-x: -122px;
+  --burst-y: -72px;
+}
+
+.thinky-burst span:nth-child(2) {
+  --burst-x: 118px;
+  --burst-y: -82px;
+  animation-delay: 35ms;
+}
+
+.thinky-burst span:nth-child(3) {
+  --burst-x: -96px;
+  --burst-y: 72px;
+  animation-delay: 70ms;
+}
+
+.thinky-burst span:nth-child(4) {
+  --burst-x: 112px;
+  --burst-y: 64px;
+  animation-delay: 105ms;
+}
+
+.thinky-burst span:nth-child(5) {
+  --burst-x: 0px;
+  --burst-y: -126px;
+  animation-delay: 50ms;
+}
+
+.thinky-burst span:nth-child(6) {
+  --burst-x: 4px;
+  --burst-y: 112px;
+  animation-delay: 90ms;
+}
+
+.thinky-orbit {
+  position: absolute;
+  z-index: 3;
+  width: 42px;
+  height: 42px;
+  pointer-events: none;
+  transform-origin: 34px 166px;
+  animation: thinky-orbit 9s linear infinite;
+  transition: opacity 280ms ease;
+}
+
+.thinky-shell.is-near .thinky-orbit {
+  animation-duration: 6.4s;
+}
+
+.thinky-orbit--curioso {
+  transform-origin: 20px 140px;
+}
+
+.thinky-orbit--focus {
+  animation-duration: 12s;
+}
+
+.thinky-orbit-core {
+  position: absolute;
+  inset: 4px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 36% 30%, rgba(255, 255, 255, 0.95), transparent 24%),
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--mood-color) 84%, #ffffff), transparent 66%);
+  box-shadow:
+    inset -6px -8px 12px rgba(0, 0, 0, 0.34),
+    inset 5px 4px 8px rgba(255, 255, 255, 0.22),
+    0 0 18px color-mix(in srgb, var(--mood-color) 65%, transparent),
+    0 0 44px color-mix(in srgb, var(--mood-color) 38%, transparent);
+  opacity: 0.84;
+  transition: border-radius 320ms ease, background 420ms ease, scale 320ms ease;
+}
+
+.thinky-orbit.is-near .thinky-orbit-core {
+  scale: 1.14;
+}
+
+.thinky-orbit--pensieroso .thinky-orbit-core {
+  border-radius: 48% 56% 46% 58%;
+}
+
+.thinky-orbit--focus .thinky-orbit-core {
+  border-radius: 8px;
+}
+
+.thinky-orbit-particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--mood-color);
+  box-shadow: 0 0 12px var(--mood-color);
+  opacity: 0.72;
+  animation: thinky-orbit-particle 1.8s ease-in-out infinite;
+}
+
+.thinky-orbit-particle--one {
+  right: 1px;
+  top: 8px;
+}
+
+.thinky-orbit-particle--two {
+  bottom: 5px;
+  left: 3px;
+  animation-delay: 500ms;
+}
+
+.thinky-console {
+  display: grid;
+  align-self: start;
+  width: min(94vw, 1120px);
+  gap: 10px;
+}
+
+.thinky-chat-log {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  min-height: 58px;
+}
+
+.thinky-message {
+  min-width: 0;
+  margin: 0;
+  padding: 10px 13px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 18px;
+  color: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.18);
+  font-size: 0.88rem;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+}
+
+.thinky-message span {
+  display: block;
+  margin-bottom: 2px;
+  color: color-mix(in srgb, var(--mood-color) 72%, #ffffff);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.thinky-message--you {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.thinky-message--thinky {
+  border-color: color-mix(in srgb, var(--mood-color) 28%, rgba(255, 255, 255, 0.12));
+}
+
+.thinky-chat-form {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--thinky-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 18px 64px rgba(0, 0, 0, 0.26);
+}
+
+.thinky-chat-form input {
+  width: auto;
+  flex: 1 1 0;
+  min-height: 44px;
+  min-width: 0;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.thinky-chat-form input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.thinky-chat-form input:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mood-color) 44%, transparent);
+}
+
+.thinky-chat-form button {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid color-mix(in srgb, var(--mood-color) 38%, rgba(255, 255, 255, 0.16));
+  border-radius: 999px;
+  color: #05070b;
+  background: color-mix(in srgb, var(--mood-color) 84%, #ffffff);
+  cursor: pointer;
+  font-weight: 850;
+  outline: none;
+}
+
+.thinky-chat-form button:focus-visible {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.78), 0 0 0 7px color-mix(in srgb, var(--mood-color) 42%, transparent);
+}
+
+.thinky-mood-bar {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  padding: 12px;
+  overflow-x: auto;
+  border: 1px solid var(--thinky-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 18px 64px rgba(0, 0, 0, 0.26);
+  scrollbar-width: none;
+}
+
+.thinky-mood-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.thinky-mood-bar button {
+  --mood-button-color: #4da3ff;
+  display: inline-flex;
+  flex: 0 0 auto;
+  min-width: 116px;
+  min-height: 56px;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px 9px 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.045);
+  cursor: pointer;
+  outline: none;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.thinky-mood-bar button:hover,
+.thinky-mood-bar button.is-active {
+  color: #ffffff;
+  border-color: color-mix(in srgb, var(--mood-button-color) 42%, rgba(255, 255, 255, 0.14));
+  background: color-mix(in srgb, var(--mood-button-color) 18%, rgba(255, 255, 255, 0.05));
+}
+
+.thinky-mood-bar button:hover {
+  transform: translateY(-2px);
+}
+
+.thinky-mood-bar button:focus-visible {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.76), 0 0 0 7px color-mix(in srgb, var(--mood-button-color) 42%, transparent);
+}
+
+.thinky-mood-dot {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background: radial-gradient(circle at 34% 30%, #ffffff 0 11%, var(--mood-button-color) 13% 70%, rgba(255, 255, 255, 0.16) 100%);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--mood-button-color) 64%, transparent);
+}
+
+.thinky-mood-copy {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+  text-align: left;
+}
+
+.thinky-mood-copy strong {
+  overflow: hidden;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.thinky-mood-copy small {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 0.74rem;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@keyframes thinky-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -12px;
+  }
+}
+
+@keyframes thinky-breathe {
+  0%,
+  100% {
+    scale: 1 1;
+  }
+  50% {
+    scale: 1.018 0.992;
+  }
+}
+
+@keyframes thinky-shadow {
+  0%,
+  100% {
+    transform: scaleX(0.94);
+    opacity: 0.72;
+  }
+  50% {
+    transform: scaleX(1.05);
+    opacity: 0.5;
+  }
+}
+
+@keyframes thinky-glow-pulse {
+  0%,
+  100% {
+    filter: blur(34px);
+  }
+  50% {
+    filter: blur(42px);
+  }
+}
+
+@keyframes thinky-forehead {
+  0%,
+  100% {
+    opacity: 0.66;
+  }
+  50% {
+    opacity: 0.82;
+  }
+}
+
+@keyframes thinky-paw {
+  0%,
+  100% {
+    rotate: -3deg;
+  }
+  50% {
+    rotate: 4deg;
+  }
+}
+
+@keyframes thinky-orbit {
+  from {
+    transform: rotate(0deg) translate(178px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translate(178px) rotate(-360deg);
+  }
+}
+
+@keyframes thinky-squash {
+  0% {
+    transform: scale(1);
+  }
+  34% {
+    transform: scale(1.07, 0.92) translateY(14px);
+  }
+  68% {
+    transform: scale(0.96, 1.05) translateY(-8px);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes thinky-ear-wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  46% {
+    transform: rotate(-2.4deg) translateY(1px);
+  }
+  64% {
+    transform: rotate(1.8deg) translateY(-1px);
+  }
+}
+
+@keyframes thinky-foot-weight {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08, 0.92) translateY(3px);
+  }
+}
+
+@keyframes thinky-mood-pop {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  42% {
+    translate: 0 -8px;
+  }
+  58% {
+    translate: 0 1px;
+  }
+}
+
+@keyframes thinky-determined {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  35% {
+    translate: -0.8px 0;
+  }
+  70% {
+    translate: 0.8px 0;
+  }
+}
+
+@keyframes thinky-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--burst-x)), calc(-50% + var(--burst-y))) scale(1);
+  }
+}
+
+@keyframes thinky-orbit-particle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translateY(0) scale(0.76);
+  }
+  50% {
+    opacity: 0.86;
+    transform: translateY(-5px) scale(1);
+  }
+}
+
+@media (max-width: 720px) {
+  body {
+    overflow: hidden;
+  }
+
+  .thinky-page {
+    min-height: 100svh;
+    grid-template-rows: minmax(112px, 0.48fr) minmax(282px, 1.1fr) minmax(250px, 0.82fr);
+  }
+
+  .thinky-header {
+    width: min(88vw, 420px);
+    transform: translateY(10px);
+  }
+
+  .thinky-header h1 {
+    font-size: clamp(2.45rem, 11vw, 4rem);
+  }
+
+  .thinky-header p:last-child {
+    margin-top: 12px;
+    max-width: 310px;
+    margin-right: auto;
+    margin-left: auto;
+    line-height: 1.35;
+  }
+
+  .thinky-stage {
+    width: min(92vw, 322px);
+  }
+
+  .thinky-shell {
+    width: min(88vw, 302px);
+  }
+
+  .thinky-orbit {
+    width: 24px;
+    height: 24px;
+    transform-origin: 28px 126px;
+    animation-name: thinky-orbit-mobile;
+  }
+
+  .thinky-mood-bar {
+    width: 100%;
+    padding: 10px 14px 12px;
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(5, 7, 11, 0.46), rgba(5, 7, 11, 0.82));
+  }
+
+  .thinky-console {
+    width: min(88vw, 340px);
+    justify-self: start;
+    margin-left: 24px;
+    gap: 8px;
+  }
+
+  .thinky-chat-log {
+    grid-template-columns: 1fr;
+    max-height: 96px;
+    overflow: hidden;
+  }
+
+  .thinky-message {
+    padding: 8px 11px;
+    font-size: 0.8rem;
+  }
+
+  .thinky-chat-log .thinky-message:nth-last-child(n + 3) {
+    display: none;
+  }
+
+  .thinky-chat-form {
+    width: 100%;
+    margin: 0;
+    padding: 8px;
+  }
+
+  .thinky-chat-form input,
+  .thinky-chat-form button {
+    min-height: 42px;
+  }
+
+  .thinky-chat-form button {
+    flex-basis: 72px;
+    padding: 0;
+  }
+
+  .thinky-mood-bar button {
+    min-width: 112px;
+    min-height: 54px;
+  }
+}
+
+@media (max-height: 700px) and (min-width: 721px) {
+  .thinky-page {
+    min-height: 560px;
+    grid-template-rows: 94px 1fr 178px;
+  }
+
+  .thinky-header h1 {
+    font-size: 3.2rem;
+  }
+
+  .thinky-stage {
+    width: min(70vh, 430px);
+  }
+
+  .thinky-shell {
+    width: min(66vh, 390px);
+  }
+}
+
+@keyframes thinky-orbit-mobile {
+  from {
+    transform: rotate(0deg) translate(126px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translate(126px) rotate(-360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
