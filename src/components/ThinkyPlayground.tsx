@@ -52,6 +52,20 @@ const SUGGESTED_PROMPTS = [
   "Paint something bright.",
 ];
 const INITIAL_MESSAGES: ChatMessage[] = [];
+const BLOCKED_API_FALLBACKS = [
+  "annodata un idea",
+  "annodata un'idea",
+  "annodata un' idea",
+  "mi si e annodata",
+  "mi si è annodata",
+];
+const DEFAULT_LOCAL_REPLIES = [
+  "Ti sento.",
+  "Dimmi di piu.",
+  "Ci penso.",
+  "Sono qui.",
+  "Piccola idea.",
+];
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
@@ -154,7 +168,25 @@ function normalizeApiLines(value: unknown): ThinkyApiLine[] {
               : "none",
       };
     })
-    .filter((line) => line.text);
+    .filter((line) => line.text && !isBlockedApiFallback(line.text));
+}
+
+function hasLengthFinishReason(value: unknown) {
+  const candidate = value as { finish_reason?: unknown; choices?: unknown };
+
+  if (String(candidate.finish_reason ?? "").toLowerCase() === "length") {
+    return true;
+  }
+
+  if (!Array.isArray(candidate.choices)) {
+    return false;
+  }
+
+  return candidate.choices.some((choice) => {
+    const item = choice as { finish_reason?: unknown };
+
+    return String(item.finish_reason ?? "").toLowerCase() === "length";
+  });
 }
 
 function combineThinkyLines(lines: ThinkyApiLine[]): ThinkyApiLine {
@@ -171,12 +203,34 @@ function combineThinkyLines(lines: ThinkyApiLine[]): ThinkyApiLine {
 function getLocalThinkyLine(text: string): ThinkyApiLine {
   const mood = detectMoodFromText(text);
   const reaction = detectThinkyReaction(text);
+  const localText =
+    reaction.id === "default"
+      ? DEFAULT_LOCAL_REPLIES[
+          Math.floor(Math.random() * DEFAULT_LOCAL_REPLIES.length)
+        ]
+      : reaction.bubble;
 
   return {
-    text: reaction.bubble,
+    text: localText,
     mood: reaction.id === "default" ? mood : reaction.mood,
     action: reaction.id === "default" ? "none" : reaction.id,
   };
+}
+
+function isBlockedApiFallback(text: string) {
+  const normalized = text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+  return BLOCKED_API_FALLBACKS.some((fallback) =>
+    normalized.includes(
+      fallback
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, ""),
+    ),
+  );
 }
 
 export default function ThinkyPlayground() {
@@ -317,7 +371,13 @@ export default function ThinkyPlayground() {
           throw new Error(`Thinky API returned ${response.status}`);
         }
 
-        const lines = normalizeApiLines(await response.json());
+        const payload = await response.json();
+
+        if (hasLengthFinishReason(payload)) {
+          throw new Error("Thinky API response was truncated");
+        }
+
+        const lines = normalizeApiLines(payload);
 
         if (!lines.length) {
           throw new Error("Thinky API returned no lines");
@@ -536,7 +596,7 @@ export default function ThinkyPlayground() {
             }}
           />
           <span className="thinky-char-counter" aria-live="polite">
-            {sentMessageCount}/{MAX_CHAT_MESSAGES} · {chatValue.length}/
+            {sentMessageCount}/{MAX_CHAT_MESSAGES} | {chatValue.length}/
             {MAX_MESSAGE_LENGTH}
           </span>
           <button type="submit" disabled={isThinking}>
