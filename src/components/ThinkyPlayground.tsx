@@ -36,6 +36,18 @@ const MAX_MESSAGE_LENGTH = 255;
 const IDLE_TIMEOUT = 7600;
 const MAX_EYE_OFFSET = 8;
 const NEAR_DISTANCE = 260;
+const SUGGESTED_PROMPTS = [
+  "Have a cookie.",
+  "Eat the pizza!",
+  "Take a tiny coffee break.",
+  "Show me a bright idea.",
+  "Debug this little bug.",
+  "Launch the rocket.",
+  "Do a tiny dance.",
+  "Read this book.",
+  "Make some magic.",
+  "Paint something bright.",
+];
 const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: 1,
@@ -47,6 +59,12 @@ const INITIAL_MESSAGES: ChatMessage[] = [
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
+}
+
+function getRandomPrompts(count: number) {
+  return [...SUGGESTED_PROMPTS]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, count);
 }
 
 function isMoodId(value: string): value is MoodId {
@@ -152,6 +170,7 @@ export default function ThinkyPlayground() {
   const [thought, setThought] = useState("");
   const [isThinking, setIsThinking] = useState(false);
   const [chatValue, setChatValue] = useState("");
+  const [suggestedPrompts, setSuggestedPrompts] = useState<string[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const targetEyeRef = useRef({ x: 0, y: 0 });
@@ -214,17 +233,14 @@ export default function ThinkyPlayground() {
       pressTimerRef.current = window.setTimeout(() => setIsPressed(false), 420);
       thoughtTimerRef.current = window.setTimeout(() => {
         setReactionId(DEFAULT_REACTION.id);
-        setThought("");
       }, 2600);
     },
     [changeMood, wakeThinky],
   );
 
-  const handleChatSubmit = useCallback(
-    async (event: FormSubmitEvent) => {
-      event.preventDefault();
-
-      const text = chatValue.trim();
+  const submitThinkyMessage = useCallback(
+    async (rawText: string) => {
+      const text = rawText.trim().slice(0, MAX_MESSAGE_LENGTH);
 
       if (!text || isThinking) {
         return;
@@ -240,6 +256,7 @@ export default function ThinkyPlayground() {
       responseTimersRef.current = [];
       setMessages((current) => [...current.slice(-5), userMessage]);
       setChatValue("");
+      setSuggestedPrompts([]);
       setIsThinking(true);
       setReactionId(DEFAULT_REACTION.id);
       setThought("...");
@@ -277,7 +294,15 @@ export default function ThinkyPlayground() {
         setIsThinking(false);
       }
     },
-    [changeMood, chatValue, isThinking, playThinkyLine],
+    [changeMood, isThinking, playThinkyLine],
+  );
+
+  const handleChatSubmit = useCallback(
+    (event: FormSubmitEvent) => {
+      event.preventDefault();
+      void submitThinkyMessage(chatValue);
+    },
+    [chatValue, submitThinkyMessage],
   );
 
   useEffect(() => {
@@ -317,6 +342,10 @@ export default function ThinkyPlayground() {
       responseTimersRef.current.forEach((timer) => window.clearTimeout(timer));
     };
   }, [resetIdleTimer]);
+
+  useEffect(() => {
+    setSuggestedPrompts(getRandomPrompts(2));
+  }, []);
 
   useEffect(() => {
     const scheduleBlink = () => {
@@ -396,10 +425,6 @@ export default function ThinkyPlayground() {
       <header className="thinky-header">
         <p className="thinky-kicker">Interactive mascot / 01</p>
         <h1>Thinky</h1>
-        <p>
-          A mood-aware companion that reads tone, follows movement, and responds
-          through expression.
-        </p>
       </header>
 
       <section className="thinky-stage" ref={stageRef} aria-live="polite">
@@ -422,11 +447,6 @@ export default function ThinkyPlayground() {
       </section>
 
       <section className="thinky-console" aria-label="Talk to Thinky">
-        <div className="thinky-console-head">
-          <span>Signal input</span>
-          <span>{mood.label}</span>
-        </div>
-
         <div className="thinky-chat-log" aria-live="polite">
           {messages
             .filter((message) => message.speaker === "you")
@@ -442,6 +462,21 @@ export default function ThinkyPlayground() {
           ))}
         </div>
 
+        {suggestedPrompts.length > 0 && (
+          <div className="thinky-suggestions" aria-label="Suggested prompts">
+            {suggestedPrompts.map((prompt) => (
+              <button
+                key={prompt}
+                type="button"
+                disabled={isThinking}
+                onClick={() => void submitThinkyMessage(prompt)}
+              >
+                {prompt}
+              </button>
+            ))}
+          </div>
+        )}
+
         <form className="thinky-chat-form" onSubmit={handleChatSubmit}>
           <input
             type="text"
@@ -450,9 +485,10 @@ export default function ThinkyPlayground() {
             placeholder="Tell Thinky something..."
             aria-label="Message Thinky"
             disabled={isThinking}
-            onChange={(event) =>
-              setChatValue(event.target.value.slice(0, MAX_MESSAGE_LENGTH))
-            }
+            onChange={(event) => {
+              setSuggestedPrompts([]);
+              setChatValue(event.target.value.slice(0, MAX_MESSAGE_LENGTH));
+            }}
           />
           <span className="thinky-char-counter" aria-live="polite">
             {chatValue.length}/{MAX_MESSAGE_LENGTH}
