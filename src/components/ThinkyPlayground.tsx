@@ -2,8 +2,12 @@ import type { ComponentProps, CSSProperties, PointerEvent } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Thinky from "./Thinky";
 import {
+  DEFAULT_REACTION,
+  detectThinkyReaction,
+  type ThinkyReactionId,
+} from "./thinky-reactions";
+import {
   IDLE_MOOD,
-  MOODS,
   detectMoodFromText,
   getMoodById,
   getRandomMood,
@@ -17,24 +21,107 @@ type ChatMessage = {
   mood?: MoodId;
 };
 
+type ThinkyApiLine = {
+  text: string;
+  mood: MoodId;
+  action: ThinkyReactionId | "none";
+};
+
 type FormSubmitEvent = Parameters<
   NonNullable<ComponentProps<"form">["onSubmit"]>
 >[0];
 
+const THINKY_API_URL = "https://ai.dork3802.workers.dev/";
 const IDLE_TIMEOUT = 7600;
 const MAX_EYE_OFFSET = 8;
 const NEAR_DISTANCE = 260;
 const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: 1,
-    speaker: "thinky",
-    text: "Say something and I will glow with the mood I feel.",
+    speaker: "you",
+    text: "Say something to Thinky.",
     mood: IDLE_MOOD,
   },
 ];
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
+}
+
+function isMoodId(value: string): value is MoodId {
+  return [
+    "curioso",
+    "pensieroso",
+    "wow",
+    "determinato",
+    "felice",
+    "entusiasta",
+    "focus",
+    "neutrale",
+  ].includes(value);
+}
+
+function isReactionId(value: string): value is ThinkyReactionId {
+  return [
+    "cookie",
+    "pizza",
+    "coffee",
+    "sleep",
+    "music",
+    "code",
+    "idea",
+    "love",
+    "rain",
+    "rocket",
+    "bug",
+    "paint",
+    "book",
+    "money",
+    "fire",
+    "hug",
+    "magic",
+    "default",
+  ].includes(value);
+}
+
+function normalizeApiLines(value: unknown): ThinkyApiLine[] {
+  const candidate = value as { lines?: unknown };
+  const lines = Array.isArray(candidate.lines) ? candidate.lines : [];
+
+  return lines
+    .slice(0, 3)
+    .map((line) => {
+      const item = line as { text?: unknown; mood?: unknown; action?: unknown };
+      const rawMood = String(item.mood ?? "");
+      const rawAction = String(item.action ?? "none");
+      const text = String(item.text ?? "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 64);
+
+      return {
+        text,
+        mood: isMoodId(rawMood) ? rawMood : "curioso",
+        action:
+          rawAction === "none"
+            ? "none"
+            : isReactionId(rawAction)
+              ? rawAction
+              : "none",
+      };
+    })
+    .filter((line) => line.text);
+}
+
+function getLocalThinkyLine(text: string): ThinkyApiLine {
+  const mood = detectMoodFromText(text);
+  const reaction = detectThinkyReaction(text);
+
+  return {
+    text: reaction.bubble,
+    mood: reaction.id === "default" ? mood : reaction.mood,
+    action: reaction.id === "default" ? "none" : reaction.id,
+  };
 }
 
 export default function ThinkyPlayground() {
@@ -46,6 +133,12 @@ export default function ThinkyPlayground() {
   const [isBlinking, setIsBlinking] = useState(false);
   const [activity, setActivity] = useState(0);
   const [burstKey, setBurstKey] = useState(0);
+  const [reactionKey, setReactionKey] = useState(0);
+  const [reactionId, setReactionId] = useState<ThinkyReactionId>(
+    DEFAULT_REACTION.id,
+  );
+  const [thought, setThought] = useState("");
+  const [isThinking, setIsThinking] = useState(false);
   const [chatValue, setChatValue] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const stageRef = useRef<HTMLDivElement | null>(null);
@@ -57,6 +150,8 @@ export default function ThinkyPlayground() {
   const pressTimerRef = useRef<number | undefined>(undefined);
   const blinkTimerRef = useRef<number | undefined>(undefined);
   const activityTimerRef = useRef<number | undefined>(undefined);
+  const thoughtTimerRef = useRef<number | undefined>(undefined);
+  const responseTimersRef = useRef<number[]>([]);
   const messageIdRef = useRef(2);
 
   const mood = useMemo(
@@ -94,39 +189,78 @@ export default function ThinkyPlayground() {
     activityTimerRef.current = window.setTimeout(() => setActivity(0), 950);
   }, []);
 
+  const playThinkyLine = useCallback(
+    (line: ThinkyApiLine) => {
+      setReactionId(line.action === "none" ? DEFAULT_REACTION.id : line.action);
+      setThought(line.text);
+      setReactionKey((key) => key + 1);
+      changeMood(line.mood);
+      setIsPressed(true);
+      wakeThinky();
+      window.clearTimeout(pressTimerRef.current);
+      window.clearTimeout(thoughtTimerRef.current);
+      pressTimerRef.current = window.setTimeout(() => setIsPressed(false), 420);
+      thoughtTimerRef.current = window.setTimeout(() => {
+        setReactionId(DEFAULT_REACTION.id);
+        setThought("");
+      }, 2600);
+    },
+    [changeMood, wakeThinky],
+  );
+
   const handleChatSubmit = useCallback(
-    (event: FormSubmitEvent) => {
+    async (event: FormSubmitEvent) => {
       event.preventDefault();
 
       const text = chatValue.trim();
 
-      if (!text) {
+      if (!text || isThinking) {
         return;
       }
 
-      const nextMood = detectMoodFromText(text);
-      const nextMoodConfig = getMoodById(nextMood);
       const userMessage: ChatMessage = {
         id: messageIdRef.current++,
         speaker: "you",
         text,
       };
-      const thinkyMessage: ChatMessage = {
-        id: messageIdRef.current++,
-        speaker: "thinky",
-        text: nextMoodConfig.reply,
-        mood: nextMood,
-      };
 
-      setMessages((current) => [...current.slice(-4), userMessage, thinkyMessage]);
+      responseTimersRef.current.forEach((timer) => window.clearTimeout(timer));
+      responseTimersRef.current = [];
+      setMessages((current) => [...current.slice(-5), userMessage]);
       setChatValue("");
-      changeMood(nextMood);
-      setIsPressed(true);
-      wakeThinky();
-      window.clearTimeout(pressTimerRef.current);
-      pressTimerRef.current = window.setTimeout(() => setIsPressed(false), 420);
+      setIsThinking(true);
+
+      try {
+        const response = await fetch(THINKY_API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: text }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Thinky API returned ${response.status}`);
+        }
+
+        const lines = normalizeApiLines(await response.json());
+
+        if (!lines.length) {
+          throw new Error("Thinky API returned no lines");
+        }
+
+        lines.forEach((line, index) => {
+          const timer = window.setTimeout(() => playThinkyLine(line), index * 1500);
+          responseTimersRef.current.push(timer);
+        });
+      } catch {
+        const fallbackLine = getLocalThinkyLine(text);
+        playThinkyLine(fallbackLine);
+      } finally {
+        setIsThinking(false);
+      }
     },
-    [changeMood, chatValue, wakeThinky],
+    [chatValue, isThinking, playThinkyLine],
   );
 
   useEffect(() => {
@@ -162,6 +296,8 @@ export default function ThinkyPlayground() {
       window.clearTimeout(pressTimerRef.current);
       window.clearTimeout(blinkTimerRef.current);
       window.clearTimeout(activityTimerRef.current);
+      window.clearTimeout(thoughtTimerRef.current);
+      responseTimersRef.current.forEach((timer) => window.clearTimeout(timer));
     };
   }, [resetIdleTimer]);
 
@@ -241,9 +377,12 @@ export default function ThinkyPlayground() {
       <div className="thinky-ambient" aria-hidden="true" />
 
       <header className="thinky-header">
-        <p className="thinky-kicker">Mood-aware companion</p>
+        <p className="thinky-kicker">Interactive mascot / 01</p>
         <h1>Thinky</h1>
-        <p>Talk to him. Move your mouse. Watch the glow react.</p>
+        <p>
+          A mood-aware companion that reads tone, follows movement, and responds
+          through expression.
+        </p>
       </header>
 
       <section className="thinky-stage" ref={stageRef} aria-live="polite">
@@ -257,13 +396,24 @@ export default function ThinkyPlayground() {
           isBlinking={isBlinking}
           activity={activity}
           burstKey={burstKey}
+          reactionId={reactionId}
+          reactionKey={reactionKey}
+          thought={thought}
           onClick={handleRandomMood}
         />
       </section>
 
       <section className="thinky-console" aria-label="Talk to Thinky">
+        <div className="thinky-console-head">
+          <span>Signal input</span>
+          <span>{mood.label}</span>
+        </div>
+
         <div className="thinky-chat-log" aria-live="polite">
-          {messages.map((message) => (
+          {messages
+            .filter((message) => message.speaker === "you")
+            .slice(-1)
+            .map((message) => (
             <p
               className={`thinky-message thinky-message--${message.speaker}`}
               key={message.id}
@@ -281,30 +431,13 @@ export default function ThinkyPlayground() {
             maxLength={180}
             placeholder="Tell Thinky something..."
             aria-label="Message Thinky"
+            disabled={isThinking}
             onChange={(event) => setChatValue(event.target.value)}
           />
-          <button type="submit">Send</button>
+          <button type="submit" disabled={isThinking}>
+            {isThinking ? "Thinking" : "Send"}
+          </button>
         </form>
-
-        <nav className="thinky-mood-bar" aria-label="Thinky moods">
-          {MOODS.map((item) => (
-            <button
-              className={item.id === mood.id ? "is-active" : ""}
-              key={item.id}
-              type="button"
-              aria-label={`Set Thinky mood to ${item.label}`}
-              aria-pressed={item.id === mood.id}
-              style={{ "--mood-button-color": item.color } as CSSProperties}
-              onClick={() => changeMood(item.id)}
-            >
-              <span className="thinky-mood-dot" aria-hidden="true" />
-              <span className="thinky-mood-copy">
-                <strong>{item.label}</strong>
-                <small>{item.colorName}</small>
-              </span>
-            </button>
-          ))}
-        </nav>
       </section>
     </main>
   );

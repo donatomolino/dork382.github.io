@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
-import Orbit from "./Orbit";
 import type { MoodId } from "./thinky-moods";
+import type { ThinkyReactionId } from "./thinky-reactions";
 
 type ThinkyProps = {
   mood: MoodId;
@@ -12,6 +12,9 @@ type ThinkyProps = {
   isBlinking: boolean;
   activity: number;
   burstKey: number;
+  reactionId: ThinkyReactionId;
+  reactionKey: number;
+  thought: string;
   onClick: () => void;
 };
 
@@ -35,6 +38,9 @@ export default function Thinky({
   isBlinking,
   activity,
   burstKey,
+  reactionId,
+  reactionKey,
+  thought,
   onClick,
 }: ThinkyProps) {
   const eyeX = eyeOffset.x;
@@ -52,6 +58,7 @@ export default function Thinky({
         isNear ? "is-near" : "",
         isPressed ? "is-pressed" : "",
         isBlinking ? "is-blinking" : "",
+        reactionId !== "default" ? `thinky-shell--react-${reactionId}` : "",
       ]
         .filter(Boolean)
         .join(" ")}
@@ -71,7 +78,22 @@ export default function Thinky({
       aria-label="Change Thinky's mood"
       onClick={onClick}
     >
-      <Orbit mood={mood} color={color} isNear={isNear} activity={activity} />
+      {thought && (
+        <span className="thinky-thought" key={`thought-${reactionKey}`} aria-live="polite">
+          {thought}
+        </span>
+      )}
+      {reactionId !== "default" && (
+        <span
+          className={`thinky-prop thinky-prop--${reactionId}`}
+          key={`prop-${reactionKey}`}
+          aria-hidden="true"
+        >
+          <span />
+          <span />
+          <span />
+        </span>
+      )}
       {burstKey > 0 && (
         <span className="thinky-burst" key={burstKey} aria-hidden="true">
           <span />
