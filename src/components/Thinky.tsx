@@ -15,6 +15,7 @@ type ThinkyProps = {
   reactionId: ThinkyReactionId;
   reactionKey: number;
   thought: string;
+  isThinking: boolean;
   onClick: () => void;
 };
 
@@ -41,6 +42,7 @@ export default function Thinky({
   reactionId,
   reactionKey,
   thought,
+  isThinking,
   onClick,
 }: ThinkyProps) {
   const eyeX = eyeOffset.x;
@@ -58,6 +60,7 @@ export default function Thinky({
         isNear ? "is-near" : "",
         isPressed ? "is-pressed" : "",
         isBlinking ? "is-blinking" : "",
+        isThinking ? "is-thinking" : "",
         reactionId !== "default" ? `thinky-shell--react-${reactionId}` : "",
       ]
         .filter(Boolean)

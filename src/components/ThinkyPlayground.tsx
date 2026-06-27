@@ -32,6 +32,7 @@ type FormSubmitEvent = Parameters<
 >[0];
 
 const THINKY_API_URL = "https://ai.dork3802.workers.dev/";
+const MAX_MESSAGE_LENGTH = 255;
 const IDLE_TIMEOUT = 7600;
 const MAX_EYE_OFFSET = 8;
 const NEAR_DISTANCE = 260;
@@ -111,6 +112,17 @@ function normalizeApiLines(value: unknown): ThinkyApiLine[] {
       };
     })
     .filter((line) => line.text);
+}
+
+function combineThinkyLines(lines: ThinkyApiLine[]): ThinkyApiLine {
+  const firstActionLine = lines.find((line) => line.action !== "none");
+  const firstMoodLine = lines.find((line) => line.mood !== "neutrale");
+
+  return {
+    text: lines.map((line) => line.text).join(" ").trim().slice(0, 190),
+    mood: firstMoodLine?.mood ?? lines[0]?.mood ?? "curioso",
+    action: firstActionLine?.action ?? "none",
+  };
 }
 
 function getLocalThinkyLine(text: string): ThinkyApiLine {
@@ -229,6 +241,10 @@ export default function ThinkyPlayground() {
       setMessages((current) => [...current.slice(-5), userMessage]);
       setChatValue("");
       setIsThinking(true);
+      setReactionId(DEFAULT_REACTION.id);
+      setThought("...");
+      setReactionKey((key) => key + 1);
+      changeMood("pensieroso");
 
       try {
         const response = await fetch(THINKY_API_URL, {
@@ -236,7 +252,11 @@ export default function ThinkyPlayground() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message: text }),
+          body: JSON.stringify({
+            message: text,
+            language: "it",
+            locale: "it-IT",
+          }),
         });
 
         if (!response.ok) {
@@ -249,10 +269,7 @@ export default function ThinkyPlayground() {
           throw new Error("Thinky API returned no lines");
         }
 
-        lines.forEach((line, index) => {
-          const timer = window.setTimeout(() => playThinkyLine(line), index * 1500);
-          responseTimersRef.current.push(timer);
-        });
+        playThinkyLine(combineThinkyLines(lines));
       } catch {
         const fallbackLine = getLocalThinkyLine(text);
         playThinkyLine(fallbackLine);
@@ -260,7 +277,7 @@ export default function ThinkyPlayground() {
         setIsThinking(false);
       }
     },
-    [chatValue, isThinking, playThinkyLine],
+    [changeMood, chatValue, isThinking, playThinkyLine],
   );
 
   useEffect(() => {
@@ -399,6 +416,7 @@ export default function ThinkyPlayground() {
           reactionId={reactionId}
           reactionKey={reactionKey}
           thought={thought}
+          isThinking={isThinking}
           onClick={handleRandomMood}
         />
       </section>
@@ -428,12 +446,17 @@ export default function ThinkyPlayground() {
           <input
             type="text"
             value={chatValue}
-            maxLength={180}
+            maxLength={MAX_MESSAGE_LENGTH}
             placeholder="Tell Thinky something..."
             aria-label="Message Thinky"
             disabled={isThinking}
-            onChange={(event) => setChatValue(event.target.value)}
+            onChange={(event) =>
+              setChatValue(event.target.value.slice(0, MAX_MESSAGE_LENGTH))
+            }
           />
+          <span className="thinky-char-counter" aria-live="polite">
+            {chatValue.length}/{MAX_MESSAGE_LENGTH}
+          </span>
           <button type="submit" disabled={isThinking}>
             {isThinking ? "Thinking" : "Send"}
           </button>
