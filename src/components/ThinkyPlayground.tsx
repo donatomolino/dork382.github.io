@@ -33,6 +33,9 @@ type FormSubmitEvent = Parameters<
 
 const THINKY_API_URL = "https://ai.dork3802.workers.dev/";
 const MAX_MESSAGE_LENGTH = 255;
+const MAX_CHAT_MESSAGES = 10;
+const MESSAGE_COUNT_COOKIE = "thinky_message_count";
+const CONTACT_EMAIL = "donatomolino@proton.me";
 const IDLE_TIMEOUT = 7600;
 const MAX_EYE_OFFSET = 8;
 const NEAR_DISTANCE = 260;
@@ -48,17 +51,39 @@ const SUGGESTED_PROMPTS = [
   "Make some magic.",
   "Paint something bright.",
 ];
-const INITIAL_MESSAGES: ChatMessage[] = [
-  {
-    id: 1,
-    speaker: "you",
-    text: "Say something to Thinky.",
-    mood: IDLE_MOOD,
-  },
-];
+const INITIAL_MESSAGES: ChatMessage[] = [];
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
+}
+
+function getCookieValue(name: string) {
+  if (typeof document === "undefined") {
+    return "";
+  }
+
+  return (
+    document.cookie
+      .split("; ")
+      .find((item) => item.startsWith(`${name}=`))
+      ?.split("=")[1] ?? ""
+  );
+}
+
+function getStoredMessageCount() {
+  const value = Number.parseInt(getCookieValue(MESSAGE_COUNT_COOKIE), 10);
+
+  return Number.isFinite(value) ? clamp(value, 0, MAX_CHAT_MESSAGES) : 0;
+}
+
+function storeMessageCount(count: number) {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  const safeCount = clamp(count, 0, MAX_CHAT_MESSAGES);
+  const maxAge = 60 * 60 * 24 * 365;
+  document.cookie = `${MESSAGE_COUNT_COOKIE}=${safeCount}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
 }
 
 function getRandomPrompts(count: number) {
@@ -171,6 +196,8 @@ export default function ThinkyPlayground() {
   const [isThinking, setIsThinking] = useState(false);
   const [chatValue, setChatValue] = useState("");
   const [suggestedPrompts, setSuggestedPrompts] = useState<string[]>([]);
+  const [sentMessageCount, setSentMessageCount] = useState(0);
+  const [isLimitDialogOpen, setIsLimitDialogOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const targetEyeRef = useRef({ x: 0, y: 0 });
@@ -183,7 +210,8 @@ export default function ThinkyPlayground() {
   const activityTimerRef = useRef<number | undefined>(undefined);
   const thoughtTimerRef = useRef<number | undefined>(undefined);
   const responseTimersRef = useRef<number[]>([]);
-  const messageIdRef = useRef(2);
+  const messageIdRef = useRef(1);
+  const messageCountRef = useRef(0);
 
   const mood = useMemo(
     () => getMoodById(activeMood),
@@ -246,12 +274,21 @@ export default function ThinkyPlayground() {
         return;
       }
 
+      if (messageCountRef.current >= MAX_CHAT_MESSAGES) {
+        setIsLimitDialogOpen(true);
+        return;
+      }
+
+      const nextMessageCount = messageCountRef.current + 1;
       const userMessage: ChatMessage = {
         id: messageIdRef.current++,
         speaker: "you",
         text,
       };
 
+      messageCountRef.current = nextMessageCount;
+      setSentMessageCount(nextMessageCount);
+      storeMessageCount(nextMessageCount);
       responseTimersRef.current.forEach((timer) => window.clearTimeout(timer));
       responseTimersRef.current = [];
       setMessages((current) => [...current.slice(-5), userMessage]);
@@ -345,6 +382,12 @@ export default function ThinkyPlayground() {
 
   useEffect(() => {
     setSuggestedPrompts(getRandomPrompts(2));
+  }, []);
+
+  useEffect(() => {
+    const storedMessageCount = getStoredMessageCount();
+    messageCountRef.current = storedMessageCount;
+    setSentMessageCount(storedMessageCount);
   }, []);
 
   useEffect(() => {
@@ -447,20 +490,22 @@ export default function ThinkyPlayground() {
       </section>
 
       <section className="thinky-console" aria-label="Talk to Thinky">
-        <div className="thinky-chat-log" aria-live="polite">
-          {messages
-            .filter((message) => message.speaker === "you")
-            .slice(-1)
-            .map((message) => (
-            <p
-              className={`thinky-message thinky-message--${message.speaker}`}
-              key={message.id}
-            >
-              <span>{message.speaker === "you" ? "You" : "Thinky"}</span>
-              {message.text}
-            </p>
-          ))}
-        </div>
+        {messages.some((message) => message.speaker === "you") && (
+          <div className="thinky-chat-log" aria-live="polite">
+            {messages
+              .filter((message) => message.speaker === "you")
+              .slice(-1)
+              .map((message) => (
+                <p
+                  className={`thinky-message thinky-message--${message.speaker}`}
+                  key={message.id}
+                >
+                  <span>{message.speaker === "you" ? "You" : "Thinky"}</span>
+                  {message.text}
+                </p>
+              ))}
+          </div>
+        )}
 
         {suggestedPrompts.length > 0 && (
           <div className="thinky-suggestions" aria-label="Suggested prompts">
@@ -491,13 +536,44 @@ export default function ThinkyPlayground() {
             }}
           />
           <span className="thinky-char-counter" aria-live="polite">
-            {chatValue.length}/{MAX_MESSAGE_LENGTH}
+            {sentMessageCount}/{MAX_CHAT_MESSAGES} · {chatValue.length}/
+            {MAX_MESSAGE_LENGTH}
           </span>
           <button type="submit" disabled={isThinking}>
             {isThinking ? "Thinking" : "Send"}
           </button>
         </form>
       </section>
+
+      {isLimitDialogOpen && (
+        <div
+          className="thinky-limit-backdrop"
+          role="presentation"
+          onClick={() => setIsLimitDialogOpen(false)}
+        >
+          <div
+            className="thinky-limit-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="thinky-limit-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <p className="thinky-limit-kicker">Thinky access</p>
+            <h2 id="thinky-limit-title">Message limit reached.</h2>
+            <p>
+              You have used the 10 available messages. If you are interested in
+              Thinky, contact me at{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+            </p>
+            <div className="thinky-limit-actions">
+              <a href={`mailto:${CONTACT_EMAIL}`}>Contact</a>
+              <button type="button" onClick={() => setIsLimitDialogOpen(false)}>
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

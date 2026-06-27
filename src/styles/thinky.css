@@ -1247,7 +1247,7 @@ button {
 .thinky-char-counter {
   display: inline-grid;
   min-height: 66px;
-  min-width: 76px;
+  min-width: 104px;
   align-items: center;
   justify-content: center;
   border-left: 1px solid var(--thinky-line);
@@ -1257,6 +1257,7 @@ button {
   letter-spacing: 0;
   line-height: 1;
   text-transform: uppercase;
+  white-space: nowrap;
   user-select: none;
 }
 
@@ -1291,6 +1292,105 @@ button {
 
 .thinky-chat-form button:focus-visible {
   box-shadow: inset 0 0 0 2px var(--mood-color);
+}
+
+.thinky-limit-backdrop {
+  position: fixed;
+  z-index: 40;
+  inset: 0;
+  display: grid;
+  padding: 18px;
+  background: rgba(5, 5, 5, 0.72);
+  backdrop-filter: blur(14px);
+  place-items: center;
+}
+
+.thinky-limit-dialog {
+  width: min(460px, 100%);
+  border: 1px solid var(--thinky-line);
+  color: var(--thinky-ink);
+  background:
+    linear-gradient(rgba(243, 240, 232, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243, 240, 232, 0.06) 1px, transparent 1px),
+    #0b0b0b;
+  background-size: 32px 32px;
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.52);
+}
+
+.thinky-limit-kicker {
+  margin: 0;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--thinky-line);
+  color: rgba(243, 240, 232, 0.58);
+  font-size: 0.68rem;
+  font-weight: 760;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.thinky-limit-dialog h2 {
+  margin: 0;
+  padding: 18px 16px 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 820;
+  letter-spacing: 0;
+  line-height: 0.95;
+}
+
+.thinky-limit-dialog p:not(.thinky-limit-kicker) {
+  margin: 0;
+  padding: 14px 16px 18px;
+  color: rgba(243, 240, 232, 0.72);
+  font-size: 0.96rem;
+  line-height: 1.42;
+}
+
+.thinky-limit-dialog a {
+  color: var(--thinky-ink);
+  font-weight: 760;
+  text-decoration-color: var(--mood-color);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.thinky-limit-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--thinky-line);
+}
+
+.thinky-limit-actions a,
+.thinky-limit-actions button {
+  display: inline-grid;
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-right: 1px solid var(--thinky-line);
+  color: #050505;
+  background: #f8f6ef;
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 760;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.thinky-limit-actions button {
+  border-right: 0;
+  color: var(--thinky-ink);
+  background: transparent;
+}
+
+.thinky-limit-actions a:hover,
+.thinky-limit-actions a:focus-visible,
+.thinky-limit-actions button:hover,
+.thinky-limit-actions button:focus-visible {
+  color: #050505;
+  background: var(--mood-color);
+  outline: none;
 }
 
 
@@ -1973,12 +2073,7 @@ button {
   }
 
   .thinky-chat-form {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "message"
-      "counter"
-      "send";
+    display: flex;
     width: 100%;
     min-width: 0;
     margin: 0;
@@ -1987,26 +2082,22 @@ button {
   }
 
   .thinky-chat-form input {
-    grid-area: message;
-    width: 100%;
+    width: auto;
+    min-width: 0;
+    padding: 0 12px;
   }
 
   .thinky-chat-form button {
     position: relative;
     z-index: 1;
-    grid-area: send;
-    width: 100%;
+    width: auto;
   }
 
   .thinky-char-counter {
-    grid-area: counter;
-    min-height: 34px;
-    min-width: 0;
-    justify-content: end;
-    padding: 0 12px;
-    border-top: 1px solid var(--thinky-line);
-    border-left: 0;
-    font-size: 0.68rem;
+    min-width: 82px;
+    padding: 0 8px;
+    border-left: 1px solid var(--thinky-line);
+    font-size: 0.62rem;
   }
 
   .thinky-chat-form input,
@@ -2016,9 +2107,8 @@ button {
 
   .thinky-chat-form button {
     min-width: 0;
-    border-top: 1px solid var(--thinky-line);
-    border-left: 0;
-    padding: 0;
+    border-left: 1px solid var(--thinky-line);
+    padding: 0 14px;
   }
 
 }
