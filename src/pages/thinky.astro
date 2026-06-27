@@ -7,7 +7,8 @@ const { generator, site } = Astro;
 const description =
   "Thinky is an interactive mood-glow mascot that reacts to your words, movement, clicks, and mood changes.";
 const pageUrl = new URL("thinky", site);
-const image = new URL("social.jpg", site);
+const image = new URL("thinky-preview.png", site);
+const imageAlt = "Thinky, an interactive mood-glow mascot on a dark grid interface.";
 ---
 
 <!doctype html>
@@ -17,15 +18,26 @@ const image = new URL("social.jpg", site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={generator} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={pageUrl} />
 
     <title>Thinky | Donato Molino</title>
     <meta name="description" content={description} />
     <meta property="og:title" content="Thinky | Donato Molino" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Donato Molino" />
     <meta property="og:image" content={image} />
+    <meta property="og:image:secure_url" content={image} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1600" />
+    <meta property="og:image:height" content="900" />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:url" content={pageUrl} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Thinky | Donato Molino" />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image:alt" content={imageAlt} />
   </head>
   <body>
     <ThinkyPlayground client:load />
