@@ -1,79 +1,238 @@
 ---
 import "@fontsource-variable/inter";
-import Compatibility from "~/components/compatibility.astro";
-import Doodles from "~/components/doodles.astro";
-import Footer from "~/components/footer.astro";
-import Header from "~/components/header.astro";
-import Intro from "~/components/intro.astro";
-import Showcase from "~/components/showcase.astro";
-import Splash from "~/components/splash.astro";
+import { Image } from "astro:assets";
+import farmingCatImage from "~/content/showcase/_images/farmingcat.png";
+import flowlightImage from "~/content/showcase/_images/flowlight.png";
+import postOfficeImage from "~/content/showcase/_images/postoffice.png";
+import swooshManiaImage from "~/content/showcase/_images/swooshmania.jpg";
+import thinkyImage from "~/content/showcase/_images/thinky.png";
 import "~/styles/index.css";
-import { ClientRouter } from "astro:transitions";
 
 const { generator, site } = Astro;
-const image = new URL("social.jpg", site);
 const description =
-  "A full stack developer focused on turning ideas into products through open collaboration, sound architecture, and measurable performance.";
+  "Donato Molino is a product engineer who turns ambitious ideas into simple, useful and enduring digital products.";
+const socialImage = new URL("/og.png", site);
+
+const projects = [
+  {
+    title: "FarmingCat",
+    type: "Game / Product",
+    year: "2022—Now",
+    url: "https://store.steampowered.com/app/2003840/FarmingCat/",
+    image: farmingCatImage,
+  },
+  {
+    title: "Post Office",
+    type: "Platform / Commerce",
+    year: "2024",
+    url: "https://centroposte.com",
+    image: postOfficeImage,
+  },
+  {
+    title: "SwooshMania",
+    type: "Game / Product",
+    year: "2025",
+    url: "https://store.steampowered.com/app/3560590/SwooshMania/",
+    image: swooshManiaImage,
+  },
+  {
+    title: "Thinky",
+    type: "AI / Interaction",
+    year: "2026",
+    url: "/thinky",
+    image: thinkyImage,
+  },
+  {
+    title: "Flowlight",
+    type: "Experiment / Light",
+    year: "2023",
+    url: "/e/flowlight",
+    image: flowlightImage,
+  },
+  {
+    title: "Junk Feed",
+    type: "Writing / Telegram",
+    year: "Ongoing",
+    url: "/junkfeed",
+  },
+];
+
+const capabilities = [
+  {
+    number: "01",
+    title: "Product Engineering",
+    items: ["TypeScript", "React", "Next.js", "Astro", "Product UI"],
+  },
+  {
+    number: "02",
+    title: "Systems & Backend",
+    items: ["Node.js", "Python", "Rust", "PostgreSQL", "API Design"],
+  },
+  {
+    number: "03",
+    title: "Cloud & Delivery",
+    items: ["Cloudflare", "AWS", "Supabase", "Docker", "CI/CD"],
+  },
+  {
+    number: "04",
+    title: "Games & Experiments",
+    items: ["Unity", "SteamWorks", "Three.js", "Prototyping", "AI"],
+  },
+];
 ---
 
 <!doctype html>
-<html lang="en" class="h-full motion-safe:scroll-smooth" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="generator" content={generator} />
-
-    <title>Donato Molino</title>
+    <title>Donato Molino — Product Engineer</title>
     <meta name="description" content={description} />
-    <ClientRouter />
-
-    <!-- social media -->
-    <meta property="og:title" content="Donato Molino" />
+    <link rel="canonical" href={site} />
+    <meta property="og:title" content="Donato Molino — Product Engineer" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={socialImage} />
     <meta property="og:url" content={site} />
     <meta name="twitter:card" content="summary_large_image" />
-
-    <!-- initialize theme -->
-    <script is:inline>
-      const themeSaved = localStorage.getItem("theme");
-
-      if (themeSaved) {
-        document.documentElement.dataset.theme = themeSaved;
-      } else {
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)",
-        ).matches;
-        document.documentElement.dataset.theme = prefersDark ? "dark" : "light";
-      }
-
-      window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", (event) => {
-          if (!localStorage.getItem("theme")) {
-            document.documentElement.dataset.theme = event.matches
-              ? "dark"
-              : "light";
-          }
-        });
-    </script>
   </head>
-  <body
-    class="page-doodle h-full overflow-x-hidden bg-default text-default text-base selection:bg-secondary selection:text-white"
-  >
-    <Header />
-    <Splash />
-    <div class="relative space-y-24 px-8 py-32">
-      <Doodles />
-      <Showcase />
-      <Intro />
-      <!--
-      <Features />
-      -->
-      <Compatibility />
-    </div>
-    <Footer />
+  <body class="home-page">
+    <header class="home-header">
+      <a class="home-brand" href="#top" aria-label="Donato Molino, back to top">
+        <span class="signal-square" aria-hidden="true"></span>
+        <span>Donato Molino</span>
+      </a>
+      <p class="home-role">Product Engineer<br />Based in Italy</p>
+      <nav aria-label="Main navigation">
+        <a href="#work">Work</a>
+        <a href="/manifesto">Manifesto</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="home-hero" aria-labelledby="home-title">
+        <p class="kicker">Independent builder · Full-stack developer</p>
+        <h1 id="home-title">
+          <span>Donato</span>
+          <span class="red">Molino</span>
+        </h1>
+        <p class="hero-copy">
+          I turn ambitious ideas into products that feel simple, useful and
+          inevitable.
+        </p>
+        <div class="hero-meta" aria-label="Professional focus">
+          <span>Digital Products</span>
+          <span>Systems</span>
+          <span>Experiments</span>
+        </div>
+        <a class="scroll-cue" href="#work">Selected work ↓</a>
+      </section>
+
+      <section class="work-section" id="work" aria-labelledby="work-title">
+        <header class="section-header">
+          <p>01 / Selected work</p>
+          <h2 id="work-title">Things made<br />to exist.</h2>
+          <p class="section-count">06 projects</p>
+        </header>
+
+        <div class="project-grid">
+          {
+            projects.map((project, index) => (
+              <a
+                class:list={["project-card", !project.image && "project-card--type"]}
+                href={project.url}
+                target={project.url.startsWith("http") ? "_blank" : undefined}
+                rel={project.url.startsWith("http") ? "noreferrer" : undefined}
+              >
+                <div class="project-visual">
+                  {project.image ? (
+                    <Image src={project.image} alt="" widths={[640, 960]} sizes="(min-width: 800px) 46vw, 100vw" />
+                  ) : (
+                    <span aria-hidden="true">JF</span>
+                  )}
+                  <span class="project-index">{(index + 1).toString().padStart(2, "0")}</span>
+                </div>
+                <div class="project-info">
+                  <h3>{project.title}</h3>
+                  <p>{project.type}</p>
+                  <p>{project.year}</p>
+                  <span aria-hidden="true">↗</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="manifesto-callout" aria-labelledby="manifesto-heading">
+        <div class="manifesto-label">02 / Principles</div>
+        <h2 id="manifesto-heading">
+          The Donnie<br />Manifesto
+        </h2>
+        <p>We are here to build what should exist.</p>
+        <a href="/manifesto">Read the ten principles <span aria-hidden="true">→</span></a>
+      </section>
+
+      <section class="capabilities-section" id="capabilities" aria-labelledby="capabilities-title">
+        <header class="section-header section-header--compact">
+          <p>03 / Capabilities</p>
+          <h2 id="capabilities-title">The stack changes.<br />The standard doesn’t.</h2>
+        </header>
+        <div class="capabilities-grid">
+          {
+            capabilities.map((capability) => (
+              <article>
+                <span>{capability.number}</span>
+                <h3>{capability.title}</h3>
+                <ul>
+                  {capability.items.map((item) => <li>{item}</li>)}
+                </ul>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="about-section" id="about" aria-labelledby="about-title">
+        <p class="about-label">04 / About</p>
+        <h2 id="about-title">
+          Code is a tool.<br />The product is the point.
+        </h2>
+        <div class="about-copy">
+          <p>
+            I’m a full-stack developer focused on turning ideas into real
+            products through sound architecture, open collaboration and close
+            attention to the people who use them.
+          </p>
+          <p>
+            From aerospace R&amp;D prototypes to multi-tenant commerce platforms
+            and independent games, I take work from the first sketch to a
+            dependable release.
+          </p>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact" aria-labelledby="contact-title">
+        <p>05 / Start something</p>
+        <h2 id="contact-title">Have an idea<br />worth building?</h2>
+        <a class="contact-link" href="mailto:donatomolino@europe.com">
+          Let’s talk <span aria-hidden="true">↗</span>
+        </a>
+      </section>
+    </main>
+
+    <footer class="home-footer">
+      <p>© {new Date().getFullYear()} Donato Molino</p>
+      <div class="social-links">
+        <a href="https://github.com/donatomolino" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/donatomolino-full-stack/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://x.com/donatomolinox" target="_blank" rel="noreferrer">X</a>
+        <a href="https://t.me/dork382/" target="_blank" rel="noreferrer">Telegram</a>
+      </div>
+      <a href="#top">Back to top ↑</a>
+    </footer>
   </body>
 </html>
