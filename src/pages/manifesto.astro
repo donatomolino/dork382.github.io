@@ -1,0 +1,148 @@
+---
+import "@fontsource-variable/inter";
+import "~/styles/manifesto.css";
+
+const principles = [
+  {
+    title: "Technology exists to improve human life.",
+    statement: "Software is not the goal. People are.",
+    body: "Technology should make life simpler, better and more powerful. The best tools amplify human creativity, intelligence and ambition.",
+  },
+  {
+    title: "UX is the product.",
+    statement: "If you have to explain how to use it, keep designing.",
+    body: "Users should not need courses, manuals or training to understand a product. Complexity belongs behind the interface. Great technology makes difficult things feel obvious.",
+  },
+  {
+    title: "The distance between an idea and reality should approach zero.",
+    statement: "If you can imagine it, you should be able to build it.",
+    body: "Technology should remove the barriers between thought and creation, giving more people the power to turn ideas into real things.",
+  },
+  {
+    title: "Build more. Talk less.",
+    statement: "Make it exist first. Make it good after.",
+    body: "A rough thing that exists is worth more than a perfect idea that never leaves your head. Build it, put it into the world, learn from reality, then make it better.",
+  },
+  {
+    title: "Tools are temporary. Principles are not.",
+    statement: "Never fall in love with the tool. Fall in love with what you are building.",
+    body: "Languages, frameworks, platforms and AI models will change. Use whatever helps you build the best product today, and be ready to abandon it tomorrow.",
+  },
+  {
+    title: "Technology should give people control.",
+    statement: "The user should own the technology, not be owned by it.",
+    body: "People should control their data, their work and their choices. Convenience should never require giving up freedom or autonomy.",
+  },
+  {
+    title: "Technology should outlive platforms.",
+    statement: "Open beats trapped.",
+    body: "Products and companies come and go. What people create should endure. Build around portability, interoperability and open standards whenever possible.",
+  },
+  {
+    title: "Reinvention is overrated.",
+    statement: "Improve it or destroy it.",
+    body: "Not every idea needs to be new. Take what already works and make it dramatically simpler, faster or better. And when the old model cannot be improved anymore, replace it completely.",
+  },
+  {
+    title: "Craft still matters.",
+    statement: "Building is getting cheaper. Taste is not.",
+    body: "Anyone can add features. Great products are built through judgment, restraint and attention to detail. Knowing what to remove is often more important than knowing what to add.",
+  },
+  {
+    title: "Technology is humanity refusing its limits.",
+    statement: "We turned rocks into thinking machines.",
+    paragraphs: [
+      "We took materials from the Earth, learned to control electricity, turned silicon into chips and built machines capable of reasoning with us.",
+      "Every generation inherits limits and decides which ones to break.",
+    ],
+    closing: "The future is not something that happens to us. We build it.",
+  },
+];
+
+const description =
+  "The Donnie Builder Manifesto — ten principles for building technology that is simple, open, human and worth making.";
+const socialImage = new URL("/manifesto-og.png", Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>The Donnie Builder Manifesto — Donato Molino</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL("/manifesto", Astro.site)} />
+    <meta property="og:title" content="The Donnie Builder Manifesto" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:url" content={new URL("/manifesto", Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <header class="masthead">
+      <a class="wordmark" href="/" aria-label="Back to Donato Molino home">
+        <span class="mark" aria-hidden="true"></span>
+        <span>Donato Molino</span>
+      </a>
+      <div class="edition" aria-label="Document details">
+        <span>Manifesto</span>
+        <span>Edition 01</span>
+        <span>2026</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="manifesto-title">
+        <p class="eyebrow">Ideas for people who make things</p>
+        <h1 id="manifesto-title">
+          <span>The Donnie</span>
+          <span>Builder</span>
+          <span class="accent">Manifesto</span>
+        </h1>
+        <p class="hero-statement">We are here to build what should exist.</p>
+        <div class="hero-index" aria-hidden="true">
+          <span>10</span>
+          <span>Principles</span>
+        </div>
+      </section>
+
+      <div class="principles">
+        {
+          principles.map((principle, index) => (
+            <article class="principle" id={`principle-${index + 1}`}>
+              <div class="principle-number" aria-hidden="true">
+                {(index + 1).toString().padStart(2, "0")}
+              </div>
+              <div class="principle-copy">
+                <h2>{principle.title}</h2>
+                <p class="statement">{principle.statement}</p>
+                {principle.body && <p class="body-copy">{principle.body}</p>}
+                {principle.paragraphs?.map((paragraph) => (
+                  <p class="body-copy">{paragraph}</p>
+                ))}
+                {principle.closing && <p class="closing">{principle.closing}</p>}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <section class="finale" aria-label="Closing statement">
+        <div class="finale-mark" aria-hidden="true"></div>
+        <p>
+          <span>Build what should exist.</span>
+          <span>Make it simple.</span>
+          <span>Make it matter.</span>
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <a href="/">donatomolino.it</a>
+      <span>The Donnie Builder Manifesto</span>
+      <a href="#manifesto-title">Back to top ↑</a>
+    </footer>
+  </body>
+</html>
