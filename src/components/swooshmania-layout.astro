@@ -1,0 +1,49 @@
+---
+import "@fontsource-variable/inter";
+import "~/styles/swooshmania.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const { generator, site } = Astro;
+const canonical = new URL(Astro.url.pathname, site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="generator" content={generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body class="swoosh-page">
+    <header class="swoosh-header">
+      <a class="swoosh-brand" href="/swooshmania/">
+        <span class="swoosh-mark" aria-hidden="true"></span>
+        <span>SwooshMania</span>
+      </a>
+      <nav aria-label="SwooshMania navigation">
+        <a href="/swooshmania/">Overview</a>
+        <a href="/swooshmania/leaderboards">Leaderboards</a>
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer class="swoosh-footer">
+      <p>© {new Date().getFullYear()} Donato Molino</p>
+      <a href="/">Back to portfolio <span aria-hidden="true">↗</span></a>
+    </footer>
+  </body>
+</html>
