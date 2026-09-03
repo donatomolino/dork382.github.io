@@ -59,6 +59,8 @@ const description = "All current leaderboards from the SwooshMania demo.";
     }
 
     const API_URL = "https://swooshmania.dork3802.workers.dev/leaderboards/all";
+    const ENTRIES_PER_PAGE = 10;
+    const HIDDEN_LEADERBOARDS = new Set(["sanddemo1test"]);
     const status = document.querySelector<HTMLElement>("#leaderboards-status");
 
     function text(value: unknown, fallback: string): string {
@@ -79,6 +81,24 @@ const description = "All current leaderboards from the SwooshMania demo.";
       const seconds = Math.floor((milliseconds % 60000) / 1000);
       const ms = Math.floor(milliseconds % 1000);
       return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${String(ms).padStart(3, "0")}`;
+    }
+
+    function demoLabel(value: unknown, fallbackIndex: number): string {
+      const name = text(value, `Demo ${fallbackIndex + 1}`);
+      const match = name.match(/^Level\s*Demo\s*(\d+)$/i);
+      if (match) return `Demo ${match[1]}`;
+      return name
+        .replace(/^Level\s*/i, "")
+        .replace(/^Demo\s*(\d+)$/i, "Demo $1");
+    }
+
+    function isLevelDemo(value: unknown): boolean {
+      return /^Level\s*Demo\s*\d+$/i.test(text(value, ""));
+    }
+
+    function displayScore(entry: RawEntry, timed: boolean): string {
+      if (timed) return fallbackScore(entry);
+      return text(entry.displayValue, fallbackScore(entry));
     }
 
     function makeAvatar(entry: RawEntry, playerName: string): HTMLElement {
@@ -105,7 +125,7 @@ const description = "All current leaderboards from the SwooshMania demo.";
       const card = document.createElement("article");
       card.className = "leaderboard-card";
       const title = document.createElement("h3");
-      title.textContent = text(board.name, `Level ${boardIndex + 1}`);
+      title.textContent = demoLabel(board.name, boardIndex);
       card.append(title);
 
       const entries = Array.isArray(board.entries)
@@ -124,27 +144,76 @@ const description = "All current leaderboards from the SwooshMania demo.";
 
       const list = document.createElement("ol");
       list.className = "player-list";
-      entries.forEach((entry, index) => {
-        const position = rank(entry.rank, index + 1);
-        const playerName = text(entry.name, "Anonymous player");
-        const item = document.createElement("li");
-        item.className = "player-row";
-        if (position === 1) item.classList.add("player-row--first");
+      const timed = isLevelDemo(board.name);
+      let currentPage = 0;
 
-        const rankLabel = document.createElement("span");
-        rankLabel.className = "player-rank";
-        rankLabel.textContent = `#${position}`;
-        const name = document.createElement("span");
-        name.className = "player-name";
-        name.textContent = playerName;
-        const score = document.createElement("time");
-        score.className = "player-score";
-        score.textContent = text(entry.displayValue, fallbackScore(entry));
+      const renderPage = (): void => {
+        list.replaceChildren();
+        const firstEntry = currentPage * ENTRIES_PER_PAGE;
+        entries
+          .slice(firstEntry, firstEntry + ENTRIES_PER_PAGE)
+          .forEach((entry, index) => {
+            const position = rank(entry.rank, firstEntry + index + 1);
+            const playerName = text(entry.name, "Anonymous player");
+            const item = document.createElement("li");
+            item.className = "player-row";
+            if (position <= 3) {
+              item.classList.add(`player-row--place-${position}`);
+            }
 
-        item.append(rankLabel, makeAvatar(entry, playerName), name, score);
-        list.append(item);
-      });
+            const rankLabel = document.createElement("span");
+            rankLabel.className = "player-rank";
+            rankLabel.textContent = `#${position}`;
+            const name = document.createElement("span");
+            name.className = "player-name";
+            name.textContent = playerName;
+            const score = document.createElement("time");
+            score.className = "player-score";
+            score.textContent = displayScore(entry, timed);
+
+            item.append(rankLabel, makeAvatar(entry, playerName), name, score);
+            list.append(item);
+          });
+      };
+
+      renderPage();
       card.append(list);
+
+      const pageCount = Math.ceil(entries.length / ENTRIES_PER_PAGE);
+      if (pageCount > 1) {
+        const pagination = document.createElement("nav");
+        pagination.className = "leaderboard-pagination";
+        pagination.setAttribute("aria-label", `Pages for ${title.textContent}`);
+        const previous = document.createElement("button");
+        previous.type = "button";
+        previous.textContent = "Previous";
+        const page = document.createElement("span");
+        const next = document.createElement("button");
+        next.type = "button";
+        next.textContent = "Next";
+
+        const updatePagination = (): void => {
+          page.textContent = `Page ${currentPage + 1} of ${pageCount}`;
+          previous.disabled = currentPage === 0;
+          next.disabled = currentPage === pageCount - 1;
+        };
+
+        previous.addEventListener("click", () => {
+          if (currentPage === 0) return;
+          currentPage -= 1;
+          renderPage();
+          updatePagination();
+        });
+        next.addEventListener("click", () => {
+          if (currentPage === pageCount - 1) return;
+          currentPage += 1;
+          renderPage();
+          updatePagination();
+        });
+        updatePagination();
+        pagination.append(previous, page, next);
+        card.append(pagination);
+      }
       return card;
     }
 
@@ -191,7 +260,14 @@ const description = "All current leaderboards from the SwooshMania demo.";
         }
         data.leaderboards.forEach((board, index) => {
           if (board && typeof board === "object") {
-            grid.append(makeCard(board as RawLeaderboard, index));
+            const leaderboard = board as RawLeaderboard;
+            const boardName = text(leaderboard.name, "").toLowerCase();
+            const entries = Array.isArray(leaderboard.entries)
+              ? leaderboard.entries
+              : [];
+            if (!HIDDEN_LEADERBOARDS.has(boardName) && entries.length > 0) {
+              grid.append(makeCard(leaderboard, index));
+            }
           }
         });
         if (!grid.childElementCount) throw new Error("No valid leaderboards");
