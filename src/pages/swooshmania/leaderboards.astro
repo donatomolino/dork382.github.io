@@ -1,0 +1,207 @@
+---
+import SwooshmaniaLayout from "~/components/swooshmania-layout.astro";
+
+const description = "All current leaderboards from the SwooshMania demo.";
+---
+
+<SwooshmaniaLayout title="Leaderboards — SwooshMania" description={description}>
+  <main id="main-content" class="leaderboards-main">
+    <header class="leaderboards-heading">
+      <p class="swoosh-eyebrow">Demo / Live results</p>
+      <h1>Leaderboards</h1>
+      <p>Every level. Every record. Updated directly from SwooshMania.</p>
+    </header>
+
+    <section aria-labelledby="leaderboards-status-title">
+      <h2 id="leaderboards-status-title" class="visually-hidden">
+        Leaderboard results
+      </h2>
+      <div id="leaderboards-status" role="status" aria-live="polite">
+        <div
+          class="leaderboards-grid"
+          aria-label="Loading leaderboards"
+          aria-busy="true"
+        >
+          {
+            Array.from({ length: 4 }, () => (
+              <div
+                class="leaderboard-card leaderboard-skeleton"
+                aria-hidden="true"
+              >
+                <span class="skeleton-title" />
+                <span class="skeleton-row" />
+                <span class="skeleton-row" />
+                <span class="skeleton-row" />
+              </div>
+            ))
+          }
+        </div>
+        <p class="loading-label">Loading live records…</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    interface RawEntry {
+      rank?: unknown;
+      name?: unknown;
+      avatar?: unknown;
+      avatarMedium?: unknown;
+      displayValue?: unknown;
+      score?: unknown;
+      timeMs?: unknown;
+    }
+
+    interface RawLeaderboard {
+      id?: unknown;
+      name?: unknown;
+      entries?: unknown;
+    }
+
+    const API_URL = "https://swooshmania.dork3802.workers.dev/leaderboards/all";
+    const status = document.querySelector<HTMLElement>("#leaderboards-status");
+
+    function text(value: unknown, fallback: string): string {
+      return typeof value === "string" && value.trim()
+        ? value.trim()
+        : fallback;
+    }
+
+    function rank(value: unknown, fallback: number): number {
+      const parsed = typeof value === "number" ? value : Number(value);
+      return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+    }
+
+    function fallbackScore(entry: RawEntry): string {
+      const milliseconds = Number(entry.timeMs ?? entry.score);
+      if (!Number.isFinite(milliseconds) || milliseconds < 0) return "—";
+      const minutes = Math.floor(milliseconds / 60000);
+      const seconds = Math.floor((milliseconds % 60000) / 1000);
+      const ms = Math.floor(milliseconds % 1000);
+      return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${String(ms).padStart(3, "0")}`;
+    }
+
+    function makeAvatar(entry: RawEntry, playerName: string): HTMLElement {
+      const wrapper = document.createElement("span");
+      wrapper.className = "player-avatar";
+      wrapper.setAttribute("aria-hidden", "true");
+      wrapper.textContent = playerName.slice(0, 1).toUpperCase() || "?";
+
+      const url = text(entry.avatarMedium, text(entry.avatar, ""));
+      if (!url) return wrapper;
+
+      const image = document.createElement("img");
+      image.src = url;
+      image.alt = "";
+      image.loading = "lazy";
+      image.decoding = "async";
+      image.addEventListener("load", () => wrapper.classList.add("has-image"));
+      image.addEventListener("error", () => image.remove());
+      wrapper.append(image);
+      return wrapper;
+    }
+
+    function makeCard(board: RawLeaderboard, boardIndex: number): HTMLElement {
+      const card = document.createElement("article");
+      card.className = "leaderboard-card";
+      const title = document.createElement("h3");
+      title.textContent = text(board.name, `Level ${boardIndex + 1}`);
+      card.append(title);
+
+      const entries = Array.isArray(board.entries)
+        ? (board.entries as RawEntry[])
+            .filter((entry) => entry && typeof entry === "object")
+            .sort((a, b) => rank(a.rank, Infinity) - rank(b.rank, Infinity))
+        : [];
+
+      if (!entries.length) {
+        const empty = document.createElement("p");
+        empty.className = "leaderboard-empty";
+        empty.textContent = "No records yet";
+        card.append(empty);
+        return card;
+      }
+
+      const list = document.createElement("ol");
+      list.className = "player-list";
+      entries.forEach((entry, index) => {
+        const position = rank(entry.rank, index + 1);
+        const playerName = text(entry.name, "Anonymous player");
+        const item = document.createElement("li");
+        item.className = "player-row";
+        if (position === 1) item.classList.add("player-row--first");
+
+        const rankLabel = document.createElement("span");
+        rankLabel.className = "player-rank";
+        rankLabel.textContent = `#${position}`;
+        const name = document.createElement("span");
+        name.className = "player-name";
+        name.textContent = playerName;
+        const score = document.createElement("time");
+        score.className = "player-score";
+        score.textContent = text(entry.displayValue, fallbackScore(entry));
+
+        item.append(rankLabel, makeAvatar(entry, playerName), name, score);
+        list.append(item);
+      });
+      card.append(list);
+      return card;
+    }
+
+    function renderError(): void {
+      if (!status) return;
+      status.replaceChildren();
+      const message = document.createElement("div");
+      message.className = "leaderboards-message leaderboards-error";
+      const title = document.createElement("h3");
+      title.textContent = "The records could not be loaded.";
+      const copy = document.createElement("p");
+      copy.textContent = "Check your connection and try again in a moment.";
+      const retry = document.createElement("button");
+      retry.className = "swoosh-button";
+      retry.type = "button";
+      retry.textContent = "Try again";
+      retry.addEventListener("click", loadLeaderboards);
+      message.append(title, copy, retry);
+      status.append(message);
+    }
+
+    async function loadLeaderboards(): Promise<void> {
+      try {
+        const response = await fetch(API_URL, {
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const payload: unknown = await response.json();
+        if (!payload || typeof payload !== "object")
+          throw new Error("Invalid response");
+        const data = payload as { success?: unknown; leaderboards?: unknown };
+        if (data.success === false || !Array.isArray(data.leaderboards)) {
+          throw new Error("Invalid leaderboard response");
+        }
+        if (!status) return;
+        const grid = document.createElement("div");
+        grid.className = "leaderboards-grid";
+        if (!data.leaderboards.length) {
+          const message = document.createElement("div");
+          message.className = "leaderboards-message";
+          message.textContent = "No leaderboards are available yet.";
+          status.replaceChildren(message);
+          return;
+        }
+        data.leaderboards.forEach((board, index) => {
+          if (board && typeof board === "object") {
+            grid.append(makeCard(board as RawLeaderboard, index));
+          }
+        });
+        if (!grid.childElementCount) throw new Error("No valid leaderboards");
+        status.replaceChildren(grid);
+      } catch (error) {
+        console.error("SwooshMania leaderboards fetch failed:", error);
+        renderError();
+      }
+    }
+
+    loadLeaderboards();
+  </script>
+</SwooshmaniaLayout>

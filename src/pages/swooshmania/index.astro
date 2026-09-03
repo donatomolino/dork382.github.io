@@ -1,0 +1,24 @@
+---
+import SwooshmaniaLayout from "~/components/swooshmania-layout.astro";
+
+const description =
+  "SwooshMania is a fast, competitive game where every millisecond counts.";
+---
+
+<SwooshmaniaLayout
+  title="SwooshMania — Donato Molino"
+  description={description}
+>
+  <main id="main-content">
+    <section class="swoosh-hero" aria-labelledby="swoosh-title">
+      <p class="swoosh-eyebrow">Game / Product · Demo</p>
+      <h1 id="swoosh-title">Swoosh<span>Mania</span></h1>
+      <p class="swoosh-intro">
+        Move fast. Find the cleanest line. Race the world, one level at a time.
+      </p>
+      <a class="swoosh-cta" href="/swooshmania/leaderboards">
+        View leaderboards <span aria-hidden="true">→</span>
+      </a>
+    </section>
+  </main>
+</SwooshmaniaLayout>
