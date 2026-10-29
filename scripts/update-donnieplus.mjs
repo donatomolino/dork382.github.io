@@ -3,6 +3,7 @@ import { resolve, join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { patchNavigation } from './patch-donnieplus-navigation.mjs';
 import { patchAccountOnly } from './patch-donnieplus-account.mjs';
+import { patchLogin } from './patch-donnieplus-login.mjs';
 
 const upstream = resolve(process.argv[2] || '');
 if (!process.argv[2]) throw new Error('Usage: node scripts/update-donnieplus.mjs /path/to/leotv-web');
@@ -15,7 +16,7 @@ const polyfill = html.match(/id="vite-legacy-polyfill" src="\.\/assets\/([^"]+)"
 const legacy = html.match(/id="vite-legacy-entry" data-src="\.\/assets\/([^"]+)"/)[1];
 const commit = execFileSync('git', ['-C', upstream, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const version = JSON.parse(readFileSync(join(upstream, 'version.json'), 'utf8')).build;
-const revision = version + '-nav1';
+const revision = version + '-nav2';
 const suffix = '-dp' + revision;
 const renames = Object.fromEntries(readdirSync(join(upstream, 'assets')).map(name => [name, name.replace(/(\.[^.]+)$/, suffix + '$1')]));
 rmSync(join(destination, 'assets'), { recursive: true, force: true });
@@ -32,6 +33,7 @@ for (const name of readdirSync(join(destination, 'assets'))) {
     source = source.replaceAll('`https://leoz1000.github.io/leotv-web/`', '(location.origin+`/donnieplus/`)')
       .replaceAll('"https://leoz1000.github.io/leotv-web/"', '(location.origin+"/donnieplus/")');
   }
+  if (/^Account-/.test(name)) source = patchLogin(source, /^Account-legacy-/.test(name));
   source = patchAccountOnly(source, name, main, legacy);
   if (name === main || name === legacy) source = patchNavigation(source, name === legacy);
   for (const [oldName, newName] of Object.entries(renames)) source = source.replaceAll(oldName, newName);
