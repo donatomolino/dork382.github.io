@@ -1,0 +1,36 @@
+{
+  "name": "DonniePlus",
+  "short_name": "DonniePlus",
+  "description": "Il tuo spazio per film, serie e storie da scoprire.",
+  "lang": "it",
+  "id": "/donnieplus/",
+  "start_url": "/donnieplus/",
+  "scope": "/donnieplus/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#050507",
+  "theme_color": "#050507",
+  "categories": [
+    "entertainment"
+  ],
+  "icons": [
+    {
+      "src": "icon.png?v=4",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png?v=4",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png?v=4",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
