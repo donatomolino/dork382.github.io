@@ -45,7 +45,7 @@ writeFileSync(join(destination, 'index.html'), `<!doctype html>
 <script data-cfasync="false">${bootstrap}</script>
 <link rel="stylesheet" href="./assets/${renames[css]}"><link rel="stylesheet" href="./donnieplus-theme.css?v=${version}"><link rel="stylesheet" href="./donnieplus-settings.css?v=${version}">
 ${preloads.map(file => `<link rel="modulepreload" crossorigin href="./assets/${renames[file]}">`).join('\n')}
-<script data-cfasync="false" type="module" src="./donnieplus-settings.js?v=${version}"></script>
+<script data-cfasync="false" type="module" src="./donnieplus-settings.js?v=${version}-ui2"></script>
 <script data-cfasync="false" type="module" crossorigin src="./assets/${renames[main]}"></script>
 </head><body><div id="root"></div>
 <script data-cfasync="false" nomodule crossorigin id="vite-legacy-polyfill" src="./assets/${renames[polyfill]}"></script>
@@ -57,16 +57,16 @@ Object.assign(manifest, { name: 'DonniePlus', short_name: 'DonniePlus', id: '/do
 writeFileSync(join(destination, 'manifest.webmanifest'), JSON.stringify(manifest, null, 2) + '\n');
 const settingsPath = join(destination, 'donnieplus-settings.js');
 writeFileSync(settingsPath, readFileSync(settingsPath, 'utf8').replace(/(donnieplus-(?:preferences\.js|wordmark\.svg)\?v=)[^'"]+/g, '$1' + version));
-const custom = [`donnieplus-theme.css?v=${version}`, `donnieplus-settings.css?v=${version}`, `donnieplus-settings.js?v=${version}`, `donnieplus-preferences.js?v=${version}`, `donnieplus-wordmark.svg?v=${version}`];
+const custom = [`donnieplus-theme.css?v=${version}`, `donnieplus-settings.css?v=${version}`, `donnieplus-settings.js?v=${version}-ui2`, `donnieplus-preferences.js?v=${version}`, `donnieplus-wordmark.svg?v=${version}`];
 writeFileSync(join(destination, 'precache.json'), JSON.stringify({ files: [...Object.values(renames).map(name => 'assets/' + name), ...custom] }));
 let sw = readFileSync(join(upstream, 'sw.js'), 'utf8').replace(/const CACHE = '[^']+';/, `const CACHE = 'donnieplus-pages-${version}-shell2';`).replaceAll('LeoTv', 'DonniePlus');
 sw = sw.replace('keys.filter((k) => k !== CACHE)', "keys.filter((k) => k !== CACHE && k.startsWith('donnieplus-pages-'))");
 sw = sw.replace("path.includes('/assets/')", "(path.includes('/assets/') || /\\/donnieplus-(settings|preferences|theme|wordmark)[^/]*\\.(css|js|svg)$/.test(path))");
 // Cloudflare caches the bare entry URL for four hours. Fetch a build-specific
 // shell URL both at install and navigation so an older HTML cannot replace it.
-sw = sw.replace("fetch(f, { cache: f === './' ? 'no-store' : 'default' })", "fetch(f === './' ? './?dp-build=" + version + "' : f, { cache: f === './' ? 'no-store' : 'default' })");
+sw = sw.replace("fetch(f, { cache: f === './' ? 'no-store' : 'default' })", "fetch(f === './' ? './?dp-build=" + version + "-ui2' : f, { cache: f === './' ? 'no-store' : 'default' })");
 sw = sw.replace('self.registration.navigationPreload.enable()', 'self.registration.navigationPreload.disable()');
-sw = sw.replace('Promise.resolve(preloaded).then((early) => early || fetch(request))', "Promise.resolve().then(() => { const fresh = new URL(request.url); fresh.searchParams.set('dp-build', '" + version + "'); return fetch(fresh, { cache: 'no-store', credentials: 'same-origin' }); })");
+sw = sw.replace('Promise.resolve(preloaded).then((early) => early || fetch(request))', "Promise.resolve().then(() => { const fresh = new URL(request.url); fresh.searchParams.set('dp-build', '" + version + "-ui2'); return fetch(fresh, { cache: 'no-store', credentials: 'same-origin' }); })");
 writeFileSync(join(destination, 'sw.js'), sw);
 writeFileSync(join(destination, 'upstream.json'), JSON.stringify({ repository: 'Leoz1000/leotv-web', commit, build: version }, null, 2) + '\n');
 console.log(`Updated DonniePlus from LeoTV ${version} (${commit}), ${Object.keys(renames).length} assets.`);
