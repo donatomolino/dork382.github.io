@@ -1,25 +1,37 @@
 # DonniePlus on GitHub Pages
 
-URL: https://donatomolino.it/donnieplus/
+Live URL: https://donatomolino.it/donnieplus/
 
-`public/donnieplus/` contains the DonniePlus static frontend with the original LeoTV Liquid Glass CSS. Astro copies it to `dist/donnieplus/` without changing portfolio routes or requiring a server adapter. The app has a separate PWA scope and cache.
+Astro copies `public/donnieplus/` unchanged into the static build. The portfolio routes remain independent. The existing GitHub Pages workflow builds and deploys pushes to `master`.
 
-The client calls `https://macleo.tail1ed5a3.ts.net` directly. GitHub Pages does not run the Sites Worker proxy. Existing LeoTV account login and profile selection supply `X-Account-Token`, `X-Profile`, and `X-Profile-Token`. No access key or password is included. `/api/access` is not called.
+## Upstream updates
 
-## Backend prerequisite — blocking publication
+Current upstream: LeoTV build `20261029160502`, commit `5c251237a0d3e9032a276cd6df00f30379a75ef3` from `Leoz1000/leotv-web`. See `public/donnieplus/upstream.json`.
 
-At preparation time, a GET to `/api/health` with `Origin: https://donatomolino.it` returned HTTP 200 **without** `Access-Control-Allow-Origin`. The static frontend therefore cannot use this backend from the intended domain yet.
+To import another checked-out upstream version:
 
-Before merging, the backend owner must:
+```sh
+node scripts/update-donnieplus.mjs /absolute/path/to/leotv-web
+node --test tests/donnieplus-preferences.test.mjs
+npm run build
+```
 
-- Permit the exact origin `https://donatomolino.it` on API, signed video and artwork responses, including errors.
-- Handle browser OPTIONS preflights for the methods used by the app (GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS).
-- Allow request headers `Content-Type`, `X-Account-Token`, `X-Profile`, `X-Profile-Token`, `Range`, and `If-Range`.
-- Expose `Content-Range`, `Accept-Ranges`, and `Content-Length`; preserve 206 responses and streaming.
-- Keep account authentication and signed media URL validation enabled. No server access key is needed.
+The importer copies the complete modern and legacy bundles, preserves the original Liquid Glass CSS, rebrands visible text, removes access-key requests, renames bundled assets, and rebuilds the entry page and precache. Review its transformations whenever upstream changes authentication or entry-point structure. It deliberately excludes upstream APK downloads.
 
-Test `/api/health`, account login, profile selection and video playback from the real domain before calling the migration complete. Existing sessions on the ChatGPT Site cannot transfer across origins, so visitors log in again.
+## Authentication and backend
+
+The static client connects directly to `https://macleo.tail1ed5a3.ts.net`. Account login and profile selection supply `X-Account-Token`, `X-Profile` and `X-Profile-Token`. No server key or password is embedded. `/api/access` is never called and `X-LeoTv-Key` is never sent.
+
+The backend must allow origin `https://donatomolino.it`, handle OPTIONS preflights, accept account/profile headers and Range, and expose Content-Range, Accept-Ranges and Content-Length. Preserve signed URLs, streaming and 206 responses. CORS for health and login preflight was verified on the live domain during the original deployment. Full login and video playback require an authenticated account.
+
+## Personalization
+
+`donnieplus-settings.js` adds the DonniePlus login wordmark and an “Aspetto e preferenze” entry in the login and settings screens. The separate, keyboard-accessible dialog offers six themes (original Liquid Glass, Oceano, Minimal, Cinema, Alba, Neon) and 23 device-local preferences covering glass effects, layout, readability, motion, content labels and video defaults.
+
+Preferences are stored in `donnieplus.preferences.v1`, validated and clamped when imported, and synchronized across tabs. Exports contain only these preferences. Reset preserves account data. Cache clearing and service-worker activation touch only `donnieplus-pages-` caches, preserving portfolio caches and downloaded media. iOS can retain system control over video volume.
+
+Custom styles layer over upstream CSS; the default remains Liquid Glass. Cloudflare Rocket Loader is disabled for app scripts through `data-cfasync="false"`.
 
 ## Validation
 
-Run `npm run build`. Check that `dist/donnieplus/index.html` and all referenced assets exist. The GitHub Pages workflow publishes the Astro build on pushes to `master`. This integration is a snapshot; changes to the upstream LeoTV build must be imported deliberately.
+The Node tests cover malformed storage, import validation and ranges, precache completeness, account-only authentication in both bundles and local asset references. Also verify the login wordmark, theme persistence, tabs and settings controls in a browser. After a deployment, confirm the GitHub Pages workflow succeeds and check the live entry page.
