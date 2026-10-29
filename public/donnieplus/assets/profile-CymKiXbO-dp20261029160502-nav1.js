@@ -1,1 +1,0 @@
-import{Xt as e}from"./Focusable-DqqnfaUl-dp20261029160502-nav1.js";function t(e=new Date){let t=e=>String(e).padStart(2,`0`);return`${e.getFullYear()}-${t(e.getMonth()+1)}-${t(e.getDate())}`}var n=e(),r=(0,n.createContext)(null),i=()=>(0,n.useContext)(r);export{i as n,t as r,r as t};
