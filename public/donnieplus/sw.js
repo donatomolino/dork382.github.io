@@ -6,7 +6,7 @@
 //   installs (precache.json lists it), so every screen opens offline;
 // - api, video and version checks: never touched.
 // It also shows the "è pronto" notices of downloads (push, below).
-const CACHE = 'donnieplus-pages-app-1';
+const CACHE = 'donnieplus-pages-20261029160502';
 const MAX_FILES = 60;
 // the page, its icon and every file of the current build
 const SHELL = ['./', 'icon.png?v=3', 'manifest.webmanifest'];
@@ -45,7 +45,7 @@ self.addEventListener('message', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE && k.startsWith('donnieplus-pages-')).map((k) => caches.delete(k))))
       // the page request starts while the worker itself is waking up
       .then(() => (self.registration.navigationPreload ? self.registration.navigationPreload.enable() : null))
       .then(() => self.clients.claim()),
@@ -120,7 +120,7 @@ self.addEventListener('fetch', (event) => {
   if (path.endsWith('.apk') || /\/apk\/?$/.test(path)) return;
   if (request.mode === 'navigate') {
     event.respondWith(fromNetworkFirst(request, url.searchParams.has('upd'), event.preloadResponse));
-  } else if (path.includes('/assets/')) {
+  } else if ((path.includes('/assets/') || /\/donnieplus-(settings|preferences|theme|wordmark)[^/]*\.(css|js|svg)$/.test(path))) {
     event.respondWith(fromCacheFirst(request));
   }
 });
