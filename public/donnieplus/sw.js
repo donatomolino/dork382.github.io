@@ -6,7 +6,7 @@
 //   installs (precache.json lists it), so every screen opens offline;
 // - api, video and version checks: never touched.
 // It also shows the "è pronto" notices of downloads (push, below).
-const CACHE = 'donnieplus-pages-20261029160502-shell2';
+const CACHE = 'donnieplus-pages-20261029160502-nav1';
 const MAX_FILES = 60;
 // the page, its icon and every file of the current build
 const SHELL = ['./', 'icon.png?v=3', 'manifest.webmanifest'];
@@ -23,7 +23,7 @@ async function saveBuild() {
   // the page itself is always fetched again: it names the current build
   const wanted = SHELL.concat(files).filter((f) => f === './' || !have.has(new URL(f, self.registration.scope).href));
   await Promise.all(wanted.map((f) =>
-    fetch(f === './' ? './?dp-build=20261029160502-ui2' : f, { cache: f === './' ? 'no-store' : 'default' })
+    fetch(f === './' ? './?dp-build=20261029160502-nav1' : f, { cache: f === './' ? 'no-store' : 'default' })
       .then((r) => (r.ok ? cache.put(f, r) : null))
       .catch(() => null)));
   if (files.length) await cache.put('precache.json', new Response(JSON.stringify({ files })));
@@ -76,7 +76,7 @@ const NAVIGATION_TIMEOUT = 3000;
 
 async function fromNetworkFirst(request, patient, preloaded) {
   const cache = await caches.open(CACHE);
-  const network = Promise.resolve().then(() => { const fresh = new URL(request.url); fresh.searchParams.set('dp-build', '20261029160502-ui2'); return fetch(fresh, { cache: 'no-store', credentials: 'same-origin' }); }).then(async (response) => {
+  const network = Promise.resolve().then(() => { const fresh = new URL(request.url); fresh.searchParams.set('dp-build', '20261029160502-nav1'); return fetch(fresh, { cache: 'no-store', credentials: 'same-origin' }); }).then(async (response) => {
     // only the app's own page is kept for offline use, never another HTML
     // file of the site (an .html page would replace the app when offline)
     const appPage = !/\.[a-z0-9]+$/i.test(new URL(request.url).pathname);
@@ -120,7 +120,7 @@ self.addEventListener('fetch', (event) => {
   if (path.endsWith('.apk') || /\/apk\/?$/.test(path)) return;
   if (request.mode === 'navigate') {
     event.respondWith(fromNetworkFirst(request, url.searchParams.has('upd'), event.preloadResponse));
-  } else if ((path.includes('/assets/') || /\/donnieplus-(settings|preferences|theme|wordmark)[^/]*\.(css|js|svg)$/.test(path))) {
+  } else if ((path.includes('/assets/') || /\/donnieplus-(settings|preferences|theme|wordmark|navigation)[^/]*\.(css|js|svg)$/.test(path))) {
     event.respondWith(fromCacheFirst(request));
   }
 });

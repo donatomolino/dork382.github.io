@@ -20,7 +20,7 @@ test('all precached assets exist and both API bundles use account-only authentic
   let accountBundles = 0;
   for (const file of assets.filter(f => f.endsWith('.js'))) {
     const source = readFileSync(new URL('assets/' + file, base), 'utf8');
-    assert.ok(!source.includes('X-LeoTv-Key'), file); assert.ok(!source.includes('/api/access'), file);
+    assert.ok(!/\b[\w$]+\.access\(\)/.test(source), file + ' contains server key consumer'); assert.ok(!source.includes('Codice di accesso'), file + ' contains server key UI'); assert.ok(!source.includes('set-srv-key'), file); assert.ok(!source.includes('X-LeoTv-Key'), file); assert.ok(!source.includes('/api/access'), file);
     if (source.includes('/api/account/login')) { accountBundles++; assert.ok(source.includes('X-Account-Token')); assert.ok(source.includes('X-Profile-Token')); }
     for (const ref of source.matchAll(/(?:\.\/|\/assets\/)([\w-]+\.(?:js|css))(?![a-z])/g)) assert.ok(assets.includes(ref[1]) || existsSync(new URL(ref[1], base)), file + ' references ' + ref[1]);
   }
