@@ -37,3 +37,11 @@ Custom styles layer over upstream CSS; the default remains Liquid Glass. Cloudfl
 The Node tests cover malformed storage, import validation and ranges, precache completeness, account-only authentication in both bundles and local asset references. Also verify the login wordmark, theme persistence, tabs and settings controls in a browser. After a deployment, confirm the GitHub Pages workflow succeeds and check the live entry page.
 
 The service worker fetches the HTML shell with a build-specific query parameter during installation and navigation. This prevents Cloudflare's cached bare entry URL from rolling the application back after an update. Navigation preload is disabled for this reason.
+
+## Persistent section navigation
+
+The root sections now keep a mounted screen for each visited section within the current profile. Selection updates immediately; a loading status appears over the last ready page until the requested screen has data. Cached sections switch without unmounting or losing scroll. Rapid selection changes only reveal the currently requested section, even if an earlier request finishes later. Home/Film/Serie TV navigation remains usable during loading; outgoing content actions are temporarily disabled.
+
+`scripts/patch-donnieplus-navigation.mjs` applies the same renderer change to modern and legacy entry bundles and fails if the upstream component contracts no longer match. Shared navigation source lives in `public/donnieplus/donnieplus-navigation.js`. Run lifecycle tests with `node --test tests/donnieplus-navigation.test.mjs tests/donnieplus-preferences.test.mjs`. Browser QA used the complete app bundles and a disposable local backend fixture with manually delayed Film/Serie TV responses; no real login or playback was required.
+
+The account-only patch also removes the upstream server-code settings component, key-bearing invitation links and key import from URL fragments. Invitations use the hosted DonniePlus URL. The audit test rejects key API calls, key consumers and key-display UI across every modern/legacy bundle; HLS cryptographic media keys are unrelated and remain untouched.
