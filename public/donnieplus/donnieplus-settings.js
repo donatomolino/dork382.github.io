@@ -178,3 +178,14 @@ new MutationObserver(() => { if (!scheduled) { scheduled = true; requestAnimatio
 enhance();
 window.addEventListener('storage', event => { if (event.key === STORAGE_KEY) { prefs = loadPreferences({ getItem: key => localStorage.getItem(key) }); apply(); if (dialog?.open) render(); } });
 window.addEventListener('pagehide', () => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs)); } catch {} });
+// The upstream load handler registers the bare worker URL. Register a build-
+// specific URL afterwards so the CDN cannot keep serving an older worker.
+if ('serviceWorker' in navigator && window.isSecureContext) {
+  const registerWorker = () => setTimeout(() => {
+    const build = new URL(import.meta.url).searchParams.get('v') || '20261029160502';
+    const worker = new URL('./sw.js', import.meta.url); worker.searchParams.set('dp-build', build + '-shell2');
+    navigator.serviceWorker.register(worker.href, { scope: './', updateViaCache: 'none' }).catch(() => {});
+  }, 0);
+  if (document.readyState === 'complete') registerWorker();
+  else window.addEventListener('load', registerWorker, { once: true });
+}
