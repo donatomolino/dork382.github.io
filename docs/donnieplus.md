@@ -35,3 +35,5 @@ Custom styles layer over upstream CSS; the default remains Liquid Glass. Cloudfl
 ## Validation
 
 The Node tests cover malformed storage, import validation and ranges, precache completeness, account-only authentication in both bundles and local asset references. Also verify the login wordmark, theme persistence, tabs and settings controls in a browser. After a deployment, confirm the GitHub Pages workflow succeeds and check the live entry page.
+
+The service worker fetches the HTML shell with a build-specific query parameter during installation and navigation. This prevents Cloudflare's cached bare entry URL from rolling the application back after an update. Navigation preload is disabled for this reason.

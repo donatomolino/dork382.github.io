@@ -26,3 +26,11 @@ test('all precached assets exist and both API bundles use account-only authentic
   }
   assert.equal(accountBundles, 2);
 });
+
+test('shell refresh bypasses stale CDN HTML and isolates cache deletion', () => {
+  const sw = readFileSync(new URL('../public/donnieplus/sw.js', import.meta.url), 'utf8');
+  assert.ok(sw.includes("fresh.searchParams.set('dp-build'"));
+  assert.ok(sw.includes("./?dp-build="));
+  assert.ok(sw.includes("k.startsWith('donnieplus-pages-')"));
+  assert.ok(!sw.includes('early || fetch(request)'));
+});
