@@ -1,1 +1,0 @@
-(function(){System.register([`./Focusable-legacy-6wAtk2PU-dp20261029160502-nav2.js`],function(e,t){var n,r,i;function a(e=new Date){let t=e=>String(e).padStart(2,`0`);return`${e.getFullYear()}-${t(e.getMonth()+1)}-${t(e.getDate())}`}return e(`r`,a),{setters:[function(e){n=e.Xt}],execute:function(){r=n(),e(`t`,i=(0,r.createContext)(null)),e(`n`,()=>(0,r.useContext)(i))}}})})();

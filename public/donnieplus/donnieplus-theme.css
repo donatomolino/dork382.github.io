@@ -1,9 +1,0 @@
-/* Keep the original LeoTV Liquid Glass visual system; use a static DonniePlus wordmark. */
-#intro{display:none!important}
-.sidebar__brand .brand-icon,.sidebar__brand .brand-word,.auth__brand>svg,.auth__brand>img{display:none!important}
-.sidebar__brand,.auth__brand{height:auto!important;filter:none!important;animation:none!important;transition:none!important;align-items:center}
-.sidebar__brand:before,.auth__brand:before{content:"Donnie";color:var(--text);font-weight:800;letter-spacing:-.045em;line-height:1}
-.sidebar__brand:after,.auth__brand:after{content:"Plus";color:var(--tint);font-weight:800;letter-spacing:-.045em;line-height:1}
-.sidebar__brand:before,.sidebar__brand:after{font-size:2.5rem}
-.auth__brand:before,.auth__brand:after{font-size:3.6rem}
-.profiles__inner:before{content:"DonniePlus";display:block;color:var(--tint);font-size:2rem;font-weight:750;letter-spacing:-.045em;margin-bottom:3rem}
