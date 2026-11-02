@@ -1,0 +1,1 @@
+self.addEventListener('install',e=>e.waitUntil(self.skipWaiting()));self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(ns=>Promise.all(ns.filter(n=>n.startsWith('donnieplus-pages-')).map(n=>caches.delete(n)))).then(()=>self.registration.unregister()).then(()=>self.clients.claim())));
