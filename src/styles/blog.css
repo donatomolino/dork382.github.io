@@ -57,7 +57,7 @@
 @media(max-width:900px) { .blog-page .home-header nav { grid-column:6/-1;justify-content:flex-end; } }
 @media(max-width:680px) {
 .blog-page .blog-header,.blog-page .blog-footer,.blog-hero,.blog-index,.blog-endcap,.blog-article { width:min(100% - 32px,1500px); }
-.blog-page .home-header nav { grid-column:6/-1;gap:16px; } .blog-page .home-header nav a:first-child,.blog-page .home-header nav a:last-child { display:none; }
+.blog-page .home-header nav { grid-column:6/-1;gap:16px; } .blog-page .home-header nav > a:first-child,.blog-page .home-header nav > a:nth-child(2),.blog-page .home-header nav > a:nth-child(4) { display:none; }
 .blog-hero { min-height:min(670px,calc(100svh - 74px)); } .blog-hero-top p:last-child,.blog-hero-bottom span { display:none; }
 .blog-hero h1 { margin-block:90px;font-size:clamp(55px,13vw,90px); } .blog-hero-bottom p { width:100%; }
 .blog-index-heading { align-items:start;flex-direction:column;gap:16px; }
@@ -70,3 +70,39 @@
 .blog-article-footer { align-items:flex-start;flex-direction:column; } .blog-prose pre { font-size:13px;padding:14px; }
 }
 @media(prefers-reduced-motion:reduce) { .blog-post-row { transition:none; } }
+/* Editorial vector icons (SVG/Lucide-style), no emoji or dash separators. */
+.blog-prose--future-tech h2::before {
+  content:"";
+  display:inline-block;
+  width:clamp(27px,3vw,38px);
+  height:clamp(27px,3vw,38px);
+  margin-right:.42em;
+  vertical-align:-.07em;
+  background:var(--swiss-red);
+  -webkit-mask:var(--blog-title-icon) center/contain no-repeat;
+  mask:var(--blog-title-icon) center/contain no-repeat;
+}
+.blog-prose--future-tech h2:nth-of-type(1) { --blog-title-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%228%22%20width%3D%2218%22%20height%3D%2213%22%20rx%3D%223%22%2F%3E%3Cpath%20d%3D%22M12%204v4%20M8%2013h.01%20M16%2013h.01%20M8%2017h8%20M9%204h6%22%2F%3E%3C%2Fsvg%3E"); }
+.blog-prose--future-tech h2:nth-of-type(2) { --blog-title-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%2218%22%20height%3D%227%22%20rx%3D%221.5%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2214%22%20width%3D%2218%22%20height%3D%227%22%20rx%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M7%206.5h.01M7%2017.5h.01%22%2F%3E%3C%2Fsvg%3E"); }
+.blog-prose--future-tech h2:nth-of-type(3) { --blog-title-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%226%22%20y%3D%222%22%20width%3D%2212%22%20height%3D%2220%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M10%2018h4%22%2F%3E%3C%2Fsvg%3E"); }
+.blog-prose--future-tech h2:nth-of-type(4) { --blog-title-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%224%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%224%22%20cy%3D%2219%22%20r%3D%222%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2219%22%20r%3D%222%22%2F%3E%3Cpath%20d%3D%22M11%206L5%2017M13%206l6%2011M6%2019h12%22%2F%3E%3C%2Fsvg%3E"); }
+.blog-prose--future-tech h2:nth-of-type(5) { --blog-title-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%222.5%22%20y%3D%223%22%20width%3D%2219%22%20height%3D%2218%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M8.5%203v18%20M2.5%209.5h6%20M13%208h4%20M13%2013h5%20M13%2017h3%22%2F%3E%3C%2Fsvg%3E"); }
+.blog-prose--future-tech h2:nth-of-type(6) { --blog-title-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%203a9%209%200%200%201%209%209M12%206a6%206%200%200%201%206%206M12%209a3%203%200%200%201%203%203%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%222%22%2F%3E%3Cpath%20d%3D%22M12%2014v7%20M3%2012a9%209%200%200%201%209-9%20M6%2012a6%206%200%200%201%206-6%22%2F%3E%3C%2Fsvg%3E"); }
+.blog-prose--future-tech h2:nth-of-type(7) { --blog-title-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%202c-5%200-8%204-8%209v2%20M20%2013v-2c0-5-3-9-8-9%20M7%2020c1-2%201.5-4%201.5-7V11a3.5%203.5%200%200%201%207%200v3c0%202-.3%204-1.5%207%20M11%2021c1-2%201-5%201-8%20M4%2016v2%22%2F%3E%3C%2Fsvg%3E"); }
+.blog-prose--future-tech h2:nth-of-type(8) { --blog-title-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M4%209V5a2%202%200%200%201%202-2h4%20M14%203h4a2%202%200%200%201%202%202v4%20M20%2015v3a2%202%200%200%201-2%202h-4%20M10%2020H6a2%202%200%200%201-2-2v-3%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%223%22%2F%3E%3C%2Fsvg%3E"); }
+.blog-prose--future-tech h2:nth-of-type(9) { --blog-title-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M2.5%2010.5%204%207h5l3%203%203-3h5l1.5%203.5%20M3%2011h7v3a3%203%200%200%201-3%203H6a3%203%200%200%201-3-3v-3Zm11%200h7v3a3%203%200%200%201-3%203h-1a3%203%200%200%201-3-3v-3Z%20M10%2012h4%22%2F%3E%3C%2Fsvg%3E"); }
+.blog-prose--future-tech h2:nth-of-type(10) { --blog-title-icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%224%22%20width%3D%227%22%20height%3D%227%22%20rx%3D%221%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%224%22%20width%3D%227%22%20height%3D%227%22%20rx%3D%221%22%2F%3E%3Crect%20x%3D%229%22%20y%3D%2215%22%20width%3D%227%22%20height%3D%227%22%20rx%3D%221%22%2F%3E%3Cpath%20d%3D%22M6.5%2011v4h6%20M17.5%2011v4h-5%22%2F%3E%3C%2Fsvg%3E"); }
+/* Separate language control stays visible at mobile sizes. */
+.blog-page .home-header .blog-nav { grid-column:8/-1;justify-content:flex-end;gap:clamp(12px,1.7vw,25px);align-items:center; }
+.blog-language-switch { display:inline-flex;align-items:center;gap:8px;padding-left:14px;border-left:2px solid var(--swiss-ink);white-space:nowrap;font-size:12px;font-weight:800; }
+.blog-language-switch a { text-decoration:none;color:inherit;opacity:.5; }
+.blog-language-switch a[aria-current="true"] { color:var(--swiss-red);opacity:1; }
+.blog-language-switch a:hover { opacity:1; }
+.blog-language-separator { display:block;width:1px;height:13px;background:var(--swiss-ink);opacity:.35; }
+@media(max-width:900px) { .blog-page .home-header .blog-nav { grid-column:6/-1; } }
+@media(max-width:680px) {
+  .blog-page .home-header .blog-nav { grid-column:6/-1;gap:14px; }
+  .blog-page .home-header .blog-nav > a:not([aria-current="page"]) { display:none; }
+  .blog-language-switch { padding-left:10px;gap:7px; }
+}
+@media(max-width:380px) { .blog-page .blog-header .home-brand { gap:6px;font-size:11px; } }
