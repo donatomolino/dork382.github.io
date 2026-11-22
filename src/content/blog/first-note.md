@@ -1,6 +1,8 @@
 ---
 title: "First note"
 description: "A first entry for the new journal."
+lang: en
+slug: first-note
 pubDate: 2026-11-22
 draft: true
 tags:
