@@ -15,29 +15,18 @@ type Entry = {
 };
 
 function staticRoutes(): string[] {
-  // Vite enumerates Astro pages at build time; no manual sitemap maintenance needed
-  // when a new ordinary .astro route is added. Parametric blog paths are added below.
-  const files = Object.keys(import.meta.glob("./**/*.astro"));
-  return files
-    .filter((file) =>
-      !file.includes("[") &&
-      !/(^|\/)(404|500|_.*)\.astro$/.test(file) &&
-      !file.startsWith("./api/") &&
-      !file.startsWith("./admin/") &&
-      !file.startsWith("./dev/") &&
-      !file.startsWith("./test/") &&
-      !file.startsWith("./donnieplus/") &&
-      !file.startsWith("./donnieplus.") &&
-      file !== "./blog/index.astro" // language detector is noindex
-    )
-    .map((file) => {
-      const name = file.slice(2, -".astro".length);
-      if (name === "index") return "/";
-      const route = name.endsWith("/index")
-        ? name.slice(0, -"/index".length)
-        : name;
-      return "/" + route + "/";
-    });
+  // Only canonical, publicly discoverable pages belong in a sitemap.
+  // Blog articles and locale indexes are populated automatically below.
+  // Keep intentionally private, experimental, and noindex routes out.
+  return [
+    "/",
+    "/manifesto/",
+    "/swooshmania/",
+    "/thinky/",
+    "/e/flowlight/",
+    "/junkfeed/",
+    "/usavschina/",
+  ];
 }
 
 function generateEntry({ loc, lastmod, alternates }: Entry): string {
