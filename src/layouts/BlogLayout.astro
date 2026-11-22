@@ -26,7 +26,10 @@ const base = Astro.site ?? new URL("https://donatomolino.it");
 const canonical = new URL(canonicalPath, base).toString();
 const otherLang = lang === "it" ? "en" : "it";
 const alternative = alternatePath ? new URL(alternatePath, base).toString() : undefined;
-const socialImage = new URL("/og.png", base).toString();
+const socialImagePath = type === "article"
+  ? canonicalPath.replace(/^\/blog\//, "/blog/og/").replace(/\/$/, ".png")
+  : "/og.png";
+const socialImage = new URL(socialImagePath, base).toString();
 const blogUrl = new URL("/blog/" + lang + "/", base).toString();
 const person = {
   "@type": "Person",
@@ -137,6 +140,10 @@ const t = lang === "it" ? {
     {alternative && <meta property="og:locale:alternate" content={otherLang === "it" ? "it_IT" : "en_US"} />}
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title + " — Donato Molino"} />
+    <meta name="twitter:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json" set:html={jsonLd} />
     {publishedAt && <meta property="article:published_time" content={publishedAt.toISOString()} />}
