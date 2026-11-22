@@ -1,0 +1,26 @@
+# Donato Molino
+
+> Personal website of Donato Molino, a product engineer and independent builder based in Italy. Original writing on software engineering, AI, interoperability, product design, and digital technology.
+
+This file is a supplementary, human-maintained index for agents that support llms.txt. It is not a prerequisite for Google Search or AI Overviews. Prefer the canonical HTML pages for the full text, charts, publication dates, and sources.
+
+## About
+
+- [Donato Molino — homepage](https://donatomolino.it/): Product engineer, selected projects, technical capabilities, and contact links.
+- [The Donnie Manifesto](https://donatomolino.it/manifesto/): Ten principles for creating useful, open, human-centered technology.
+- [GitHub](https://github.com/donatomolino): Public development profile.
+- [LinkedIn](https://www.linkedin.com/in/donatomolino-full-stack/): Professional profile.
+
+## Writing
+
+- [Blog in English](https://donatomolino.it/blog/en/)
+- [Blog in Italian](https://donatomolino.it/blog/it/)
+- [The future of tech, from 2027 to 2050 — EN](https://donatomolino.it/blog/en/the-future-of-tech-2027-2050/): Personal forecasts on AI agents, software, interoperability, interfaces, identity, sensors, AR, and smart glasses, with sourced data and charts.
+- [Il futuro del tech, dal 2027 al 2050 — IT](https://donatomolino.it/blog/it/il-futuro-del-tech-2027-2050/): Italian version of the same original essay.
+
+## Machine-readable discovery
+
+- [XML sitemap](https://donatomolino.it/sitemap.xml)
+- [RSS feed](https://donatomolino.it/blog/rss.xml)
+
+Original blog entries are authored by Donato Molino. Forecast dates are opinions, not guarantees. Refer to each article's cited sources for externally reported figures.
