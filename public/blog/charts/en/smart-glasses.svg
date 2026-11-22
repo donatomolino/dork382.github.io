@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="566" viewBox="0 0 1000 566" role="img" aria-labelledby="title desc">
+<title id="title">Smart glasses: two distinct markets</title><desc id="desc">Forecast annual shipments, millions of units No display, 2026: 13.6 M, No display, 2030: 27.3 M, With display, 2026: 3 M, With display, 2030: 12.2 M IDC categories are not equivalent to fully spatial AR.</desc>
+<rect width="1000" height="566" fill="#f2f1ed"/>
+<text x="48" y="64" font-family="Arial,Helvetica,sans-serif" font-size="35" font-weight="800" letter-spacing="-1.1" fill="#11110f">Smart glasses: two distinct markets</text>
+<text x="48" y="98" font-family="Arial,Helvetica,sans-serif" font-size="16" fill="#44443f">Forecast annual shipments, millions of units</text><text x="48" y="175" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#11110f">No display, 2026</text>
+<rect x="260" y="150" width="600" height="40" fill="#dfded9"/>
+<rect x="260" y="150" width="255" height="40" fill="#11110f"/>
+<text x="527" y="177" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="800" fill="#11110f">13.6 M</text><text x="48" y="260" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#11110f">No display, 2030</text>
+<rect x="260" y="235" width="600" height="40" fill="#dfded9"/>
+<rect x="260" y="235" width="512" height="40" fill="#ed1c24"/>
+<text x="784" y="262" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="800" fill="#11110f">27.3 M</text><text x="48" y="345" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#11110f">With display, 2026</text>
+<rect x="260" y="320" width="600" height="40" fill="#dfded9"/>
+<rect x="260" y="320" width="56" height="40" fill="#11110f"/>
+<text x="328" y="347" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="800" fill="#11110f">3.0 M</text><text x="48" y="430" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#11110f">With display, 2030</text>
+<rect x="260" y="405" width="600" height="40" fill="#dfded9"/>
+<rect x="260" y="405" width="229" height="40" fill="#ed1c24"/>
+<text x="501" y="432" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="800" fill="#11110f">12.2 M</text><line x1="48" y1="500" x2="952" y2="500" stroke="#11110f" stroke-width="2"/>
+<text x="48" y="528" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="#11110f">Source: IDC, Smart Glasses Market 2026</text>
+<text x="48" y="550" font-family="Arial,Helvetica,sans-serif" font-size="13" fill="#595954">IDC categories are not equivalent to fully spatial AR.</text>
+</svg>
