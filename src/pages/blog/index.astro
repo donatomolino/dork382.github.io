@@ -1,0 +1,37 @@
+---
+const base = Astro.site ?? new URL("https://donatomolino.it");
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="robots" content="noindex,follow" />
+  <title>Blog / Donato Molino</title>
+  <meta name="description" content="Writing about technology and software, available in English and Italian." />
+  <link rel="canonical" href={new URL("/blog/", base)} />
+  <link rel="alternate" hreflang="en" href={new URL("/blog/en/", base)} />
+  <link rel="alternate" hreflang="it" href={new URL("/blog/it/", base)} />
+  <link rel="alternate" hreflang="x-default" href={new URL("/blog/", base)} />
+  <script is:inline>
+    (function () {
+      const key = "donatomolino_blog_language";
+      let chosen;
+      try {
+        const saved = localStorage.getItem(key);
+        if (saved === "it" || saved === "en") chosen = saved;
+      } catch (_error) {}
+      if (!chosen) {
+        const primary = (navigator.languages && navigator.languages[0]) || navigator.language || "en";
+        chosen = primary.toLowerCase().split("-")[0] === "it" ? "it" : "en";
+      }
+      window.location.replace("/blog/" + chosen + "/" + window.location.search + window.location.hash);
+    })();
+  </script>
+</head>
+<body style="margin:0;padding:3rem;font:16px system-ui;background:#f2f1ed;color:#11110f">
+  <h1>Donato Molino / Blog</h1>
+  <p>Choose your language / Scegli la lingua:</p>
+  <p><a href="/blog/it/" lang="it">Italiano</a> · <a href="/blog/en/" lang="en">English</a></p>
+</body>
+</html>

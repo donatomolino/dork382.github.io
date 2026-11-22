@@ -56,3 +56,31 @@ The 3D scene is route-local and lazy-loaded, uses shared procedural geometry, co
 ## Deployment and production data
 
 Run `npm run build`, then start the standalone Node output with `node dist/server/entry.mjs`. Set the two server environment variables in the deployment platform for remote mode. Before declaring real-time status in production, connect an appropriately licensed market-data feed, provide exchange-calendar metadata, historical snapshot coverage, and source timestamps. Private valuations require dated, attributable sources and should be removed when reliability cannot be established.
+
+
+## Bilingual blog
+
+The personal journal is available in **Italian and English**. The language-neutral entry point `/blog/` uses the browser's primary language (Italian if it starts with `it`, otherwise English) on first visit. When visitors select **IT** or **EN**, their preference is stored locally and used for subsequent visits to `/blog/`. Direct language-specific URLs always stay in their requested language.
+
+- Italian index: `/blog/it/`
+- English index: `/blog/en/`
+- Each translated post has its own canonical URL and reciprocal `hreflang` links.
+- Article source files live in `src/content/blog/` and use Markdown.
+
+To publish a new post, add a Markdown file with this frontmatter:
+
+```yaml
+---
+title: "An example title"
+description: "A short SEO summary"
+lang: en
+slug: example-title
+translationKey: example-post
+pubDate: 2026-11-22
+draft: false
+tags:
+  - Software
+---
+```
+
+Use `lang: it` and a translated `slug` for the Italian edition; keep the same `translationKey` so the language switch links directly to the translated article. Unpublished drafts use `draft: true`. The blog automatically excludes future-dated articles. The first bilingual article includes localized SVG charts in `public/blog/charts/`.

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="481" viewBox="0 0 1000 481" role="img" aria-labelledby="title desc">
+<title id="title">More and more connected devices</title><desc id="desc">Global IoT connections, billions 2024 • observed: 18.5 bn, 2025 • estimate: 21.1 bn, 2030 • forecast: 39 bn IoT includes industrial devices and infrastructure, not just wearables.</desc>
+<rect width="1000" height="481" fill="#f2f1ed"/>
+<text x="48" y="64" font-family="Arial,Helvetica,sans-serif" font-size="35" font-weight="800" letter-spacing="-1.1" fill="#11110f">More and more connected devices</text>
+<text x="48" y="98" font-family="Arial,Helvetica,sans-serif" font-size="16" fill="#44443f">Global IoT connections, billions</text><text x="48" y="175" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#11110f">2024 • observed</text>
+<rect x="260" y="150" width="600" height="40" fill="#dfded9"/>
+<rect x="260" y="150" width="247" height="40" fill="#11110f"/>
+<text x="519" y="177" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="800" fill="#11110f">18.5 bn</text><text x="48" y="260" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#11110f">2025 • estimate</text>
+<rect x="260" y="235" width="600" height="40" fill="#dfded9"/>
+<rect x="260" y="235" width="281" height="40" fill="#11110f"/>
+<text x="553" y="262" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="800" fill="#11110f">21.1 bn</text><text x="48" y="345" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#11110f">2030 • forecast</text>
+<rect x="260" y="320" width="600" height="40" fill="#dfded9"/>
+<rect x="260" y="320" width="520" height="40" fill="#ed1c24"/>
+<text x="792" y="347" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="800" fill="#11110f">39 bn</text><line x1="48" y1="415" x2="952" y2="415" stroke="#11110f" stroke-width="2"/>
+<text x="48" y="443" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="#11110f">Source: IoT Analytics, State of IoT 2025</text>
+<text x="48" y="465" font-family="Arial,Helvetica,sans-serif" font-size="13" fill="#595954">IoT includes industrial devices and infrastructure, not just wearables.</text>
+</svg>

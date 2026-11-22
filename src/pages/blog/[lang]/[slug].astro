@@ -1,0 +1,92 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BlogLayout from "~/layouts/BlogLayout.astro";
+
+export const prerender = true;
+type Language = "it" | "en";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) =>
+    !data.draft && data.pubDate <= new Date()
+  );
+  const paths = await Promise.all(posts.map(async (post) => {
+    const others = await getCollection("blog", ({ data }) =>
+      !data.draft &&
+      data.translationKey === post.data.translationKey &&
+      data.lang !== post.data.lang &&
+      data.pubDate <= new Date()
+    );
+    const alternate = post.data.translationKey
+      ? others.find((other) => other.data.translationKey === post.data.translationKey)
+      : undefined;
+
+    return {
+      params: { lang: post.data.lang, slug: post.data.slug },
+      props: { post, alternatePath: alternate
+        ? "/blog/" + alternate.data.lang + "/" + alternate.data.slug + "/"
+        : undefined },
+    };
+  }));
+  return paths;
+}
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  alternatePath?: string;
+}
+
+const { post, alternatePath } = Astro.props;
+const lang = post.data.lang as Language;
+const { Content } = await render(post);
+const t = lang === "it" ? {
+  back: "Tutti gli articoli",
+  journal: "Diario",
+  topics: "Argomenti",
+  end: "Fine dell'articolo.",
+  more: "Altri articoli",
+} : {
+  back: "All writing",
+  journal: "Journal",
+  topics: "Topics",
+  end: "That's the note.",
+  more: "More writing",
+};
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat(lang === "it" ? "it-IT" : "en-GB", {
+    day: "2-digit", month: "long", year: "numeric", timeZone: "UTC",
+  }).format(date);
+---
+<BlogLayout
+  title={post.data.title}
+  description={post.data.description}
+  canonicalPath={"/blog/" + lang + "/" + post.data.slug + "/"}
+  alternatePath={alternatePath}
+  type="article"
+  lang={lang}
+  publishedAt={post.data.pubDate}
+  updatedAt={post.data.updatedDate}
+>
+  <article class="blog-article">
+    <header class="blog-article-header">
+      <a class="blog-back" href={"/blog/" + lang + "/"}>← {t.back}</a>
+      <div class="blog-article-meta">
+        <span>{t.journal} / Donato Molino</span>
+        <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+      </div>
+      <h1>{post.data.title}</h1>
+      <p class="blog-article-description">{post.data.description}</p>
+      {post.data.tags.length > 0 && (
+        <div class="blog-article-tags" aria-label={t.topics}>
+          {post.data.tags.map((tag) => <span>{tag}</span>)}
+        </div>
+      )}
+    </header>
+    <div class:list={["blog-prose", post.data.translationKey === "future-tech" && "blog-prose--future-tech"]}>
+      <Content />
+    </div>
+    <footer class="blog-article-footer">
+      <p>{t.end}</p>
+      <a href={"/blog/" + lang + "/"}>{t.more} <span aria-hidden="true">↗</span></a>
+    </footer>
+  </article>
+</BlogLayout>
