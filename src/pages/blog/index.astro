@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "~/layouts/BlogLayout.astro";
+
+const posts = (await getCollection("blog", ({ data }) =>
+  !data.draft && data.pubDate <= new Date()
+)).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit", month: "short", year: "numeric", timeZone: "UTC",
+  }).format(date);
+---
+<BlogLayout
+  title="Blog"
+  description="Notes on product engineering, software, AI, independent projects and the ideas behind what I build."
+  canonicalPath="/blog/"
+>
+  <section class="blog-hero" aria-labelledby="blog-title">
+    <div class="blog-hero-top">
+      <p>01 / Writing</p><p>Ideas, experiments &amp; perspective</p>
+    </div>
+    <h1 id="blog-title">Things worth<br /><span>thinking about.</span></h1>
+    <div class="blog-hero-bottom">
+      <p>Notes from the process of making things. What works, what doesn't, and what might come next.</p>
+      <span>Donato Molino / Journal</span>
+    </div>
+  </section>
+  <section class="blog-index" aria-labelledby="posts-title">
+    <div class="blog-index-heading">
+      <h2 id="posts-title">All writing<span class="blog-red">.</span></h2>
+      <span>{posts.length.toString().padStart(2, "0")} entries</span>
+    </div>
+    {posts.length > 0 ? (
+      <div class="blog-post-list">
+        {posts.map((post, index) => (
+          <a class="blog-post-row" href={"/blog/" + post.id + "/"}>
+            <span class="blog-row-number">{(index + 1).toString().padStart(2, "0")}</span>
+            <div class="blog-row-copy">
+              <h3>{post.data.title}</h3>
+              <p>{post.data.description}</p>
+              {post.data.tags.length > 0 && (
+                <div class="blog-row-tags" aria-label="Topics">
+                  {post.data.tags.map((tag) => <span>{tag}</span>)}
+                </div>
+              )}
+            </div>
+            <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+            <span class="blog-row-arrow" aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="blog-empty">
+        <span aria-hidden="true">—</span>
+        <h3>The first note is still being written.</h3>
+        <p>This space is ready for ideas, breakdowns and things learned along the way.</p>
+      </div>
+    )}
+  </section>
+  <aside class="blog-endcap">
+    <p>02 / A starting point</p>
+    <h2>Less noise.<br />More making.</h2>
+    <a href="/manifesto">Read the manifesto <span aria-hidden="true">↗</span></a>
+  </aside>
+</BlogLayout>
