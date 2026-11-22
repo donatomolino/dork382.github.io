@@ -12,11 +12,14 @@ interface Props {
   alternatePath?: string;
   publishedAt?: Date;
   updatedAt?: Date;
+  tags?: string[];
+  sources?: string[];
+  postItems?: { title: string; url: string }[];
 }
 
 const {
   title, description, canonicalPath, type = "website", lang, alternatePath,
-  publishedAt, updatedAt
+  publishedAt, updatedAt, tags = [], sources = [], postItems = []
 } = Astro.props;
 
 const base = Astro.site ?? new URL("https://donatomolino.it");
@@ -24,6 +27,69 @@ const canonical = new URL(canonicalPath, base).toString();
 const otherLang = lang === "it" ? "en" : "it";
 const alternative = alternatePath ? new URL(alternatePath, base).toString() : undefined;
 const socialImage = new URL("/og.png", base).toString();
+const blogUrl = new URL("/blog/" + lang + "/", base).toString();
+const person = {
+  "@type": "Person",
+  "@id": new URL("/#donato-molino", base).toString(),
+  name: "Donato Molino",
+  url: new URL("/", base).toString(),
+  jobTitle: "Product Engineer",
+  sameAs: [
+    "https://github.com/donatomolino",
+    "https://www.linkedin.com/in/donatomolino-full-stack/",
+    "https://x.com/donatomolinox",
+  ],
+};
+const structuredPage = type === "article" ? {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": canonical + "#article",
+  mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
+  headline: title,
+  description,
+  inLanguage: lang,
+  url: canonical,
+  datePublished: publishedAt?.toISOString(),
+  dateModified: (updatedAt ?? publishedAt)?.toISOString(),
+  author: person,
+  publisher: person,
+  image: socialImage,
+  isAccessibleForFree: true,
+  isPartOf: { "@type": "Blog", "@id": blogUrl, name: "Donato Molino — Blog" },
+  keywords: tags,
+  citation: sources,
+} : {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": canonical + "#collection",
+  url: canonical,
+  name: title,
+  description,
+  inLanguage: lang,
+  isPartOf: { "@type": "WebSite", "@id": new URL("/#website", base).toString() },
+  about: person,
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: postItems.map((item, index) => ({
+      "@type": "ListItem", position: index + 1, name: item.title, url: new URL(item.url, base).toString(),
+    })),
+  },
+};
+const breadcrumbs = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Donato Molino", item: new URL("/", base).toString() },
+    { "@type": "ListItem", position: 2, name: "Blog", item: blogUrl },
+    ...(type === "article" ? [{
+      "@type": "ListItem", position: 3, name: title, item: canonical,
+    }] : []),
+  ],
+};
+const jsonLd = JSON.stringify([structuredPage, breadcrumbs]).replace(/</g, "\\u003c");
+const defaultLanguageUrl = type === "article"
+  ? (lang === "en" ? canonical : alternative)
+  : new URL("/blog/", base).toString();
 const t = lang === "it" ? {
   skip: "Vai al contenuto",
   home: "Donato Molino, pagina iniziale",
@@ -56,10 +122,14 @@ const t = lang === "it" ? {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title} — Donato Molino</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+    <meta name="author" content="Donato Molino" />
+    <meta property="og:site_name" content="Donato Molino" />
+    <link rel="alternate" type="application/rss+xml" title="Donato Molino — Blog RSS" href="/blog/rss.xml" />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang={lang} href={canonical} />
     {alternative && <link rel="alternate" hreflang={otherLang} href={alternative} />}
-    <link rel="alternate" hreflang="x-default" href={new URL("/blog/", base).toString()} />
+    {defaultLanguageUrl && <link rel="alternate" hreflang="x-default" href={defaultLanguageUrl} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
@@ -68,18 +138,7 @@ const t = lang === "it" ? {
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    {type === "article" && <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      headline: title,
-      description,
-      inLanguage: lang,
-      url: canonical,
-      datePublished: publishedAt?.toISOString(),
-      dateModified: (updatedAt ?? publishedAt)?.toISOString(),
-      author: { "@type": "Person", name: "Donato Molino", url: new URL("/", base).toString() },
-      image: socialImage,
-    })} />}
+    <script type="application/ld+json" set:html={jsonLd} />
     {publishedAt && <meta property="article:published_time" content={publishedAt.toISOString()} />}
     {updatedAt && <meta property="article:modified_time" content={updatedAt.toISOString()} />}
   </head>
