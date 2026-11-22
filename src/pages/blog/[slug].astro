@@ -1,0 +1,56 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BlogLayout from "~/layouts/BlogLayout.astro";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) =>
+    !data.draft && data.pubDate <= new Date()
+  );
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit", month: "long", year: "numeric", timeZone: "UTC",
+  }).format(date);
+---
+<BlogLayout
+  title={post.data.title}
+  description={post.data.description}
+  canonicalPath={"/blog/" + post.id + "/"}
+  type="article"
+  publishedAt={post.data.pubDate}
+  updatedAt={post.data.updatedDate}
+>
+  <article class="blog-article">
+    <header class="blog-article-header">
+      <a class="blog-back" href="/blog/">← All writing</a>
+      <div class="blog-article-meta">
+        <span>Journal / Donato Molino</span>
+        <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+      </div>
+      <h1>{post.data.title}</h1>
+      <p class="blog-article-description">{post.data.description}</p>
+      {post.data.tags.length > 0 && (
+        <div class="blog-article-tags" aria-label="Topics">
+          {post.data.tags.map((tag) => <span>{tag}</span>)}
+        </div>
+      )}
+    </header>
+    <div class="blog-prose"><Content /></div>
+    <footer class="blog-article-footer">
+      <p>That's the note.</p>
+      <a href="/blog/">More writing <span aria-hidden="true">↗</span></a>
+    </footer>
+  </article>
+</BlogLayout>
