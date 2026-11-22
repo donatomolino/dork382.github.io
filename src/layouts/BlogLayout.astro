@@ -32,6 +32,8 @@ const t = lang === "it" ? {
   contact: "Contatti",
   nav: "Navigazione principale",
   langChoice: "Lingua",
+  role: "Ingegnere del prodotto",
+  based: "In Italia",
   back: "Torna alla home",
 } : {
   skip: "Skip to content",
@@ -41,6 +43,8 @@ const t = lang === "it" ? {
   contact: "Contact",
   nav: "Main navigation",
   langChoice: "Language",
+  role: "Product Engineer",
+  based: "Based in Italy",
   back: "Back to home",
 };
 ---
@@ -85,7 +89,7 @@ const t = lang === "it" ? {
       <a class="home-brand" href="/" aria-label={t.home}>
         <span class="signal-square" aria-hidden="true"></span><span>Donato Molino</span>
       </a>
-      <p class="home-role">Product Engineer<br />Based in Italy</p>
+      <p class="home-role">{t.role}<br />{t.based}</p>
       <nav class="blog-nav" aria-label={t.nav}>
         <a href="/#work">{t.work}</a>
         <a href="/manifesto">{t.manifesto}</a>
