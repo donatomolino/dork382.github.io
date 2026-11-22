@@ -1,6 +1,9 @@
 ---
 title: "Il futuro del tech, dal 2027 al 2050"
 description: "La mia visione dei prossimi vent'anni: AI personali, software temporaneo, protocolli aperti, interfacce generate e smart glasses. Cosa dicono i dati, e dove iniziano le mie scommesse."
+lang: it
+slug: il-futuro-del-tech-2027-2050
+translationKey: future-tech
 pubDate: 2026-11-22
 draft: false
 tags:
@@ -16,7 +19,7 @@ Questa è la mia visione, dal 2027 fino agli scenari più lontani del 2050. Ho c
 
 Le date sono indicative. Molte evoluzioni avverranno in parallelo e alcune potrebbero non avvenire affatto.
 
-## 2027–2030 — Avremo AI personali, non soltanto chatbot
+## 2027–2030 Avremo AI personali, non soltanto chatbot
 
 Immagino che ognuno di noi avrà una o più AI personali capaci di gestire informazioni, dispositivi, servizi e attività. Non soltanto risposte a domande, ma agenti che lavorano con strumenti reali: leggono un documento, confrontano opzioni, compilano una richiesta, interrogano un servizio, preparano qualcosa e chiedono conferma quando serve.
 
@@ -32,7 +35,7 @@ Per me la parte più interessante è l'indipendenza dai fornitori. Vorrei un'AI 
 
 Ma non è tutto risolto. Memoria portabile, permessi, sicurezza, responsabilità e costi rimangono problemi aperti. E Gartner [prevedeva nel 2025](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) che oltre il 40% dei progetti agentici sarebbe stato abbandonato entro il 2027. **È una previsione di Gartner, non un tasso di fallimento già osservato.**
 
-## 2028–2033 — Software più personalizzato, e a volte temporaneo
+## 2028–2033 Software più personalizzato, e a volte temporaneo
 
 Non penso che Salesforce, SAP, ServiceNow o Microsoft Dynamics spariranno. Penso invece che il loro ruolo cambierà.
 
@@ -42,7 +45,7 @@ La generazione di codice sta abbassando il costo di creare interfacce e automazi
 
 La mia scommessa non è che tutto verrà riscritto continuamente. Quello sarebbe un incubo di manutenzione. È che **la parte visibile del software diventerà più economica da cambiare**, mentre contratti di dati, autorizzazioni, integrazioni, controlli e infrastrutture dovranno essere molto più stabili. In aziende regolamentate la velocità sarà comunque limitata da audit, sicurezza e affidabilità.
 
-## 2028–2033 — Smartphone, tablet e PC convergeranno
+## 2028–2033 Smartphone, tablet e PC convergeranno
 
 Penso che per gran parte delle attività quotidiane lo smartphone diventerà l'unico computer necessario: in tasca sarà un telefono, aperto sarà un tablet, collegato a uno schermo offrirà un desktop completo.
 
@@ -52,7 +55,7 @@ Rimangono ostacoli concreti: software professionale, periferiche, autonomia, dis
 
 Non credo alla morte del PC. **Credo che il PC, per molte persone, diventerà una modalità di utilizzo anziché un dispositivo separato.**
 
-## 2030–2037 — Più protocolli condivisi, meno ecosistemi chiusi
+## 2030–2037 Più protocolli condivisi, meno ecosistemi chiusi
 
 Questa è probabilmente la previsione a cui tengo di più.
 
@@ -64,7 +67,7 @@ Sono segnali, non una garanzia. L'interoperabilità porta difficoltà di moderaz
 
 Credo però che il valore si sposterà gradualmente **dall'obbligo di usare la stessa app alla libertà di scegliere l'interfaccia che preferisci**.
 
-## 2030–2038 — Interfacce generate per quello che serve, quando serve
+## 2030–2038 Interfacce generate per quello che serve, quando serve
 
 Oggi usiamo prodotti con schermate progettate in anticipo, più o meno uguali per tutti. Domani potremmo chiedere un risultato e ottenere un'interfaccia costruita attorno a quel compito: solo i dati utili, le azioni necessarie e i controlli adatti al dispositivo.
 
@@ -74,7 +77,7 @@ Immagino di aprire la mia AI e chiederle di confrontare le spese di casa: invece
 
 Questo non significa che ogni pixel debba essere improvvisato. Per operazioni delicate serviranno componenti affidabili, accessibilità, coerenza e conferme esplicite. **L'interfaccia può essere dinamica senza diventare imprevedibile.**
 
-## 2030–2040 — Sensori praticamente ovunque
+## 2030–2040 Sensori praticamente ovunque
 
 Occhiali, cuffie, anelli, vestiti e oggetti della casa raccoglieranno sempre più informazioni sull'ambiente e sulle nostre attività. La mia AI personale potrebbe combinare alcuni di quei segnali per avere un contesto molto più utile rispetto a un semplice messaggio scritto.
 
@@ -88,7 +91,7 @@ I sensori, però, non producono automaticamente informazioni utili. Dati impreci
 
 Il futuro che vorrei è fatto di **controllo granulare, elaborazione locale quando possibile e condivisione minima dei dati**. Non di sorveglianza permanente mascherata da comodità.
 
-## 2032–2040 — Un'identità digitale che ci segue tra le piattaforme
+## 2032–2040 Un'identità digitale che ci segue tra le piattaforme
 
 Oggi account, preferenze, file e cronologie sono distribuiti tra servizi che spesso non comunicano. Immagino una maggiore separazione tra **chi sono**, **quali dati possiedo** e **quale applicazione uso per accedervi**.
 
@@ -98,7 +101,7 @@ Attenzione, però: **un wallet d'identità non equivale a un profilo universale 
 
 La mia previsione è che sposteremo gradualmente il centro di gravità dall'account della piattaforma al controllo dell'utente. Non basterà un solo standard, e non succederà ovunque alla stessa velocità.
 
-## 2035–2045 — La realtà aumentata diventerà davvero spaziale
+## 2035–2045 La realtà aumentata diventerà davvero spaziale
 
 Non credo che il punto d'arrivo dell'AR sia avere notifiche e finestre 2D davanti agli occhi. Mi aspetto oggetti digitali che riconoscano la geometria del mondo, mantengano la loro posizione e reagiscano agli spazi reali.
 
@@ -108,7 +111,7 @@ La diffusione dei dispositivi non va confusa con la maturità di questa visione.
 
 I veri limiti saranno ancora autonomia, calore, peso, campo visivo, tracciamento preciso, qualità ottica e accettazione sociale. Per questo colloco la maturità della *vera* AR più lontano.
 
-## 2040–2050+ — Gli occhiali potrebbero sostituire lo smartphone
+## 2040–2050+ Gli occhiali potrebbero sostituire lo smartphone
 
 È la mia previsione più lontana e anche quella su cui ho più dubbi riguardo alle date.
 
