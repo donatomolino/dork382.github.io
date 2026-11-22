@@ -21,6 +21,22 @@ const showcase = defineCollection({
     }),
 });
 
+const blog = defineCollection({
+  loader: glob({
+    base: "./src/content/blog",
+    pattern: "**/*.{md,mdx}",
+  }),
+  schema: z.object({
+    title: z.string().min(1),
+    description: z.string().min(1),
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    draft: z.boolean().default(false),
+    tags: z.array(z.string()).default([]),
+  }),
+});
+
 export const collections = {
   showcase,
+  blog,
 };
