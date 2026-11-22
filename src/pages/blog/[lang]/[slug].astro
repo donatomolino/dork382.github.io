@@ -37,19 +37,26 @@ interface Props {
 
 const { post, alternatePath } = Astro.props;
 const lang = post.data.lang as Language;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const toc = headings.filter((heading) => heading.depth === 2);
 const t = lang === "it" ? {
   back: "Tutti gli articoli",
   journal: "Diario",
   topics: "Argomenti",
   end: "Fine dell'articolo.",
   more: "Altri articoli",
+  onThisPage: "In questo articolo",
+  authorIntro: "Scritto da Donato Molino, Product Engineer e sviluppatore indipendente.",
+  authorLink: "Altri progetti",
 } : {
   back: "All writing",
   journal: "Journal",
   topics: "Topics",
   end: "That's the note.",
   more: "More writing",
+  onThisPage: "In this article",
+  authorIntro: "Written by Donato Molino, product engineer and independent developer.",
+  authorLink: "Explore my work",
 };
 const formatDate = (date: Date) =>
   new Intl.DateTimeFormat(lang === "it" ? "it-IT" : "en-GB", {
@@ -83,9 +90,26 @@ const formatDate = (date: Date) =>
         </div>
       )}
     </header>
+    {toc.length > 2 && (
+      <nav class="blog-article-toc" aria-label={t.onThisPage}>
+        <p>{t.onThisPage}</p>
+        <ol>
+          {toc.map((heading, index) => (
+            <li><a href={"#" + heading.slug}>
+              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              {heading.text}
+            </a></li>
+          ))}
+        </ol>
+      </nav>
+    )}
     <div class:list={["blog-prose", post.data.translationKey === "future-tech" && "blog-prose--future-tech"]}>
       <Content />
     </div>
+    <aside class="blog-author-byline">
+      <p>{t.authorIntro}</p>
+      <a href="/#work">{t.authorLink} <span aria-hidden="true">↗</span></a>
+    </aside>
     <footer class="blog-article-footer">
       <p>{t.end}</p>
       <a href={"/blog/" + lang + "/"}>{t.more} <span aria-hidden="true">↗</span></a>
