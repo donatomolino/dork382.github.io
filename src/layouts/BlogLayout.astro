@@ -2,19 +2,47 @@
 import "@fontsource-variable/inter";
 import "~/styles/index.css";
 import "~/styles/blog.css";
+
 interface Props {
   title: string;
   description: string;
   canonicalPath: string;
   type?: "website" | "article";
-  lang?: "en" | "it";
+  lang: "en" | "it";
+  alternatePath?: string;
   publishedAt?: Date;
   updatedAt?: Date;
 }
-const { title, description, canonicalPath, type = "website", lang = "en", publishedAt, updatedAt } = Astro.props;
+
+const {
+  title, description, canonicalPath, type = "website", lang, alternatePath,
+  publishedAt, updatedAt
+} = Astro.props;
+
 const base = Astro.site ?? new URL("https://donatomolino.it");
 const canonical = new URL(canonicalPath, base).toString();
+const otherLang = lang === "it" ? "en" : "it";
+const alternative = alternatePath ? new URL(alternatePath, base).toString() : undefined;
 const socialImage = new URL("/og.png", base).toString();
+const t = lang === "it" ? {
+  skip: "Vai al contenuto",
+  home: "Donato Molino, pagina iniziale",
+  work: "Lavori",
+  manifesto: "Manifesto",
+  contact: "Contatti",
+  nav: "Navigazione principale",
+  langChoice: "Lingua",
+  back: "Torna alla home",
+} : {
+  skip: "Skip to content",
+  home: "Donato Molino, home",
+  work: "Work",
+  manifesto: "Manifesto",
+  contact: "Contact",
+  nav: "Main navigation",
+  langChoice: "Language",
+  back: "Back to home",
+};
 ---
 <!doctype html>
 <html lang={lang}>
@@ -25,9 +53,14 @@ const socialImage = new URL("/og.png", base).toString();
     <title>{title} — Donato Molino</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    {alternative && <link rel="alternate" hreflang={otherLang} href={alternative} />}
+    <link rel="alternate" hreflang="x-default" href={new URL("/blog/", base).toString()} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
+    <meta property="og:locale" content={lang === "it" ? "it_IT" : "en_US"} />
+    {alternative && <meta property="og:locale:alternate" content={otherLang === "it" ? "it_IT" : "en_US"} />}
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
@@ -47,17 +80,30 @@ const socialImage = new URL("/og.png", base).toString();
     {updatedAt && <meta property="article:modified_time" content={updatedAt.toISOString()} />}
   </head>
   <body class="home-page blog-page">
-    <a class="blog-skip" href="#main-content">Skip to content</a>
+    <a class="blog-skip" href="#main-content">{t.skip}</a>
     <header class="home-header blog-header">
-      <a class="home-brand" href="/" aria-label="Donato Molino home">
+      <a class="home-brand" href="/" aria-label={t.home}>
         <span class="signal-square" aria-hidden="true"></span><span>Donato Molino</span>
       </a>
       <p class="home-role">Product Engineer<br />Based in Italy</p>
-      <nav aria-label="Main navigation">
-        <a href="/#work">Work</a>
-        <a href="/manifesto">Manifesto</a>
-        <a href="/blog/" aria-current="page">Blog</a>
-        <a href="/#contact">Contact</a>
+      <nav class="blog-nav" aria-label={t.nav}>
+        <a href="/#work">{t.work}</a>
+        <a href="/manifesto">{t.manifesto}</a>
+        <a href={"/blog/" + lang + "/"} aria-current="page">Blog</a>
+        <a href="/#contact">{t.contact}</a>
+        <span class="blog-language-switch" role="group" aria-label={t.langChoice}>
+          <a href={lang === "it" ? canonicalPath : (alternatePath ?? "/blog/it/")}
+            data-blog-language="it"
+            lang="it"
+            aria-current={lang === "it" ? "true" : undefined}
+            aria-label="Italiano">IT</a>
+          <span class="blog-language-separator" aria-hidden="true"></span>
+          <a href={lang === "en" ? canonicalPath : (alternatePath ?? "/blog/en/")}
+            data-blog-language="en"
+            lang="en"
+            aria-current={lang === "en" ? "true" : undefined}
+            aria-label="English">EN</a>
+        </span>
       </nav>
     </header>
     <main id="main-content"><slot /></main>
@@ -69,7 +115,18 @@ const socialImage = new URL("/og.png", base).toString();
         <a href="https://x.com/donatomolinox" target="_blank" rel="noreferrer">X</a>
         <a href="https://t.me/dork382/" target="_blank" rel="noreferrer">Telegram</a>
       </div>
-      <a href="/">Back to home ↗</a>
+      <a href="/">{t.back} <span aria-hidden="true">↗</span></a>
     </footer>
+    <script is:inline>
+      document.querySelectorAll("[data-blog-language]").forEach((link) => {
+        link.addEventListener("click", () => {
+          try {
+            localStorage.setItem("donatomolino_blog_language", link.getAttribute("data-blog-language"));
+          } catch (_error) {
+            // Language selection still works when storage is unavailable.
+          }
+        });
+      });
+    </script>
   </body>
 </html>
