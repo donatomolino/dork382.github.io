@@ -51,10 +51,14 @@ const formatDate = (date: Date) =>
 ---
 <BlogLayout
   lang={lang}
-  title={lang === "it" ? "Blog" : "Blog"}
+  title={lang === "it" ? "Blog: AI, software e tecnologia" : "Blog: AI, Software & Technology"}
   description={t.seo}
   canonicalPath={"/blog/" + lang + "/"}
   alternatePath={"/blog/" + (lang === "it" ? "en" : "it") + "/"}
+  postItems={posts.map((post) => ({
+    title: post.data.title,
+    url: "/blog/" + lang + "/" + post.data.slug + "/",
+  }))}
 >
   <section class="blog-hero" aria-labelledby="blog-title">
     <div class="blog-hero-top">
