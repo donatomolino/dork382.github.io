@@ -26,6 +26,8 @@ function staticRoutes(): string[] {
       !file.startsWith("./admin/") &&
       !file.startsWith("./dev/") &&
       !file.startsWith("./test/") &&
+      !file.startsWith("./donnieplus/") &&
+      !file.startsWith("./donnieplus.") &&
       file !== "./blog/index.astro" // language detector is noindex
     )
     .map((file) => {
