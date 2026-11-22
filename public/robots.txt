@@ -1,2 +1,20 @@
+# Public site: search engines and AI search tools may crawl and cite public pages.
+# Crawl permission does not guarantee indexing or inclusion in AI answers.
 User-agent: *
 Allow: /
+
+# OpenAI search discovery and user-initiated retrieval (distinct from GPTBot training).
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic search discovery and user-initiated retrieval.
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+Sitemap: https://donatomolino.it/sitemap.xml

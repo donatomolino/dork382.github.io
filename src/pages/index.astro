@@ -13,6 +13,46 @@ const description =
   "Donato Molino is a product engineer who turns ambitious ideas into simple, useful and enduring digital products.";
 const socialImage = new URL("/og.png", site);
 
+const homepageUrl = new URL("/", site).toString();
+const personId = homepageUrl + "#donato-molino";
+const siteGraph = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": homepageUrl + "#website",
+      url: homepageUrl,
+      name: "Donato Molino",
+      description,
+      inLanguage: "en",
+      publisher: { "@id": personId },
+    },
+    {
+      "@type": "Person",
+      "@id": personId,
+      name: "Donato Molino",
+      url: homepageUrl,
+      jobTitle: "Product Engineer",
+      description,
+      knowsAbout: [
+        "Full-stack development",
+        "Product engineering",
+        "TypeScript",
+        "React",
+        "Node.js",
+        "Artificial intelligence",
+        "Unity",
+      ],
+      sameAs: [
+        "https://github.com/donatomolino",
+        "https://www.linkedin.com/in/donatomolino-full-stack/",
+        "https://x.com/donatomolinox",
+      ],
+    },
+  ],
+}).replace(/</g, "\\u003c");
+
+
 const projects = [
   {
     title: "FarmingCat",
@@ -90,7 +130,11 @@ const capabilities = [
     <meta name="generator" content={generator} />
     <title>Donato Molino — Product Engineer</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={site} />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+    <meta name="author" content="Donato Molino" />
+    <meta property="og:site_name" content="Donato Molino" />
+    <script type="application/ld+json" set:html={siteGraph} />
+    <link rel="canonical" href={homepageUrl} />
     <meta property="og:title" content="Donato Molino — Product Engineer" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content={description} />

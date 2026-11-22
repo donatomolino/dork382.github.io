@@ -62,6 +62,25 @@ const principles = [
 const description =
   "The Donnie Manifesto — ten principles for building technology that is simple, open, human and worth making.";
 const socialImage = new URL("/manifesto-og.png", Astro.site);
+
+const manifestoUrl = new URL("/manifesto/", Astro.site);
+const manifestoJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "@id": manifestoUrl.toString() + "#manifesto",
+  headline: "The Donnie Manifesto",
+  description,
+  url: manifestoUrl.toString(),
+  inLanguage: "en",
+  author: {
+    "@type": "Person",
+    "@id": new URL("/#donato-molino", Astro.site).toString(),
+    name: "Donato Molino",
+    url: new URL("/", Astro.site).toString(),
+  },
+  isAccessibleForFree: true,
+}).replace(/</g, "\\u003c");
+
 ---
 
 <!doctype html>
@@ -72,12 +91,16 @@ const socialImage = new URL("/manifesto-og.png", Astro.site);
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>The Donnie Manifesto — Donato Molino</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={new URL("/manifesto", Astro.site)} />
+    <meta name="author" content="Donato Molino" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta property="og:site_name" content="Donato Molino" />
+    <script type="application/ld+json" set:html={manifestoJsonLd} />
+    <link rel="canonical" href={manifestoUrl} />
     <meta property="og:title" content="The Donnie Manifesto" />
     <meta property="og:type" content="article" />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImage} />
-    <meta property="og:url" content={new URL("/manifesto", Astro.site)} />
+    <meta property="og:url" content={manifestoUrl} />
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>

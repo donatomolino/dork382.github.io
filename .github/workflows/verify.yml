@@ -1,0 +1,43 @@
+name: Verify Website Build
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Build production site
+        run: npm run build
+      - name: Check generated discovery files
+        run: |
+          test -f dist/sitemap.xml
+          test -f dist/robots.txt
+          test -f dist/llms.txt
+          test -f dist/blog/rss.xml
+          test -f dist/blog/it/index.html
+          test -f dist/blog/en/index.html
+          test -f dist/blog/it/il-futuro-del-tech-2027-2050/index.html
+          test -f dist/blog/en/the-future-of-tech-2027-2050/index.html
+          test -f dist/blog/og/it/il-futuro-del-tech-2027-2050.png
+          test -f dist/blog/og/en/the-future-of-tech-2027-2050.png
+          grep -q 'OAI-SearchBot' dist/robots.txt
+          grep -q 'https://donatomolino.it/blog/en/' dist/sitemap.xml
+          grep -q 'https://donatomolino.it/blog/it/' dist/sitemap.xml
+          grep -q '"@type":"BlogPosting"' dist/blog/en/the-future-of-tech-2027-2050/index.html
+          grep -q 'hreflang="it"' dist/blog/en/the-future-of-tech-2027-2050/index.html

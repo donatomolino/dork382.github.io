@@ -36,6 +36,7 @@ const blog = defineCollection({
     updatedDate: z.coerce.date().optional(),
     draft: z.boolean().default(false),
     tags: z.array(z.string()).default([]),
+    sources: z.array(z.url()).default([]),
   }),
 });
 
