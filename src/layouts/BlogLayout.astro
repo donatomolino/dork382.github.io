@@ -7,16 +7,17 @@ interface Props {
   description: string;
   canonicalPath: string;
   type?: "website" | "article";
+  lang?: "en" | "it";
   publishedAt?: Date;
   updatedAt?: Date;
 }
-const { title, description, canonicalPath, type = "website", publishedAt, updatedAt } = Astro.props;
+const { title, description, canonicalPath, type = "website", lang = "en", publishedAt, updatedAt } = Astro.props;
 const base = Astro.site ?? new URL("https://donatomolino.it");
 const canonical = new URL(canonicalPath, base).toString();
 const socialImage = new URL("/og.png", base).toString();
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -30,6 +31,18 @@ const socialImage = new URL("/og.png", base).toString();
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
+    {type === "article" && <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: title,
+      description,
+      inLanguage: lang,
+      url: canonical,
+      datePublished: publishedAt?.toISOString(),
+      dateModified: (updatedAt ?? publishedAt)?.toISOString(),
+      author: { "@type": "Person", name: "Donato Molino", url: new URL("/", base).toString() },
+      image: socialImage,
+    })} />}
     {publishedAt && <meta property="article:published_time" content={publishedAt.toISOString()} />}
     {updatedAt && <meta property="article:modified_time" content={updatedAt.toISOString()} />}
   </head>
