@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="481" viewBox="0 0 1000 481" role="img" aria-labelledby="title desc">
+<title id="title">Agenti AI: quanto sanno usare un computer?</title><desc id="desc">Successo su OSWorld, benchmark di azioni su sistemi operativi AI, 2024: 5%, AI, 2025: 66.3%, Riferimento umano: 72.35% Misura uno specifico benchmark, non l'affidabilità generale degli agenti.</desc>
+<rect width="1000" height="481" fill="#f2f1ed"/>
+<text x="48" y="64" font-family="Arial,Helvetica,sans-serif" font-size="35" font-weight="800" letter-spacing="-1.1" fill="#11110f">Agenti AI: quanto sanno usare un computer?</text>
+<text x="48" y="98" font-family="Arial,Helvetica,sans-serif" font-size="16" fill="#44443f">Successo su OSWorld, benchmark di azioni su sistemi operativi</text><text x="48" y="175" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#11110f">AI, 2024</text>
+<rect x="260" y="150" width="600" height="40" fill="#dfded9"/>
+<rect x="260" y="150" width="30" height="40" fill="#11110f"/>
+<text x="302" y="177" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="800" fill="#11110f">~5%</text><text x="48" y="260" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#11110f">AI, 2025</text>
+<rect x="260" y="235" width="600" height="40" fill="#dfded9"/>
+<rect x="260" y="235" width="398" height="40" fill="#ed1c24"/>
+<text x="670" y="262" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="800" fill="#11110f">66,3%</text><text x="48" y="345" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="700" fill="#11110f">Riferimento umano</text>
+<rect x="260" y="320" width="600" height="40" fill="#dfded9"/>
+<rect x="260" y="320" width="434" height="40" fill="#686861"/>
+<text x="706" y="347" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="800" fill="#11110f">72,35%</text><line x1="48" y1="415" x2="952" y2="415" stroke="#11110f" stroke-width="2"/>
+<text x="48" y="443" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="#11110f">Fonte: Stanford HAI, AI Index 2026</text>
+<text x="48" y="465" font-family="Arial,Helvetica,sans-serif" font-size="13" fill="#595954">Misura uno specifico benchmark, non l'affidabilità generale degli agenti.</text>
+</svg>
