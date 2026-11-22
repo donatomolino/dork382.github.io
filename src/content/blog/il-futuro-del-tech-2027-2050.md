@@ -6,6 +6,16 @@ slug: il-futuro-del-tech-2027-2050
 translationKey: future-tech
 pubDate: 2026-11-22
 draft: false
+sources:
+  - https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance
+  - https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025
+  - https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027
+  - https://iot-analytics.com/Number-Connected-Iot-Devices/
+  - https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/
+  - https://www.w3.org/TR/activitypub/
+  - https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation
+  - https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en
+  - https://digital-strategy.ec.europa.eu/en/policies/data-act
 tags:
   - Futuro
   - Intelligenza artificiale
