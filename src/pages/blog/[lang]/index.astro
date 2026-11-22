@@ -9,7 +9,8 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as "it" | "en";
 const t = lang === "it" ? {
-  title: "Appunti sul futuro.",
+  headOne: "Appunti sul",
+  headTwo: "futuro.",
   eyebrow: "01 / Scrittura",
   tag: "Idee, esperimenti e prospettive",
   description: "Note su quello che costruisco, le idee che provo e ciò che penso possa arrivare dopo.",
@@ -19,11 +20,13 @@ const t = lang === "it" ? {
   empty: "Il primo articolo è in preparazione.",
   emptyBody: "Questo spazio raccoglierà idee, esperimenti e appunti dal lavoro.",
   start: "02 / Da dove iniziare",
-  end: "Meno rumore. Più cose reali.",
+  endOne: "Meno rumore.",
+  endTwo: "Più cose reali.",
   manifesto: "Leggi il manifesto",
   seo: "Pensieri su ingegneria del prodotto, software, AI, progetti indipendenti e tecnologia.",
 } : {
-  title: "Things worth thinking about.",
+  headOne: "Things worth",
+  headTwo: "thinking about.",
   eyebrow: "01 / Writing",
   tag: "Ideas, experiments & perspective",
   description: "Notes from making things. What works, what doesn't, and what might come next.",
@@ -33,7 +36,8 @@ const t = lang === "it" ? {
   empty: "The first note is still being written.",
   emptyBody: "This space is ready for ideas, experiments and things learned along the way.",
   start: "02 / A starting point",
-  end: "Less noise. More making.",
+  endOne: "Less noise.",
+  endTwo: "More making.",
   manifesto: "Read the manifesto",
   seo: "Thoughts on product engineering, software, AI, independent projects and technology.",
 };
@@ -56,7 +60,7 @@ const formatDate = (date: Date) =>
     <div class="blog-hero-top">
       <p>{t.eyebrow}</p><p>{t.tag}</p>
     </div>
-    <h1 id="blog-title">{t.title}</h1>
+    <h1 id="blog-title">{t.headOne}<br /><span>{t.headTwo}</span></h1>
     <div class="blog-hero-bottom">
       <p>{t.description}</p><span>{t.journal}</span>
     </div>
@@ -93,7 +97,7 @@ const formatDate = (date: Date) =>
   </section>
   <aside class="blog-endcap">
     <p>{t.start}</p>
-    <h2>{t.end}</h2>
+    <h2>{t.endOne}<br />{t.endTwo}</h2>
     <a href="/manifesto">{t.manifesto} <span aria-hidden="true">↗</span></a>
   </aside>
 </BlogLayout>
