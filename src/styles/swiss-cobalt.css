@@ -488,3 +488,108 @@
     transform: none;
   }
 }
+
+
+/* Native disclosure: "Let's talk" opens real contact channels without JS. */
+.home-page .contact-disclosure {
+  grid-column: 7 / -1;
+  align-self: end;
+  width: 100%;
+  min-width: 0;
+}
+.home-page .contact-disclosure > summary {
+  grid-column: auto;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.home-page .contact-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+.home-page .contact-disclosure > summary:focus-visible {
+  outline: 2px solid var(--swiss-blue);
+  outline-offset: 5px;
+}
+.home-page .contact-disclosure-indicator {
+  display: inline-block;
+  font-size: .8em;
+  font-weight: 500;
+  line-height: 1;
+  transform-origin: center;
+  transition: transform 180ms ease;
+}
+.home-page .contact-disclosure[open] .contact-disclosure-indicator {
+  transform: rotate(45deg);
+}
+.home-page .contact-methods {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  border-bottom: 2px solid var(--swiss-ink);
+}
+.home-page .contact-method {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto;
+  gap: 16px;
+  align-items: center;
+  min-width: 0;
+  padding: 19px 8px;
+  border-top: 1px solid var(--swiss-ink);
+  text-decoration: none;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+.home-page .contact-method:hover,
+.home-page .contact-method:focus-visible {
+  background: var(--swiss-blue-lighter);
+}
+.home-page .contact-method-label {
+  color: var(--swiss-blue);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+.home-page .contact-method-value {
+  color: var(--swiss-ink);
+  font-size: clamp(15px, 1.45vw, 20px);
+  font-weight: 630;
+  letter-spacing: -.035em;
+  overflow-wrap: anywhere;
+}
+.home-page .contact-method-arrow {
+  color: var(--swiss-blue);
+  font-size: 22px;
+  transition: transform 180ms ease;
+}
+.home-page .contact-method:hover .contact-method-arrow,
+.home-page .contact-method:focus-visible .contact-method-arrow {
+  transform: translate(3px, -3px);
+}
+@media (max-width: 680px) {
+  .home-page .contact-disclosure {
+    grid-column: 1 / -1;
+  }
+  .home-page .contact-method {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 9px 12px;
+    padding: 18px 4px;
+  }
+  .home-page .contact-method-label {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .home-page .contact-method-value {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .home-page .contact-method-arrow {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-page .contact-disclosure-indicator,
+  .home-page .contact-method,
+  .home-page .contact-method-arrow {
+    transition: none !important;
+  }
+}
