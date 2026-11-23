@@ -11,6 +11,11 @@ function initIntro() {
 
   intro.setAttribute("aria-hidden", "false");
   const button = intro.querySelector<HTMLButtonElement>("[data-intro-skip]");
+  const background = Array.from(document.querySelectorAll<HTMLElement>(
+    "body > .home-header, body > main, body > .home-footer, body > .home-skip"
+  ));
+  background.forEach((element) => { element.inert = true; });
+  button?.focus({ preventScroll: true });
   let finished = false;
   let startExit: number;
   let endExit: number;
@@ -29,6 +34,10 @@ function initIntro() {
         document.documentElement.classList.remove("intro-playing", "intro-leaving");
         intro.setAttribute("aria-hidden", "true");
       }, 260);
+    }
+    background.forEach((element) => { element.inert = false; });
+    if (document.activeElement === button) {
+      document.querySelector<HTMLAnchorElement>(".home-skip")?.focus({ preventScroll: true });
     }
     document.removeEventListener("keydown", onKeyDown);
   };
