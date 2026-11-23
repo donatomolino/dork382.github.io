@@ -564,6 +564,20 @@
 .home-page .contact-method:focus-visible .contact-method-arrow {
   transform: translate(3px, -3px);
 }
+/* Discord is shown as a username, not an invented direct-profile URL. */
+.home-page .contact-method--static {
+  cursor: text;
+}
+.home-page .contact-method--static:hover {
+  background: transparent;
+}
+.home-page .contact-method-note {
+  color: var(--swiss-muted);
+  font-size: 11px;
+  font-weight: 670;
+  letter-spacing: .015em;
+  text-align: right;
+}
 @media (max-width: 680px) {
   .home-page .contact-disclosure {
     grid-column: 1 / -1;
@@ -584,6 +598,13 @@
   .home-page .contact-method-arrow {
     grid-column: 2;
     grid-row: 2;
+  }
+  .home-page .contact-method-note {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    max-width: 12ch;
+    text-align: right;
   }
 }
 @media (prefers-reduced-motion: reduce) {
