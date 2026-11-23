@@ -71,3 +71,21 @@ jobs:
           ! grep -q 'Post Office' dist/index.html
           ! grep -q '06 projects' dist/index.html
           ! grep -q 'donatomolino@europe.com' dist/index.html
+
+          # Eight referenced charts must be valid static assets, not JS widgets.
+          for name in enterprise-agents-survey agents-osworld enterprise-agent-forecast saas-exposure-2030 interoperability-milestones generated-interface-flow iot-devices smart-glasses; do
+            test -f "dist/blog/charts/en/$name.svg"
+            grep -q "/blog/charts/en/$name.svg" dist/blog/en/the-future-of-tech-2027-2050/index.html
+          done
+          grep -q '2026-11-23' dist/blog/en/the-future-of-tech-2027-2050/index.html
+          grep -q 'Chart 8' dist/blog/en/the-future-of-tech-2027-2050/index.html
+          grep -q 'Sources and methodology' dist/blog/en/the-future-of-tech-2027-2050/index.html
+          grep -q 'Up to $234B' dist/blog/charts/en/saas-exposure-2030.svg
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          for chart in Path('dist/blog/charts/en').glob('*.svg'):
+              ET.parse(chart)
+          print('English editorial SVG charts parse as XML')
+          PY
+

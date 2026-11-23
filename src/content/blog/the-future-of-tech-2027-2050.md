@@ -5,17 +5,23 @@ lang: en
 slug: the-future-of-tech-2027-2050
 translationKey: future-tech
 pubDate: 2026-11-22
+updatedDate: 2026-11-23
 draft: false
 sources:
   - https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance
   - https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025
   - https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027
-  - https://iot-analytics.com/Number-Connected-Iot-Devices/
+  - https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence
+  - https://iot-analytics.com/number-connected-iot-devices/
   - https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/
   - https://www.w3.org/TR/activitypub/
   - https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation
   - https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en
   - https://digital-strategy.ec.europa.eu/en/policies/data-act
+  - https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en
+  - https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays
+  - https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/
+  - https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/
 tags:
   - Future
   - Artificial Intelligence
@@ -29,17 +35,25 @@ This is my vision, starting in 2027 and extending to more distant scenarios arou
 
 The dates are approximate. Several changes will happen in parallel, and some may never happen at all.
 
+**How to read this essay:** the charts distinguish measured results, survey responses, analyst forecasts, and my own conceptual diagrams. A forecast is not a fact about the future, and a diagram is not a statistic. The examples below are either documented current capabilities or explicitly hypothetical product scenarios.
+
 ## 2027–2030 Personal AI, not just chatbots
 
 I imagine each of us having one or more personal AIs capable of managing information, devices, services, and everyday tasks. Not just answering questions, but agents that can work with real tools: read a document, compare options, fill out a form, query a service, prepare something, and ask for approval when necessary.
 
 The first signs are already here. In the [McKinsey *State of AI 2025* survey](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025), **23%** of respondents said their organizations were scaling at least one agentic AI system; another **39%** reported experimenting with agents. This survey covers organizations, not individuals. It does not mean 62% of people already have personal AI agents.
 
+![Two separate 2025 survey figures: 23% of respondents report their organizations scaling agentic AI, and an additional 39% report experimenting.](/blog/charts/en/enterprise-agents-survey.svg)
+
+*Chart 1 — Organizational adoption signals, not consumer adoption. Source: [McKinsey, State of AI 2025](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025), global survey of 1,993 respondents, June–July 2025. The groups describe reported stages; they are not a forecast.*
+
 The ability to operate a computer has also improved dramatically. The [Stanford AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance) reports a **66.3%** success rate on the OSWorld benchmark in 2025, up from roughly **5%** in 2024. The human reference score is **72.35%**. That's extraordinary progress, but it also shows that an agent may still fail on about one in three tasks in this particular test.
 
 ![Chart comparing AI performance on the OSWorld benchmark: roughly 5% in 2024, 66.3% in 2025, and a human reference of 72.35%.](/blog/charts/en/agents-osworld.svg)
 
-*Chart 1 — Data: [Stanford HAI, AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance). This benchmark measures specific computer tasks, not the overall reliability of every AI agent.*
+*Chart 2 — Data: [Stanford HAI, AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance). This benchmark measures specific computer tasks, not the overall reliability of every AI agent.*
+
+**A concrete example:** I ask my personal AI to plan a weekend trip. It reads a train timetable, compares hotels against my budget, proposes two itineraries, and prepares a reservation. Crucially, it **doesn't pay or book until I approve**. This is a hypothetical end-to-end scenario, not a claim that today's agents can do it reliably.
 
 For me, the most interesting part is independence from providers. I want an AI that keeps its memory and context even when I switch models, and that can operate locally or in the cloud. Open standards are moving in a promising direction: in December 2025, the [Model Context Protocol joined the Agentic AI Foundation](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation), under the Linux Foundation.
 
@@ -53,13 +67,27 @@ Today, we often adapt how we work to the screens of the software we bought. I im
 
 Code generation is reducing the cost of building interfaces and automations. In 2025, Gartner [forecast](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) that 33% of enterprise software applications would include agentic AI by 2028, up from less than 1% in 2024. That's still a **projection**, not a measurement of how long applications actually last.
 
+![Gartner's projected share of enterprise apps with agentic AI: below 1% in 2024, and 33% forecast for 2028.](/blog/charts/en/enterprise-agent-forecast.svg)
+
+*Chart 3 — Source: [Gartner, June 2025](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027). The 2024 figure is **less than 1%** and drawn as an upper-bound marker; 2028 is a forecast, not observed adoption.*
+
 My bet isn't that everything will be constantly rewritten. That would be a maintenance nightmare. It's that **the visible layer of software will become cheaper to change**, while data contracts, permissions, integrations, controls, and infrastructure will need to become much more stable. In regulated industries, audits, security, and reliability will still limit how quickly things can change.
+
+Here's how I picture it in commerce: a retailer creates a temporary dashboard for a two-week campaign. The interface is tailored to the team running the launch, but inventory, customer records, payment permissions, and order APIs remain in established systems. When the campaign ends, the dashboard can go away **without taking the data with it**.
+
+This isn't just about developer productivity. In July 2026, [Gartner estimated](https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence) that **up to $234 billion in enterprise application SaaS spending**, approximately **20%** of that category, could be exposed to agentic arbitrage by 2030: agents doing work across tools without users opening each interface. That money is **exposed to a different way of buying software**, not already lost revenue.
+
+![Diagram of Gartner's 2030 enterprise application SaaS exposure estimate: up to $234 billion, roughly 20% of the category.](/blog/charts/en/saas-exposure-2030.svg)
+
+*Chart 4 — Source: [Gartner, July 2026](https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence). Market exposure is an analyst estimate about business-model pressure, **not a prediction of $234B in losses**.*
 
 ## 2028–2033 Phones, tablets, and PCs converge
 
 I think that for most everyday tasks, the smartphone will eventually become the only computer we need: a phone in our pocket, a tablet when unfolded, and a full desktop when connected to a monitor.
 
 This isn't science fiction. In March 2026, [Google documented](https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays) Android desktop experiences on external monitors, developed in collaboration with Samsung. The problem is no longer demonstrating that a phone can show desktop windows. It's making the whole experience reliable enough to replace a laptop.
+
+**What I mean in practice:** I start editing a document on my phone during a train ride. At home I connect it to a monitor and keyboard, and the same device opens a multi-window workspace. Google and Samsung's [Android 16 connected-display work](https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays) is a real technical step in this direction. That doesn't mean every Android phone supports the feature or that every desktop application runs there.
 
 Real obstacles remain: professional applications, peripherals, battery life, heat dissipation, heavy multitasking, hardware architectures, and compatibility. Game developers, 3D artists, and people working in specialized environments may still need dedicated workstations.
 
@@ -73,6 +101,12 @@ I should be able to use one messaging app while somebody else uses a completely 
 
 Some pieces already exist. [ActivityPub](https://www.w3.org/TR/activitypub/) has been a W3C recommendation for decentralized social networking since 2018. The EU's [Digital Markets Act](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en) requires designated large messaging platforms to provide specific forms of interoperability; the first third-party services interoperable with WhatsApp arrived in November 2025. In the agent ecosystem, standards like MCP address how tools and data can connect.
 
+![Timeline of interoperability milestones: ActivityPub in 2018, EU Data Act and third-party WhatsApp chats in 2025, MCP foundation in 2025, and EU identity wallets due by end of 2026.](/blog/charts/en/interoperability-milestones.svg)
+
+*Chart 5 — Selected, independently sourced milestones: [W3C ActivityPub](https://www.w3.org/TR/activitypub/), [EU Data Act](https://digital-strategy.ec.europa.eu/en/policies/data-act), [EU messaging interoperability](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en), [Linux Foundation / MCP](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation), and [EU Digital Identity](https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en). The last item is a regulatory availability deadline, not evidence of universal adoption.*
+
+**A concrete distinction:** two people can follow each other through compatible ActivityPub-powered social services, such as Mastodon servers, even when they use different services. That's not the same as being able to message freely between every popular chat app. The [EU's November 2025 WhatsApp integrations](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en) are a narrower, regulated step, with important limitations.
+
 These are signals, not guarantees. Interoperability raises challenges around moderation, spam, encryption, identity, and business incentives. Platforms have powerful commercial reasons to keep people inside their ecosystems.
 
 Still, I believe value will gradually move **from having to use the same app toward being free to choose the interface you prefer**.
@@ -83,7 +117,13 @@ Today, we use products made of predefined screens that are more or less identica
 
 We are not starting from zero. [Google Research has explored dynamically generated interfaces](https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/), while the open [A2UI project](https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/) defines a way to describe agent-produced interfaces and render them across different frameworks.
 
-Imagine opening my AI and asking it to compare household expenses. Instead of navigating three different apps, it generates a chart, a table, and two useful actions. When I change my goal, the interface changes too.
+![Concept diagram showing a generated-interface workflow: user request, permissioned data, approved components, and explicit human confirmation.](/blog/charts/en/generated-interface-flow.svg)
+
+*Chart 6 — **Conceptual design**, not measured adoption or a live product. Informed by [Google Research's generative UI work](https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/) and the [A2UI project](https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/).*
+
+Imagine opening my AI and asking it to compare household expenses. Instead of navigating three different apps, it generates a chart, a table, and two useful actions. More specifically, I could ask: *“Why was my electricity bill higher this month?”* It would request permission to read the relevant bills and meter data, show a breakdown of consumption versus tariffs, and offer a comparison with last month. Any payment or supplier change would still require an explicit decision from me.
+
+Google's own [A2UI examples](https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/) show agents returning structured interactive components instead of plain chat text. That's a real technical direction, although secure cross-provider execution remains harder than displaying a useful chart. When I change my goal, the interface changes too.
 
 This doesn't mean that every pixel should be improvised. Sensitive operations will still need dependable components, accessibility, consistency, and explicit confirmation. **An interface can be dynamic without being unpredictable.**
 
@@ -95,7 +135,9 @@ One number puts the scale into perspective. According to [IoT Analytics](https:/
 
 ![Chart showing global IoT connections: 18.5 billion in 2024, an estimated 21.1 billion in 2025, and a forecast 39 billion in 2030.](/blog/charts/en/iot-devices.svg)
 
-*Chart 2 — [IoT Analytics](https://iot-analytics.com/Number-Connected-Iot-Devices/). These totals include industry, infrastructure, and other connected devices—not just wearables. The 2030 figure is a forecast.*
+*Chart 7 — [IoT Analytics](https://iot-analytics.com/Number-Connected-Iot-Devices/). These totals include industry, infrastructure, and other connected devices—not just wearables. The 2030 figure is a forecast.*
+
+A useful home example doesn't need to be futuristic: a door sensor, a temperature sensor, and a small local server can already provide a simple activity history and automations. My longer-term bet is that a personal AI could connect those signals to genuinely useful tasks **without sending an entire household's raw data to a third party**. That's a design goal, not something to assume by default.
 
 But sensors do not automatically produce useful insights. Inaccurate or out-of-context data can be worse than no data at all. And when a system knows your habits, location, and personal signals, privacy and security cannot be afterthoughts.
 
@@ -107,6 +149,8 @@ Today, our accounts, preferences, files, and histories are scattered across serv
 
 Europe is already moving in this direction. The [European Digital Identity Wallet](https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en) is intended to be made available by member states by the end of 2026, offering ways to identify ourselves and share specific credentials. The [Data Act](https://digital-strategy.ec.europa.eu/en/policies/data-act), applicable since September 2025, also introduces measures for accessing data from connected products and switching cloud providers.
 
+Consider a practical use case: proving a specific qualification or eligibility to a service without creating another full account. This is the narrower problem digital credentials can help with. It is very different from handing over a complete profile of who I am.
+
 There is an important distinction: **an identity wallet is not the same thing as a universal profile containing every conversation, preference, and AI memory**. That broader kind of portability remains to be built, both technically and legally.
 
 My prediction is that the center of gravity will gradually shift from platform accounts toward user control. It won't take just one standard, and it won't happen everywhere at the same speed.
@@ -114,6 +158,8 @@ My prediction is that the center of gravity will gradually shift from platform a
 ## 2035–2045 Truly spatial augmented reality
 
 I don't think the endgame for AR is having 2D notifications and windows floating in front of our eyes. I expect digital objects that understand the geometry of the world, stay anchored in place, and respond to physical spaces.
+
+Picture fixing a machine: instead of looking down at a video, I see the correct component highlighted in its actual physical location, a torque value beside the fastener, and the next step only after confirming the previous one. **That's an illustrative future workflow**, not something I assume consumer AR glasses can deliver reliably today.
 
 Think of instructions attached to something I'm repairing, information about an object I'm looking at, or virtual work surfaces placed wherever I need them. That's very different from projecting a tiny screen into your field of vision.
 
@@ -131,7 +177,9 @@ The market is moving, although we're still far from a replacement. IDC forecasts
 
 ![Chart showing IDC's forecast smart-glasses shipments with and without displays in 2026 and 2030.](/blog/charts/en/smart-glasses.svg)
 
-*Chart 3 — [IDC, 2026](https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/). These are forecasts for annual shipments, not active users or the percentage of smartphones replaced.*
+*Chart 8 — [IDC, 2026](https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/). These are forecasts for annual shipments, not active users or the percentage of smartphones replaced.*
+
+The use case I find most convincing is small, frequent assistance: walking directions, a translation while traveling, or a reminder linked to a physical place, without taking out a phone. The harder question isn't whether a device can display that information. It's whether I would trust it to be comfortable, private, reliable, and socially acceptable all day.
 
 The numbers show market interest and projected growth. **They do not prove that smartphones will disappear.** For extended reading, complex work, or a private display, we may still prefer other devices.
 
@@ -150,6 +198,8 @@ I don't believe in a future without apps. I believe in one where apps are **less
 
 Of course, the opposite could happen: closed personal AIs, even more concentrated data, invasive sensors, and new dependencies on a handful of providers. Technology alone doesn't guarantee openness. That takes standards, regulation, well-designed products, and people demanding control.
 
+Imagine the full path: I ask a personal AI to organize my next trip. It accesses travel services through authorized connections, presents a temporary interface to compare routes, uses a portable credential only where necessary, and later gives me directions on whichever screen I have available. **The experience is continuous even if the apps, services, and devices behind it are not.** That's the future I'm betting on, not one magic product replacing everything.
+
 That's why the most important prediction here isn't about a device or a date.
 
 **The real value won't lie only in the software we use, but in the ability of our systems to communicate without taking away our freedom to choose.**
@@ -158,6 +208,13 @@ That's why the most important prediction here isn't about a device or a date.
 
 ### Sources and methodology
 
-I used information published by **November 22, 2026**. Each chart cites its underlying source. Estimates and market forecasts are labeled as such; the date ranges in this essay are **my personal hypotheses**, not statistical projections.
+This revision includes sources available by **November 23, 2026**. Eight charts are embedded as small static SVGs, with a direct source and a scope note beneath each. Charts 1, 2, 3, 4, 7 and 8 show reported data, survey findings or cited analyst estimates. Chart 5 is a timeline of sourced milestones; Chart 6 is a **conceptual product workflow**, not measured data.
 
-Main sources: [Stanford AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report), [McKinsey — State of AI 2025](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025), [Gartner — Agentic AI](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027), [IoT Analytics](https://iot-analytics.com/Number-Connected-Iot-Devices/), [IDC — Smart Glasses](https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/), [Android Developers](https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays), [W3C ActivityPub](https://www.w3.org/TR/activitypub/), [Linux Foundation — Agentic AI Foundation](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation), [Google Research — Generative UI](https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/), [European Commission — Digital Identity](https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en), [European Commission — Data Act](https://digital-strategy.ec.europa.eu/en/policies/data-act), and [Digital Markets Act — Interoperability](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en).
+The 2027–2050 dates are **my hypotheses**, not statistical forecasts. Enterprise surveys do not measure consumer behavior; shipment forecasts do not equal active users; and dollars **exposed** to disruption are not dollars **lost**. I deliberately keep those distinctions visible.
+
+Primary sources by subject:
+
+- **AI performance and enterprise adoption:** [Stanford AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance), [McKinsey State of AI 2025](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025), [Gartner on agents in software (2025)](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027).
+- **Software economics and interfaces:** [Gartner's July 2026 SaaS exposure estimate](https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence), [Android Developers on connected displays](https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays), [Google Research on generative UI](https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/), [Google Developers on A2UI](https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/).
+- **Protocols, digital identity and policy:** [W3C ActivityPub](https://www.w3.org/TR/activitypub/), [Linux Foundation / MCP](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation), [EU Digital Markets Act interoperability](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en), [European Digital Identity Wallet](https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en), [EU Data Act](https://digital-strategy.ec.europa.eu/en/policies/data-act).
+- **Connected devices and glasses:** [IoT Analytics](https://iot-analytics.com/number-connected-iot-devices/), [IDC smart glasses market outlook (2026)](https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/).
