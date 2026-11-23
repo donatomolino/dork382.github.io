@@ -198,7 +198,7 @@ async function checkScrolledPage() {
       const response = await route.fetch();
       const html = (await response.text()).replace(
         "</body>",
-        '<script>window.scrollTo(0, 1250);document.documentElement.dataset.scrolledTest="yes";</script></body>'
+        '<script>document.documentElement.style.scrollBehavior="auto";window.scrollTo({top:1250,behavior:"instant"});document.documentElement.dataset.scrolledTest="yes";</script></body>'
       );
       await route.fulfill({ response, body: html });
     } else {
