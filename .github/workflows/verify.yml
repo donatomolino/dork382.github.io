@@ -53,4 +53,21 @@ jobs:
           grep -q '03 / Discord' dist/index.html
           grep -q 'donatomolino@proton.me' dist/index.html
           grep -q 'Add friend on Discord' dist/index.html
+          # Approved SVG mark exists as a small favicon and in all shared headers.
+          test -f dist/favicon.svg
+          grep -q 'viewBox="200 200 850 850"' dist/favicon.svg
+          grep -q 'site-brand-mark' dist/index.html
+          grep -q 'site-brand-mark' dist/blog/en/index.html
+          grep -q 'site-brand-mark' dist/blog/it/index.html
+          grep -q 'site-brand-mark' dist/manifesto/index.html
+          # SwooshMania is the only featured product and has grounded progress labels.
+          grep -q 'id="swooshmania-title"' dist/index.html
+          grep -q 'Unique demo players' dist/index.html
+          grep -q 'Steam wishlists' dist/index.html
+          grep -q 'Planned release' dist/index.html
+          grep -q '2027' dist/index.html
+          grep -q 'September 2026' dist/index.html
+          ! grep -q 'FarmingCat' dist/index.html
+          ! grep -q 'Post Office' dist/index.html
+          ! grep -q '06 projects' dist/index.html
           ! grep -q 'donatomolino@europe.com' dist/index.html

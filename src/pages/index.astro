@@ -2,14 +2,13 @@
 import "@fontsource-variable/inter";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import farmingCatImage from "~/content/showcase/_images/farmingcat.png";
-import flowlightImage from "~/content/showcase/_images/flowlight.png";
-import postOfficeImage from "~/content/showcase/_images/postoffice.png";
 import swooshManiaImage from "~/content/showcase/_images/swooshmania.jpg";
-import thinkyImage from "~/content/showcase/_images/thinky.png";
+import BrandMark from "~/components/BrandMark.astro";
 import "~/styles/index.css";
 import "~/styles/swiss-refinement.css";
 import "~/styles/swiss-cobalt.css";
+import "~/styles/brand-mark.css";
+import "~/styles/featured-product.css";
 
 const { generator, site } = Astro;
 const description =
@@ -56,49 +55,14 @@ const siteGraph = JSON.stringify({
 }).replace(/</g, "\\u003c");
 
 
-const projects = [
-  {
-    title: "FarmingCat",
-    type: "Game / Product",
-    year: "2022—Now",
-    url: "https://store.steampowered.com/app/2003840/FarmingCat/",
-    image: farmingCatImage,
-  },
-  {
-    title: "Post Office",
-    type: "Platform / Commerce",
-    year: "2024",
-    url: "https://centroposte.com",
-    image: postOfficeImage,
-  },
-  {
-    title: "SwooshMania",
-    type: "Game / Product",
-    year: "2025",
-    url: "/swooshmania/",
-    image: swooshManiaImage,
-  },
-  {
-    title: "Thinky",
-    type: "AI / Interaction",
-    year: "2026",
-    url: "/thinky",
-    image: thinkyImage,
-  },
-  {
-    title: "Flowlight",
-    type: "Experiment / Light",
-    year: "2023",
-    url: "/e/flowlight",
-    image: flowlightImage,
-  },
-  {
-    title: "Junk Feed",
-    type: "Writing / Telegram",
-    year: "Ongoing",
-    url: "/junkfeed",
-  },
-];
+// Last figures explicitly reported in September 2026; these are not live Steamworks metrics.
+const swooshMania = {
+  steamUrl: "https://store.steampowered.com/app/3560590/SwooshMania/",
+  demoPlayers: 300,
+  approximateWishlists: 300,
+  metricsAsOf: "September 2026",
+  plannedRelease: "2027",
+};
 
 const latestPosts = (await getCollection("blog", ({ data }) =>
   !data.draft && data.lang === "en" && data.pubDate <= new Date()
@@ -137,7 +101,7 @@ const capabilities = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.svg?v=squircle" type="image/svg+xml" />
     <meta name="generator" content={generator} />
     <title>Donato Molino — Product Engineer</title>
     <meta name="description" content={description} />
@@ -157,7 +121,7 @@ const capabilities = [
     <a class="home-skip-link" href="#top">Skip to content</a>
     <header class="home-header">
       <a class="home-brand" href="#top" aria-label="Donato Molino, back to top">
-        <span class="signal-square" aria-hidden="true"></span>
+        <BrandMark />
         <span>Donato Molino</span>
       </a>
       <p class="home-role">Product Engineer<br />Based in Italy</p>
@@ -191,38 +155,56 @@ const capabilities = [
 
       <section class="work-section" id="work" aria-labelledby="work-title">
         <header class="section-header">
-          <p>01 / Selected work</p>
+          <p>01 / Featured product</p>
           <h2 id="work-title">Things made<br />to exist.</h2>
-          <p class="section-count">06 projects</p>
+          <p class="section-count">01 product</p>
         </header>
 
-        <div class="project-grid">
-          {
-            projects.map((project, index) => (
-              <a
-                class:list={["project-card", !project.image && "project-card--type"]}
-                href={project.url}
-                target={project.url.startsWith("http") ? "_blank" : undefined}
-                rel={project.url.startsWith("http") ? "noreferrer" : undefined}
-              >
-                <div class="project-visual">
-                  {project.image ? (
-                    <Image src={project.image} alt="" widths={[640, 960]} sizes="(min-width: 800px) 46vw, 100vw" />
-                  ) : (
-                    <span aria-hidden="true">JF</span>
-                  )}
-                  <span class="project-index">{(index + 1).toString().padStart(2, "0")}</span>
-                </div>
-                <div class="project-info">
-                  <h3>{project.title}</h3>
-                  <p>{project.type}</p>
-                  <p>{project.year}</p>
-                  <span aria-hidden="true">↗</span>
-                </div>
+        <article class="featured-product" aria-labelledby="swooshmania-title">
+          <a class="featured-product-visual" href="/swooshmania/" aria-label="Discover SwooshMania">
+            <Image
+              src={swooshManiaImage}
+              alt="SwooshMania — 3D time-trial game"
+              widths={[640, 960, 1440]}
+              sizes="(min-width: 760px) 55vw, 100vw"
+              loading="lazy"
+            />
+            <span class="featured-product-number" aria-hidden="true">01</span>
+          </a>
+          <div class="featured-product-content">
+            <p class="featured-product-eyebrow">Independent game / Unity · Steam</p>
+            <h3 id="swooshmania-title">SwooshMania<span class="featured-product-dot">.</span></h3>
+            <p class="featured-product-description">
+              A fast-paced 3D time-trial game built around precision, momentum and
+              leaderboards. A playable demo is available on Steam.
+            </p>
+            <dl class="featured-product-stats" aria-label="Project progress">
+              <div>
+                <dt>Unique demo players</dt>
+                <dd>{swooshMania.demoPlayers}</dd>
+              </div>
+              <div>
+                <dt>Steam wishlists</dt>
+                <dd>≈{swooshMania.approximateWishlists}</dd>
+              </div>
+              <div>
+                <dt>Planned release</dt>
+                <dd>{swooshMania.plannedRelease}</dd>
+              </div>
+            </dl>
+            <p class="featured-product-note">
+              Player and wishlist figures last reported {swooshMania.metricsAsOf}; not live counts.
+            </p>
+            <div class="featured-product-actions">
+              <a class="featured-product-primary" href={swooshMania.steamUrl} target="_blank" rel="noopener noreferrer">
+                Wishlist on Steam <span aria-hidden="true">↗</span>
               </a>
-            ))
-          }
-        </div>
+              <a class="featured-product-secondary" href="/swooshmania/">
+                Explore the game <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </article>
       </section>
 
       {latestPosts.length > 0 && (
