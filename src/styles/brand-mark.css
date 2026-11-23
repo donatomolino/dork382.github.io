@@ -1,0 +1,58 @@
+/*
+ * Approved Swiss squircle identity.
+ * Native cross-document view transitions enhance supported browsers only;
+ * no animation gate, page-covering loader or JavaScript is required.
+ */
+.site-brand-mark {
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  flex: none;
+  overflow: visible;
+  vertical-align: middle;
+  transform-origin: center;
+  transition: transform 220ms cubic-bezier(.2,.8,.2,1);
+}
+.site-brand-mark .site-mark-red,
+.site-brand-mark .site-mark-blue {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 240ms cubic-bezier(.2,.8,.2,1);
+}
+:is(.home-brand, .wordmark):hover .site-brand-mark,
+:is(.home-brand, .wordmark):focus-visible .site-brand-mark {
+  transform: translateY(-1px) rotate(-5deg);
+}
+:is(.home-brand, .wordmark):hover .site-mark-red,
+:is(.home-brand, .wordmark):focus-visible .site-mark-red {
+  transform: scale(1.12);
+}
+:is(.home-brand, .wordmark):hover .site-mark-blue,
+:is(.home-brand, .wordmark):focus-visible .site-mark-blue {
+  transform: translate(8px, -8px);
+}
+
+/* Shared-element transition is opt-in and ignored by unsupported browsers. */
+@media (prefers-reduced-motion: no-preference) {
+  .site-brand-mark {
+    view-transition-name: dm-identity;
+  }
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-old(dm-identity),
+  ::view-transition-new(dm-identity) {
+    animation-duration: 160ms;
+    animation-timing-function: ease-out;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-brand-mark,
+  .site-brand-mark .site-mark-red,
+  .site-brand-mark .site-mark-blue {
+    transition: none !important;
+    transform: none !important;
+  }
+}
