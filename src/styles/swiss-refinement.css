@@ -1,0 +1,612 @@
+/*
+ * Swiss International refinement.
+ *
+ * Intent: preserve the original site's typography, rectilinear grid, paper,
+ * red/ink identity and actual content. Tighten vertical rhythm and strengthen
+ * restrained interaction without introducing a new design system.
+ *
+ * No JS, no animation gate, no 3D, no external assets.
+ */
+
+.home-page {
+  --swiss-blue: #254ac4;
+  --swiss-muted: #575a57;
+  --swiss-faint: #e6e4dd;
+  --swiss-hover: #eae8e1;
+}
+
+.home-page ::selection {
+  background: #d7dfff;
+  color: var(--swiss-ink);
+}
+
+.home-page :is(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+/* The same Swiss grid and typography, with less empty vertical space. */
+.home-page :is(
+  .home-header,
+  .home-hero,
+  .work-section,
+  .manifesto-callout,
+  .capabilities-section,
+  .about-section,
+  .contact-section,
+  .home-footer
+) {
+  width: min(100% - 48px, 1420px);
+}
+
+.home-page .home-header {
+  min-height: 76px;
+  border-bottom-width: 2px;
+}
+
+.home-page .signal-square {
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.home-page .home-brand:hover .signal-square {
+  background: var(--swiss-blue);
+  transform: rotate(-8deg);
+}
+
+.home-page .home-header nav a {
+  position: relative;
+  padding: 9px 0;
+  text-decoration: none;
+}
+
+.home-page .home-header nav a::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 2px;
+  height: 2px;
+  background: var(--swiss-blue);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+
+.home-page .home-header nav a:hover,
+.home-page .home-header nav a:focus-visible {
+  color: var(--swiss-ink);
+}
+
+.home-page .home-header nav a:hover::after,
+.home-page .home-header nav a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.home-page :is(a, button):focus-visible {
+  outline: 2px solid var(--swiss-blue);
+  outline-offset: 4px;
+}
+
+/* Keep the name-based hero: the mockup is not a content specification. */
+.home-page .home-hero {
+  min-height: min(700px, calc(86svh - 76px));
+  padding: clamp(30px, 4vw, 56px) 0 28px;
+  row-gap: 16px;
+}
+
+.home-page .home-hero h1 {
+  font-size: clamp(74px, 12.8vw, 184px);
+  line-height: .79;
+}
+
+.home-page .hero-copy {
+  font-size: clamp(25px, 2.95vw, 42px);
+  line-height: 1.12;
+}
+
+.home-page .hero-meta {
+  border-top-width: 1px;
+  gap: 7px;
+  color: var(--swiss-muted);
+}
+
+.home-page .hero-meta span:first-child {
+  color: var(--swiss-blue);
+}
+
+.home-page .scroll-cue {
+  width: max-content;
+  padding: 10px 0;
+  border-bottom: 2px solid var(--swiss-red);
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.home-page .scroll-cue:hover {
+  color: var(--swiss-blue);
+  border-color: var(--swiss-blue);
+}
+
+/* Project presentation stays an uncompromising, two-column Swiss grid. */
+.home-page .section-header {
+  padding: clamp(54px, 6vw, 92px) 0 clamp(32px, 3.7vw, 54px);
+}
+
+.home-page .section-header h2 {
+  font-size: clamp(52px, 6.5vw, 96px);
+  line-height: .94;
+}
+
+.home-page .project-visual {
+  aspect-ratio: 16 / 9.5;
+}
+
+.home-page .project-card {
+  position: relative;
+  isolation: isolate;
+  transition: background-color 180ms ease;
+}
+
+.home-page .project-card::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: -1px;
+  border: 3px solid var(--swiss-blue);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.home-page .project-card:hover::after,
+.home-page .project-card:focus-visible::after {
+  opacity: 1;
+}
+
+.home-page .project-card:hover .project-visual img,
+.home-page .project-card:focus-visible .project-visual img {
+  filter: grayscale(0) contrast(1.02);
+  transform: scale(1.028);
+}
+
+.home-page .project-visual img {
+  transition: filter 260ms ease, transform 340ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.home-page .project-info {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr) minmax(0, .8fr) auto;
+  min-height: 92px;
+  padding: 17px 20px;
+  transition: background-color 180ms ease;
+}
+
+.home-page .project-card:hover .project-info,
+.home-page .project-card:focus-visible .project-info {
+  background: var(--swiss-hover);
+}
+
+.home-page .project-info h3 {
+  font-size: clamp(24px, 2.2vw, 34px);
+  overflow-wrap: anywhere;
+}
+
+.home-page .project-info > span {
+  display: inline-block;
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+.home-page .project-card:hover .project-info > span,
+.home-page .project-card:focus-visible .project-info > span {
+  color: var(--swiss-blue);
+  transform: translate(3px, -3px);
+}
+
+.home-page .project-index {
+  width: 38px;
+  top: 12px;
+  left: 12px;
+}
+
+/* Manifesto and skills: retain the strong dividers; shorten the journey. */
+.home-page .manifesto-callout {
+  min-height: 0;
+  padding: clamp(74px, 8vw, 116px) 0;
+  row-gap: 44px;
+}
+
+.home-page .manifesto-callout h2 {
+  font-size: clamp(62px, 9.8vw, 145px);
+  line-height: .87;
+}
+
+.home-page .manifesto-callout > p {
+  font-size: clamp(25px, 3vw, 44px);
+  line-height: 1.13;
+}
+
+.home-page .manifesto-callout > a {
+  border-top-width: 2px;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.home-page .manifesto-callout > a:hover,
+.home-page .manifesto-callout > a:focus-visible {
+  color: var(--swiss-blue);
+  border-color: var(--swiss-blue);
+}
+
+.home-page .capabilities-grid article {
+  min-height: 315px;
+  padding: 19px;
+  transition: background-color 180ms ease;
+}
+
+.home-page .capabilities-grid article:hover {
+  background: var(--swiss-faint);
+}
+
+.home-page .capabilities-grid h3 {
+  margin: 35px 0 auto;
+  font-size: clamp(25px, 2.2vw, 33px);
+  line-height: 1.07;
+}
+
+.home-page .capabilities-grid ul {
+  margin-top: 25px;
+  border-top-width: 1px;
+  font-size: 12px;
+}
+
+/* About/contact were previously extremely tall on both screen sizes. */
+.home-page .about-section {
+  padding: clamp(66px, 8vw, 110px) 0;
+  row-gap: 25px;
+}
+
+.home-page .about-section h2 {
+  font-size: clamp(54px, 7.2vw, 108px);
+  line-height: .95;
+}
+
+.home-page .about-copy {
+  margin-top: clamp(38px, 5vw, 68px);
+}
+
+.home-page .about-copy p {
+  max-width: 36ch;
+  font-size: clamp(17px, 1.45vw, 21px);
+  line-height: 1.58;
+}
+
+.home-page .contact-section {
+  min-height: 0;
+  padding: clamp(70px, 8.5vw, 124px) 0;
+  row-gap: clamp(36px, 4vw, 70px);
+}
+
+.home-page .contact-section h2 {
+  font-size: clamp(64px, 10vw, 150px);
+  line-height: .86;
+}
+
+.home-page .contact-link {
+  border-top-width: 5px;
+  padding: 13px 0;
+  font-size: clamp(28px, 3.6vw, 52px);
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.home-page .contact-link span {
+  transition: transform 180ms ease;
+}
+
+.home-page .contact-link:hover,
+.home-page .contact-link:focus-visible {
+  color: var(--swiss-blue);
+  border-color: var(--swiss-blue);
+}
+
+.home-page .contact-link:hover span,
+.home-page .contact-link:focus-visible span {
+  transform: translate(4px, -4px);
+}
+
+.home-page .home-footer {
+  min-height: 94px;
+}
+
+/* Apply the same small refinement to both existing language variants. */
+.blog-page :is(
+  .blog-header, .blog-footer, .blog-hero,
+  .blog-index, .blog-endcap, .blog-article
+) {
+  width: min(100% - 48px, 1420px);
+}
+
+.blog-page .blog-hero {
+  min-height: 0;
+  padding: clamp(42px, 5vw, 76px) 0;
+  gap: clamp(34px, 4.5vw, 68px);
+}
+
+.blog-page .blog-hero h1 {
+  margin: 0;
+  font-size: clamp(61px, 9.1vw, 126px);
+  line-height: .92;
+}
+
+.blog-page .blog-hero-bottom p {
+  font-size: clamp(22px, 2.45vw, 35px);
+  line-height: 1.18;
+}
+
+.blog-page .blog-index {
+  padding: clamp(50px, 6vw, 92px) 0;
+}
+
+.blog-page .blog-index-heading h2 {
+  font-size: clamp(48px, 6vw, 83px);
+  line-height: .98;
+}
+
+.blog-page .blog-index-heading {
+  padding-bottom: 27px;
+}
+
+.blog-page .blog-post-row {
+  padding: clamp(22px, 2.5vw, 36px) 12px;
+  transition: background-color 180ms ease, padding-inline 180ms ease;
+}
+
+.blog-page .blog-post-row:hover,
+.blog-page .blog-post-row:focus-visible {
+  background: var(--swiss-hover);
+  padding-inline: 18px;
+}
+
+.blog-page .blog-row-copy h3 {
+  font-size: clamp(30px, 3.8vw, 55px);
+  line-height: 1.04;
+}
+
+.blog-page .blog-row-arrow {
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+.blog-page .blog-post-row:hover .blog-row-arrow,
+.blog-page .blog-post-row:focus-visible .blog-row-arrow {
+  transform: translate(3px, -3px);
+  color: var(--swiss-blue);
+}
+
+.blog-page .blog-endcap {
+  min-height: 0;
+  padding: clamp(54px, 6.5vw, 96px) 0;
+}
+
+.blog-page .blog-endcap h2 {
+  font-size: clamp(57px, 7vw, 102px);
+}
+
+.blog-page .blog-article {
+  padding-bottom: 64px;
+}
+
+.blog-page .blog-article-header {
+  padding-bottom: clamp(44px, 5vw, 75px);
+}
+
+.blog-page .blog-article-header h1 {
+  margin: clamp(48px, 6vw, 90px) 0 28px;
+  font-size: clamp(58px, 8.8vw, 120px);
+  line-height: .96;
+}
+
+.blog-page .blog-article-description {
+  font-size: clamp(22px, 2.7vw, 37px);
+  line-height: 1.19;
+}
+
+.blog-page .blog-prose {
+  width: min(100%, 760px);
+  margin: clamp(48px, 6vw, 80px) auto;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.75;
+}
+
+.blog-page .blog-prose h2 {
+  font-size: clamp(31px, 3.7vw, 47px);
+  line-height: 1.2;
+}
+
+.blog-page .blog-article-toc {
+  padding: clamp(26px, 3.5vw, 45px) 0;
+  border-color: var(--swiss-ink);
+}
+
+/* One supporting blue, never a replacement for Swiss red. */
+.blog-page .blog-article-toc a:hover,
+.blog-page .blog-article-toc a:focus-visible {
+  color: var(--swiss-blue);
+}
+
+.blog-page .blog-prose a:hover,
+.blog-page .blog-prose a:focus-visible {
+  color: var(--swiss-blue);
+}
+
+/* Interaction adapts to the actual layout rather than changing it. */
+@media (max-width: 900px) {
+  .home-page .project-info {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .home-page :is(
+    .home-header, .home-hero, .work-section, .manifesto-callout,
+    .capabilities-section, .about-section, .contact-section, .home-footer
+  ),
+  .blog-page :is(
+    .blog-header, .blog-footer, .blog-hero,
+    .blog-index, .blog-endcap, .blog-article
+  ) {
+    width: calc(100% - 32px);
+  }
+
+  .home-page .home-header {
+    min-height: 70px;
+  }
+
+  .home-page .home-header nav {
+    gap: 12px;
+  }
+
+  .home-page .home-hero {
+    min-height: 0;
+    padding: 37px 0 40px;
+    row-gap: 31px;
+  }
+
+  .home-page .home-hero h1 {
+    font-size: clamp(68px, 20vw, 119px);
+    line-height: .83;
+  }
+
+  .home-page .hero-copy {
+    font-size: clamp(25px, 6vw, 36px);
+    line-height: 1.15;
+  }
+
+  .home-page .section-header {
+    row-gap: 24px;
+    padding: 57px 0 30px;
+  }
+
+  .home-page .section-header h2 {
+    font-size: clamp(48px, 10vw, 70px);
+  }
+
+  .home-page .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-page .project-visual {
+    aspect-ratio: 16 / 10;
+  }
+
+  .home-page .project-info {
+    min-height: 91px;
+    padding: 17px;
+  }
+
+  .home-page .manifesto-callout {
+    min-height: 0;
+    row-gap: 27px;
+    padding: 70px 0;
+  }
+
+  .home-page .manifesto-callout h2 {
+    font-size: clamp(62px, 14vw, 90px);
+  }
+
+  .home-page .capabilities-grid article {
+    min-height: 247px;
+    padding: 20px;
+  }
+
+  .home-page .capabilities-grid h3 {
+    margin: 29px 0 auto;
+  }
+
+  .home-page .about-section {
+    padding: 69px 0;
+    row-gap: 30px;
+  }
+
+  .home-page .about-section h2 {
+    font-size: clamp(48px, 11vw, 78px);
+  }
+
+  .home-page .about-copy {
+    margin-top: 14px;
+    gap: 20px;
+  }
+
+  .home-page .about-copy p {
+    max-width: 48ch;
+  }
+
+  .home-page .contact-section {
+    min-height: 0;
+    row-gap: 47px;
+    padding: 70px 0;
+  }
+
+  .home-page .contact-section h2 {
+    font-size: clamp(63px, 14.8vw, 110px);
+  }
+
+  .home-page .home-footer {
+    min-height: 99px;
+  }
+
+  .blog-page .blog-hero {
+    min-height: 0;
+    padding: 36px 0 45px;
+    gap: 36px;
+  }
+
+  .blog-page .blog-hero h1 {
+    margin: 0;
+    font-size: clamp(53px, 11vw, 77px);
+  }
+
+  .blog-page .blog-hero-bottom p {
+    font-size: 22px;
+  }
+
+  .blog-page .blog-index {
+    padding: 55px 0 65px;
+  }
+
+  .blog-page .blog-post-row {
+    padding: 26px 0;
+  }
+
+  .blog-page .blog-row-copy h3 {
+    font-size: clamp(29px, 7.7vw, 42px);
+  }
+
+  .blog-page .blog-post-row:hover,
+  .blog-page .blog-post-row:focus-visible {
+    padding-inline: 0;
+  }
+
+  .blog-page .blog-article-header h1 {
+    margin: 45px 0 28px;
+    font-size: clamp(49px, 11vw, 77px);
+  }
+
+  .blog-page .blog-prose {
+    font-size: 17px;
+    line-height: 1.72;
+  }
+
+  .blog-page .blog-prose h2 {
+    font-size: clamp(31px, 8.2vw, 43px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page .home-brand .signal-square,
+  .home-page .home-header nav a::after,
+  .home-page .project-card,
+  .home-page .project-card::after,
+  .home-page .project-card .project-info,
+  .home-page .project-info > span,
+  .home-page .project-visual img,
+  .home-page .scroll-cue,
+  .home-page .contact-link,
+  .home-page .contact-link span,
+  .blog-page .blog-post-row,
+  .blog-page .blog-row-arrow {
+    transition: none !important;
+  }
+}
