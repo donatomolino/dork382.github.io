@@ -1,0 +1,61 @@
+name: Verify Brand and Featured Product
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - 'src/pages/index.astro'
+      - 'src/components/BrandMark.astro'
+      - 'src/layouts/BlogLayout.astro'
+      - 'src/pages/manifesto.astro'
+      - 'src/styles/brand-mark.css'
+      - 'src/styles/featured-product.css'
+      - 'public/favicon.svg'
+      - 'scripts/verify-brand-product.mjs'
+      - '.github/workflows/verify-brand-product.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  responsive-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Build production Astro pages
+        run: npm run build
+      - name: Install isolated Chromium QA dependency
+        run: |
+          mkdir -p /tmp/brand-playwright
+          cd /tmp/brand-playwright
+          npm init -y >/dev/null
+          npm install --no-fund --no-audit playwright@1.56.1
+          npx playwright install --with-deps chromium
+          cd "$GITHUB_WORKSPACE"
+          ln -s /tmp/brand-playwright/node_modules/playwright node_modules/playwright
+      - name: Verify responsive product and logo
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4322 >/tmp/brand-preview.log 2>&1 &
+          for i in $(seq 1 45); do
+            if curl -fsS http://127.0.0.1:4322/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/verify-brand-product.mjs
+      - name: Upload responsive screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swiss-brand-product-screenshots
+          path: artifacts/brand-product/
+          if-no-files-found: ignore
+          retention-days: 7
