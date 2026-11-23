@@ -159,7 +159,9 @@ const capabilities = [
       (() => {
         try {
           if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-          if (window.sessionStorage.getItem("dm:code-intro:v1")) return;
+          const preview = new URLSearchParams(window.location.search).get("intro");
+          if (preview === "0") return;
+          if (preview !== "1" && window.sessionStorage.getItem("dm:code-intro:v1")) return;
           window.sessionStorage.setItem("dm:code-intro:v1", "1");
           document.documentElement.classList.add("intro-playing");
           // Fail-safe: never leave the visitor behind an overlay.
