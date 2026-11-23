@@ -9,7 +9,8 @@ import { chromium } from "playwright";
 const url = "http://127.0.0.1:4322";
 const output = "artifacts/brand-product";
 await fs.mkdir(output, { recursive: true });
-const browser = await chromium.launch({ headless: true });
+// GitHub's Ubuntu runner already ships Chrome; avoid reinstalling OS dependencies.
+const browser = await chromium.launch({ headless: true, channel: "chrome" });
 
 async function checkOverflow(page, name) {
   const geometry = await page.evaluate(() => ({
