@@ -24,10 +24,15 @@ jobs:
         run: npm ci
       - name: Build the Astro site
         run: npm run build
-      - name: Install Playwright in CI only
+      - name: Install isolated Playwright browser
         run: |
-          npm install --no-save --package-lock=false playwright@1.56.1
+          mkdir -p /tmp/intro-playwright
+          cd /tmp/intro-playwright
+          npm init -y
+          npm install --no-fund --no-audit playwright@1.56.1
           npx playwright install --with-deps chromium
+          cd "$GITHUB_WORKSPACE"
+          ln -s /tmp/intro-playwright/node_modules/playwright node_modules/playwright
       - name: Run preview and capture visual QA
         run: |
           npm run preview -- --host 127.0.0.1 --port 4322 > /tmp/site-intro-preview.log 2>&1 &
