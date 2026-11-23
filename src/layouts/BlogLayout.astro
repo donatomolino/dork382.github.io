@@ -4,6 +4,8 @@ import "~/styles/index.css";
 import "~/styles/blog.css";
 import "~/styles/swiss-refinement.css";
 import "~/styles/swiss-cobalt.css";
+import "~/styles/brand-mark.css";
+import BrandMark from "~/components/BrandMark.astro";
 
 interface Props {
   title: string;
@@ -124,7 +126,7 @@ const t = lang === "it" ? {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.svg?v=squircle" type="image/svg+xml" />
     <title>{title} — Donato Molino</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
@@ -155,7 +157,7 @@ const t = lang === "it" ? {
     <a class="blog-skip" href="#main-content">{t.skip}</a>
     <header class="home-header blog-header">
       <a class="home-brand" href="/" aria-label={t.home}>
-        <span class="signal-square" aria-hidden="true"></span><span>Donato Molino</span>
+        <BrandMark /><span>Donato Molino</span>
       </a>
       <p class="home-role">{t.role}<br />{t.based}</p>
       <nav class="blog-nav" aria-label={t.nav}>
