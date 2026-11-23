@@ -87,6 +87,8 @@ I think that for most everyday tasks, the smartphone will eventually become the 
 
 This isn't science fiction. In March 2026, [Google documented](https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays) Android desktop experiences on external monitors, developed in collaboration with Samsung. The problem is no longer demonstrating that a phone can show desktop windows. It's making the whole experience reliable enough to replace a laptop.
 
+**What I mean in practice:** I start editing a document on my phone during a train ride. At home I connect it to a monitor and keyboard, and the same device opens a multi-window workspace. Google and Samsung's [Android 16 connected-display work](https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays) is a real technical step in this direction. That doesn't mean every Android phone supports the feature or that every desktop application runs there.
+
 Real obstacles remain: professional applications, peripherals, battery life, heat dissipation, heavy multitasking, hardware architectures, and compatibility. Game developers, 3D artists, and people working in specialized environments may still need dedicated workstations.
 
 I don't believe the PC will die. **I believe that, for many people, the PC will become a mode of use rather than a separate device.**
@@ -99,6 +101,12 @@ I should be able to use one messaging app while somebody else uses a completely 
 
 Some pieces already exist. [ActivityPub](https://www.w3.org/TR/activitypub/) has been a W3C recommendation for decentralized social networking since 2018. The EU's [Digital Markets Act](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en) requires designated large messaging platforms to provide specific forms of interoperability; the first third-party services interoperable with WhatsApp arrived in November 2025. In the agent ecosystem, standards like MCP address how tools and data can connect.
 
+![Timeline of interoperability milestones: ActivityPub in 2018, EU Data Act and third-party WhatsApp chats in 2025, MCP foundation in 2025, and EU identity wallets due by end of 2026.](/blog/charts/en/interoperability-milestones.svg)
+
+*Chart 5 — Selected, independently sourced milestones: [W3C ActivityPub](https://www.w3.org/TR/activitypub/), [EU Data Act](https://digital-strategy.ec.europa.eu/en/policies/data-act), [EU messaging interoperability](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en), [Linux Foundation / MCP](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation), and [EU Digital Identity](https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en). The last item is a regulatory availability deadline, not evidence of universal adoption.*
+
+**A concrete distinction:** two people can follow each other through compatible ActivityPub-powered social services, such as Mastodon servers, even when they use different services. That's not the same as being able to message freely between every popular chat app. The [EU's November 2025 WhatsApp integrations](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en) are a narrower, regulated step, with important limitations.
+
 These are signals, not guarantees. Interoperability raises challenges around moderation, spam, encryption, identity, and business incentives. Platforms have powerful commercial reasons to keep people inside their ecosystems.
 
 Still, I believe value will gradually move **from having to use the same app toward being free to choose the interface you prefer**.
@@ -109,7 +117,13 @@ Today, we use products made of predefined screens that are more or less identica
 
 We are not starting from zero. [Google Research has explored dynamically generated interfaces](https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/), while the open [A2UI project](https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/) defines a way to describe agent-produced interfaces and render them across different frameworks.
 
-Imagine opening my AI and asking it to compare household expenses. Instead of navigating three different apps, it generates a chart, a table, and two useful actions. When I change my goal, the interface changes too.
+![Concept diagram showing a generated-interface workflow: user request, permissioned data, approved components, and explicit human confirmation.](/blog/charts/en/generated-interface-flow.svg)
+
+*Chart 6 — **Conceptual design**, not measured adoption or a live product. Informed by [Google Research's generative UI work](https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/) and the [A2UI project](https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/).*
+
+Imagine opening my AI and asking it to compare household expenses. Instead of navigating three different apps, it generates a chart, a table, and two useful actions. More specifically, I could ask: *“Why was my electricity bill higher this month?”* It would request permission to read the relevant bills and meter data, show a breakdown of consumption versus tariffs, and offer a comparison with last month. Any payment or supplier change would still require an explicit decision from me.
+
+Google's own [A2UI examples](https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/) show agents returning structured interactive components instead of plain chat text. That's a real technical direction, although secure cross-provider execution remains harder than displaying a useful chart. When I change my goal, the interface changes too.
 
 This doesn't mean that every pixel should be improvised. Sensitive operations will still need dependable components, accessibility, consistency, and explicit confirmation. **An interface can be dynamic without being unpredictable.**
 
@@ -121,7 +135,9 @@ One number puts the scale into perspective. According to [IoT Analytics](https:/
 
 ![Chart showing global IoT connections: 18.5 billion in 2024, an estimated 21.1 billion in 2025, and a forecast 39 billion in 2030.](/blog/charts/en/iot-devices.svg)
 
-*Chart 2 — [IoT Analytics](https://iot-analytics.com/Number-Connected-Iot-Devices/). These totals include industry, infrastructure, and other connected devices—not just wearables. The 2030 figure is a forecast.*
+*Chart 7 — [IoT Analytics](https://iot-analytics.com/Number-Connected-Iot-Devices/). These totals include industry, infrastructure, and other connected devices—not just wearables. The 2030 figure is a forecast.*
+
+A useful home example doesn't need to be futuristic: a door sensor, a temperature sensor, and a small local server can already provide a simple activity history and automations. My longer-term bet is that a personal AI could connect those signals to genuinely useful tasks **without sending an entire household's raw data to a third party**. That's a design goal, not something to assume by default.
 
 But sensors do not automatically produce useful insights. Inaccurate or out-of-context data can be worse than no data at all. And when a system knows your habits, location, and personal signals, privacy and security cannot be afterthoughts.
 
@@ -132,6 +148,8 @@ The future I want involves **granular control, local processing whenever possibl
 Today, our accounts, preferences, files, and histories are scattered across services that often don't communicate. I imagine a clearer separation between **who I am**, **which data I control**, and **which application I use to access it**.
 
 Europe is already moving in this direction. The [European Digital Identity Wallet](https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en) is intended to be made available by member states by the end of 2026, offering ways to identify ourselves and share specific credentials. The [Data Act](https://digital-strategy.ec.europa.eu/en/policies/data-act), applicable since September 2025, also introduces measures for accessing data from connected products and switching cloud providers.
+
+Consider a practical use case: proving a specific qualification or eligibility to a service without creating another full account. This is the narrower problem digital credentials can help with. It is very different from handing over a complete profile of who I am.
 
 There is an important distinction: **an identity wallet is not the same thing as a universal profile containing every conversation, preference, and AI memory**. That broader kind of portability remains to be built, both technically and legally.
 
