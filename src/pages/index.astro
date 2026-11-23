@@ -10,6 +10,9 @@ import thinkyImage from "~/content/showcase/_images/thinky.png";
 import "~/styles/index.css";
 import "~/styles/swiss-refinement.css";
 import "~/styles/swiss-cobalt.css";
+import "~/styles/site-intro.css";
+import SiteIntroHead from "~/components/SiteIntroHead.astro";
+import SiteIntro from "~/components/SiteIntro.astro";
 
 const { generator, site } = Astro;
 const description =
@@ -152,8 +155,10 @@ const capabilities = [
     <meta property="og:image" content={socialImage} />
     <meta property="og:url" content={site} />
     <meta name="twitter:card" content="summary_large_image" />
+    <SiteIntroHead />
   </head>
   <body class="home-page">
+    <SiteIntro />
     <a class="home-skip-link" href="#top">Skip to content</a>
     <header class="home-header">
       <a class="home-brand" href="#top" aria-label="Donato Molino, back to top">
