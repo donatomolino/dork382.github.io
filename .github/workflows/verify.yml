@@ -51,3 +51,6 @@ jobs:
           grep -q '01 / Email' dist/index.html
           grep -q '02 / Telegram' dist/index.html
           grep -q '03 / Discord' dist/index.html
+          grep -q 'donatomolino@proton.me' dist/index.html
+          grep -q 'Add friend on Discord' dist/index.html
+          ! grep -q 'donatomolino@europe.com' dist/index.html
