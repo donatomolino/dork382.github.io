@@ -24,8 +24,18 @@ async function openContext(width, dark = false) {
   });
   if (dark) {
     await context.addInitScript(() => {
-      // Force the theme attribute before the page's inline bootstrap executes.
-      document.documentElement.dataset.theme = "dark";
+      // Ensure dark mode is set before any page bootstrap script can run.
+      const apply = () => {
+        if (!document.documentElement) return false;
+        document.documentElement.dataset.theme = "dark";
+        return true;
+      };
+      if (!apply()) {
+        const observer = new MutationObserver(() => {
+          if (apply()) observer.disconnect();
+        });
+        observer.observe(document, { childList: true });
+      }
     });
   }
   return context;
