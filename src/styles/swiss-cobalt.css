@@ -1,0 +1,490 @@
+/*
+ * Swiss International · Cobalt edition
+ * Genuine portfolio content, 12-column editorial logic, black rules, cream
+ * canvas, red signature, vivid cobalt. No intro, 3D, JS motion or mock projects.
+ */
+.home-page {
+  --swiss-blue: #2149d8;
+  --swiss-blue-soft: #e0e8ff;
+  --swiss-blue-lighter: #edf1ff;
+}
+
+/* The existing identity square and the new hero graphic share soft geometry. */
+.home-page .signal-square {
+  width: 17px;
+  border-radius: 6px;
+  flex: none;
+}
+.home-page .home-brand {
+  gap: 12px;
+}
+
+/* Signature: strong name, editorial copy and oversized rounded red block. */
+.home-page:not(.blog-page) .home-hero {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: auto auto auto;
+  column-gap: clamp(12px, 1.6vw, 24px);
+  align-items: center;
+  min-height: 0;
+  padding: clamp(52px, 5.9vw, 86px) 0 clamp(49px, 5vw, 70px);
+  row-gap: clamp(24px, 3.5vw, 48px);
+}
+.home-page:not(.blog-page) .kicker {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  align-self: start;
+  color: var(--swiss-blue);
+  font-size: 11px;
+}
+.home-page:not(.blog-page) .home-hero h1 {
+  grid-column: 1 / span 5;
+  grid-row: 2;
+  align-self: center;
+  font-size: clamp(65px, 9vw, 138px);
+  line-height: .83;
+  letter-spacing: -.086em;
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+.home-page:not(.blog-page) .home-hero h1 .red {
+  color: var(--swiss-ink);
+}
+.home-page:not(.blog-page) .home-hero h1 .red::after {
+  content: ".";
+  color: var(--swiss-red);
+}
+.home-page:not(.blog-page) .hero-copy {
+  grid-column: 6 / span 4;
+  grid-row: 2;
+  align-self: center;
+  margin: 0;
+  max-width: 30ch;
+  padding-left: clamp(19px, 2vw, 32px);
+  border-left: 1px solid var(--swiss-ink);
+  font-size: clamp(18px, 2vw, 30px);
+  font-weight: 640;
+  line-height: 1.2;
+  letter-spacing: -.04em;
+}
+.home-page .hero-squircle {
+  grid-column: 10 / -1;
+  grid-row: 2;
+  position: relative;
+  justify-self: end;
+  width: min(100%, 220px);
+  aspect-ratio: 1;
+  margin-right: 16px;
+  border-radius: 30%;
+  background: var(--swiss-red);
+}
+.home-page .hero-squircle span {
+  position: absolute;
+  right: -16px;
+  bottom: -16px;
+  width: 31%;
+  aspect-ratio: 1;
+  border-radius: 24%;
+  background: var(--swiss-blue);
+}
+.home-page:not(.blog-page) .hero-meta {
+  grid-column: 6 / span 6;
+  grid-row: 3;
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  color: var(--swiss-ink);
+  font-size: 10px;
+}
+.home-page .hero-meta span {
+  padding: 8px 11px;
+  border-radius: 40px;
+  background: #f8dfdf;
+}
+.home-page .hero-meta span:nth-child(2) {
+  background: var(--swiss-blue-soft);
+  color: #163caa;
+}
+.home-page .hero-meta span:nth-child(3) {
+  background: #d8ebe0;
+  color: #164931;
+}
+.home-page:not(.blog-page) .scroll-cue {
+  grid-column: 1 / span 5;
+  grid-row: 3;
+  align-self: center;
+  width: max-content;
+  margin: 0;
+  padding: 16px 22px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--swiss-blue);
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: .035em;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+.home-page:not(.blog-page) .scroll-cue:hover,
+.home-page:not(.blog-page) .scroll-cue:focus-visible {
+  background: var(--swiss-red);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Project tiles use the actual six selected works. Denser at larger widths. */
+.home-page .work-section .section-header {
+  padding-top: clamp(50px, 5.2vw, 75px);
+  padding-bottom: clamp(27px, 3vw, 43px);
+}
+.home-page .work-section .section-header > p:first-child {
+  color: var(--swiss-blue);
+}
+.home-page .project-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.home-page .project-visual {
+  aspect-ratio: 16 / 10;
+}
+.home-page .project-info,
+.home-page .project-card:hover .project-info {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  gap: 8px 12px;
+  align-content: center;
+  align-items: center;
+  min-height: 105px;
+  padding: clamp(14px, 1.6vw, 20px);
+}
+.home-page .project-info h3 {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  font-size: clamp(21px, 2vw, 30px);
+  line-height: 1.1;
+}
+.home-page .project-info p:nth-of-type(1) {
+  grid-column: 1;
+  grid-row: 2;
+  color: var(--swiss-muted);
+  font-size: 10px;
+}
+.home-page .project-info p:nth-of-type(2) {
+  display: block;
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+  color: var(--swiss-muted);
+  font-size: 10px;
+  text-align: right;
+}
+.home-page .project-info > span {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  color: var(--swiss-blue);
+  font-size: 24px;
+}
+.home-page .project-card:nth-child(4) .project-info {
+  background: var(--swiss-blue-soft);
+}
+.home-page .project-card:nth-child(4):hover .project-info,
+.home-page .project-card:nth-child(4):focus-visible .project-info {
+  background: #cddaff;
+}
+.home-page .project-card:nth-child(4) .project-index {
+  background: var(--swiss-blue);
+}
+.home-page .project-index {
+  border-radius: 9px;
+}
+
+/* A compact, real-content editorial feed instead of fictitious blog cards. */
+.home-page .journal-section {
+  width: min(100% - 48px, 1420px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(24px, 4vw, 56px) clamp(12px, 1.6vw, 24px);
+  padding: clamp(60px, 6.2vw, 92px) 0;
+  border-bottom: 2px solid var(--swiss-ink);
+}
+.home-page .journal-heading {
+  grid-column: 1 / span 4;
+}
+.home-page .journal-eyebrow {
+  width: max-content;
+  margin: 0 0 22px;
+  color: var(--swiss-red);
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+.home-page .journal-heading h2 {
+  margin: 0 0 34px;
+  font-size: clamp(42px, 5.3vw, 76px);
+  font-weight: 780;
+  line-height: .98;
+  letter-spacing: -.07em;
+}
+.home-page .journal-heading h2 span {
+  color: var(--swiss-blue);
+}
+.home-page .journal-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  padding: 13px 18px;
+  border: 2px solid var(--swiss-blue);
+  border-radius: 5px;
+  color: var(--swiss-blue);
+  font-size: 11px;
+  font-weight: 770;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+.home-page .journal-more:hover,
+.home-page .journal-more:focus-visible {
+  background: var(--swiss-blue);
+  color: #fff;
+}
+.home-page .journal-list {
+  grid-column: 5 / -1;
+  align-self: stretch;
+  border-top: 2px solid var(--swiss-ink);
+}
+.home-page .journal-row {
+  display: grid;
+  grid-template-columns: minmax(76px, .65fr) minmax(0, 3.35fr) 28px;
+  align-items: start;
+  gap: clamp(16px, 2vw, 28px);
+  padding: 20px 12px;
+  border-bottom: 1px solid var(--swiss-ink);
+  transition: background-color 180ms ease;
+}
+.home-page .journal-row:hover,
+.home-page .journal-row:focus-visible {
+  background: var(--swiss-blue-lighter);
+}
+.home-page .journal-row time {
+  padding-top: 6px;
+  color: var(--swiss-muted);
+  font-size: 11px;
+  font-weight: 680;
+  text-transform: uppercase;
+}
+.home-page .journal-row h3 {
+  margin: 0 0 8px;
+  font-size: clamp(24px, 2.5vw, 36px);
+  font-weight: 750;
+  line-height: 1.08;
+  letter-spacing: -.045em;
+}
+.home-page .journal-row p {
+  max-width: 63ch;
+  margin: 0 0 13px;
+  font-size: clamp(13px, 1.15vw, 16px);
+  line-height: 1.5;
+}
+.home-page .journal-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 99px;
+  background: var(--swiss-blue-soft);
+  color: #1538a7;
+  font-size: 10px;
+  font-weight: 760;
+  text-transform: uppercase;
+}
+.home-page .journal-arrow {
+  font-size: 23px;
+  color: var(--swiss-blue);
+  transition: transform 180ms ease;
+}
+.home-page .journal-row:hover .journal-arrow,
+.home-page .journal-row:focus-visible .journal-arrow {
+  transform: translate(3px, -3px);
+}
+
+/* Make cobalt perceptible beyond hover while preserving red as the signature. */
+.home-page .capabilities-section .section-header > p,
+.home-page .about-label {
+  color: var(--swiss-blue);
+}
+.home-page .capabilities-grid article:nth-child(2) > span,
+.home-page .capabilities-grid article:nth-child(4) > span {
+  color: var(--swiss-blue);
+}
+.home-page .contact-link {
+  border-top-color: var(--swiss-blue);
+}
+
+/* Blog also carries the same identity, not a separate visual theme. */
+.blog-page .blog-row-number,
+.blog-page .blog-article-toc li span {
+  color: var(--swiss-blue);
+}
+.blog-page .blog-row-tags span:first-child,
+.blog-page .blog-article-tags span:first-child {
+  border-color: #b8c7fc;
+  background: var(--swiss-blue-soft);
+  color: #1538a7;
+}
+.blog-page .blog-language-switch a[aria-current="true"] {
+  color: var(--swiss-blue);
+}
+.blog-page .blog-post-row:hover .blog-row-copy h3,
+.blog-page .blog-post-row:focus-visible .blog-row-copy h3 {
+  color: var(--swiss-blue);
+}
+
+/* Keyboard support, no invisible interactive layers. */
+.home-page .home-skip-link {
+  position: fixed;
+  z-index: 10;
+  top: -90px;
+  left: 15px;
+  padding: 12px 16px;
+  background: var(--swiss-ink);
+  color: var(--swiss-paper);
+  font-size: 13px;
+  font-weight: 700;
+}
+.home-page .home-skip-link:focus { top: 8px; }
+
+@media (max-width: 1120px) {
+  .home-page:not(.blog-page) .home-hero h1 {
+    grid-column: 1 / span 5;
+    font-size: clamp(60px, 8.1vw, 100px);
+  }
+  .home-page .hero-squircle { width: min(100%, 168px); }
+  .home-page .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .home-page:not(.blog-page) .home-hero {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: repeat(5, auto);
+    gap: 19px 10px;
+    padding: 36px 0 45px;
+  }
+  .home-page:not(.blog-page) .kicker {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .home-page:not(.blog-page) .home-hero h1 {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 5px 0;
+    font-size: clamp(66px, 15.8vw, 112px);
+    line-height: .83;
+  }
+  .home-page:not(.blog-page) .hero-copy {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    max-width: 45ch;
+    padding: 15px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--swiss-ink);
+    font-size: clamp(22px, 5.4vw, 31px);
+  }
+  .home-page .hero-squircle {
+    grid-column: 10 / -1;
+    grid-row: 4;
+    justify-self: end;
+    width: min(80px, 100%);
+    margin: 0 9px 10px 0;
+    border-radius: 27%;
+  }
+  .home-page .hero-squircle span {
+    right: -9px;
+    bottom: -9px;
+    border-radius: 25%;
+  }
+  .home-page:not(.blog-page) .hero-meta {
+    grid-column: 1 / span 9;
+    grid-row: 4;
+    gap: 6px;
+    font-size: 9px;
+  }
+  .home-page .hero-meta span { padding: 7px 9px; }
+  .home-page:not(.blog-page) .scroll-cue {
+    grid-column: 1 / -1;
+    grid-row: 5;
+    padding: 14px 19px;
+  }
+  .home-page .project-grid { grid-template-columns: 1fr; }
+  .home-page .project-info {
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 17px;
+  }
+  .home-page .journal-section {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    width: calc(100% - 32px);
+    padding: 62px 0;
+  }
+  .home-page .journal-heading,
+  .home-page .journal-list {
+    grid-column: 1 / -1;
+  }
+  .home-page .journal-heading h2 {
+    margin-bottom: 22px;
+    font-size: clamp(44px, 9.5vw, 65px);
+  }
+  .home-page .journal-row {
+    grid-template-columns: 1fr 23px;
+    gap: 10px;
+    padding: 19px 4px;
+  }
+  .home-page .journal-row time {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 0;
+    font-size: 10px;
+  }
+  .home-page .journal-row-content {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .home-page .journal-arrow {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .home-page .journal-row h3 { font-size: clamp(25px, 6vw, 35px); }
+  .home-page:not(.blog-page) .home-header nav a:nth-child(1),
+  .home-page:not(.blog-page) .home-header nav a:nth-child(4) {
+    display: inline-flex;
+  }
+  .home-page:not(.blog-page) .home-header nav a:nth-child(2) {
+    display: none;
+  }
+  .home-page:not(.blog-page) .home-header nav { gap: 12px; }
+}
+
+@media (max-width: 410px) {
+  .home-page:not(.blog-page) .home-header nav a:nth-child(4) { display: none; }
+  .home-page:not(.blog-page) .home-hero h1 { font-size: clamp(60px, 16.7vw, 73px); }
+  .home-page .hero-squircle { width: 66px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page .journal-more,
+  .home-page .journal-row,
+  .home-page .journal-arrow,
+  .home-page:not(.blog-page) .scroll-cue {
+    transition: none !important;
+  }
+  .home-page:not(.blog-page) .scroll-cue:hover,
+  .home-page:not(.blog-page) .scroll-cue:focus-visible,
+  .home-page .journal-row:hover .journal-arrow,
+  .home-page .journal-row:focus-visible .journal-arrow {
+    transform: none;
+  }
+}
