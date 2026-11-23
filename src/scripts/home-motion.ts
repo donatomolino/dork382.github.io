@@ -37,7 +37,7 @@ function initIntro() {
     }
     background.forEach((element) => { element.inert = false; });
     if (document.activeElement === button) {
-      document.querySelector<HTMLAnchorElement>(".home-skip")?.focus({ preventScroll: true });
+      document.querySelector<HTMLElement>("main#top")?.focus({ preventScroll: true });
     }
     document.removeEventListener("keydown", onKeyDown);
   };
