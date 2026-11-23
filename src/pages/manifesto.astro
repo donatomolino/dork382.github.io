@@ -1,6 +1,8 @@
 ---
 import "@fontsource-variable/inter";
 import "~/styles/manifesto.css";
+import "~/styles/brand-mark.css";
+import BrandMark from "~/components/BrandMark.astro";
 
 const principles = [
   {
@@ -88,7 +90,7 @@ const manifestoJsonLd = JSON.stringify({
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.svg?v=squircle" type="image/svg+xml" />
     <title>The Donnie Manifesto — Donato Molino</title>
     <meta name="description" content={description} />
     <meta name="author" content="Donato Molino" />
@@ -106,7 +108,7 @@ const manifestoJsonLd = JSON.stringify({
   <body>
     <header class="masthead">
       <a class="wordmark" href="/" aria-label="Back to Donato Molino home">
-        <span class="mark" aria-hidden="true"></span>
+        <BrandMark />
         <span>Donato Molino</span>
       </a>
       <div class="edition" aria-label="Document details">
