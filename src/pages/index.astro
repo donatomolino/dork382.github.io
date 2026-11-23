@@ -10,9 +10,6 @@ import thinkyImage from "~/content/showcase/_images/thinky.png";
 import "~/styles/index.css";
 import "~/styles/swiss-refinement.css";
 import "~/styles/swiss-cobalt.css";
-import "~/styles/site-intro.css";
-import SiteIntroHead from "~/components/SiteIntroHead.astro";
-import SiteIntro from "~/components/SiteIntro.astro";
 
 const { generator, site } = Astro;
 const description =
@@ -155,10 +152,8 @@ const capabilities = [
     <meta property="og:image" content={socialImage} />
     <meta property="og:url" content={site} />
     <meta name="twitter:card" content="summary_large_image" />
-    <SiteIntroHead />
   </head>
   <body class="home-page">
-    <SiteIntro />
     <a class="home-skip-link" href="#top">Skip to content</a>
     <header class="home-header">
       <a class="home-brand" href="#top" aria-label="Donato Molino, back to top">
@@ -304,9 +299,28 @@ const capabilities = [
       <section class="contact-section" id="contact" aria-labelledby="contact-title">
         <p>06 / Start something</p>
         <h2 id="contact-title">Have an idea<br />worth building?</h2>
-        <a class="contact-link" href="mailto:donatomolino@europe.com">
-          Let’s talk <span aria-hidden="true">↗</span>
-        </a>
+        <details class="contact-disclosure">
+          <summary class="contact-link">
+            Let’s talk <span aria-hidden="true" class="contact-disclosure-indicator">+</span>
+          </summary>
+          <div class="contact-methods" aria-label="Ways to get in touch">
+            <a class="contact-method" href="mailto:donatomolino@europe.com">
+              <span class="contact-method-label">01 / Email</span>
+              <span class="contact-method-value">donatomolino@europe.com</span>
+              <span class="contact-method-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="contact-method" href="https://t.me/dork382/" target="_blank" rel="noopener noreferrer">
+              <span class="contact-method-label">02 / Telegram</span>
+              <span class="contact-method-value">@dork382</span>
+              <span class="contact-method-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="contact-method" href="mailto:donatomolino@europe.com?subject=Discord%20contact">
+              <span class="contact-method-label">03 / Discord</span>
+              <span class="contact-method-value">Request my Discord handle</span>
+              <span class="contact-method-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </details>
       </section>
     </main>
 

@@ -45,3 +45,9 @@ jobs:
           grep -q 'class="hero-squircle"' dist/index.html
           grep -q 'class="journal-section"' dist/index.html
           grep -q 'href="/blog/en/the-future-of-tech-2027-2050/"' dist/index.html
+          # No animated first-visit gate; contact options are SSR HTML and JS-free.
+          ! grep -q 'dm-intro-overlay' dist/index.html
+          grep -q 'class="contact-disclosure"' dist/index.html
+          grep -q '01 / Email' dist/index.html
+          grep -q '02 / Telegram' dist/index.html
+          grep -q '03 / Discord' dist/index.html
