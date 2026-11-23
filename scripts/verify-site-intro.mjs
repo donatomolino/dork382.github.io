@@ -187,25 +187,58 @@ async function checkOnceDailyAndBlog() {
 async function checkScrolledPage() {
   const context = await browser.newContext({ viewport: { width: 800, height: 750 } });
   const page = await context.newPage();
-  await page.goto(BASE + "/?intro=0", { waitUntil: "domcontentloaded" });
-  await page.evaluate(() => {
-    history.replaceState(null, "", "/?intro");
-    window.scrollTo(0, 1250);
+
+  // Inject a synchronous scroll at the very end of HTML parsing, before the
+  // deferred Astro module starts the intro. This reproduces a restored page
+  // with the shared header genuinely above the viewport.
+  await page.route("**/*", async (route) => {
+    const url = new URL(route.request().url());
+    if (route.request().isNavigationRequest() &&
+        url.pathname === "/" && url.searchParams.has("intro")) {
+      const response = await route.fetch();
+      const html = (await response.text()).replace(
+        "</body>",
+        '<script>window.scrollTo(0, 1250);document.documentElement.dataset.scrolledTest="yes";</script></body>'
+      );
+      await route.fulfill({ response, body: html });
+    } else {
+      await route.continue();
+    }
   });
-  await page.reload({ waitUntil: "domcontentloaded" });
-  // Browser restore timing may vary. If the header is offscreen at the start,
-  // the floating copy should fade in place rather than flying offscreen.
+
+  await page.goto(BASE + "/?intro", { waitUntil: "domcontentloaded" });
+  await page.waitForFunction(
+    () => document.documentElement.classList.contains("intro-running"),
+    null,
+    { timeout: 3500 }
+  );
+
   const startedOffscreen = await page.evaluate(() => {
     const r = document.querySelector(".home-header .signal-square").getBoundingClientRect();
-    return r.bottom < 0;
+    return document.documentElement.dataset.scrolledTest === "yes" && r.bottom < 0;
   });
+  assert.ok(startedOffscreen, "test never actually started with the logo offscreen");
+
+  await page.waitForTimeout(2300);
+  const offscreenFlight = await page.evaluate(() => {
+    const copy = document.querySelector("[data-dm-intro-logo]");
+    if (!copy) return null;
+    const r = copy.getBoundingClientRect();
+    return { x: r.x + r.width / 2, y: r.y + r.height / 2 };
+  });
+  assert.ok(
+    offscreenFlight && Math.abs(offscreenFlight.x - 400) < 8 &&
+    Math.abs(offscreenFlight.y - 375) < 8,
+    "offscreen header should leave the copy centered: " + JSON.stringify(offscreenFlight)
+  );
+
   await page.evaluate(() => window.donatoIntro);
   await checkNoOverflow(page, "scrolled");
   assert.equal(
     await page.locator("[data-dm-intro-overlay]").count(),
     0, "scrolled intro overlay not cleaned up"
   );
-  console.log("PASS restored scrolled page; header offscreen:", startedOffscreen);
+  console.log("PASS genuinely scrolled page and center-only fallback");
   pass += 1;
   await context.close();
 }
