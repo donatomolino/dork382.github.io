@@ -5,17 +5,23 @@ lang: en
 slug: the-future-of-tech-2027-2050
 translationKey: future-tech
 pubDate: 2026-11-22
+updatedDate: 2026-11-23
 draft: false
 sources:
   - https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance
   - https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025
   - https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027
-  - https://iot-analytics.com/Number-Connected-Iot-Devices/
+  - https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence
+  - https://iot-analytics.com/number-connected-iot-devices/
   - https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/
   - https://www.w3.org/TR/activitypub/
   - https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation
   - https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en
   - https://digital-strategy.ec.europa.eu/en/policies/data-act
+  - https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en
+  - https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays
+  - https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/
+  - https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/
 tags:
   - Future
   - Artificial Intelligence
@@ -29,17 +35,25 @@ This is my vision, starting in 2027 and extending to more distant scenarios arou
 
 The dates are approximate. Several changes will happen in parallel, and some may never happen at all.
 
+**How to read this essay:** the charts distinguish measured results, survey responses, analyst forecasts, and my own conceptual diagrams. A forecast is not a fact about the future, and a diagram is not a statistic. The examples below are either documented current capabilities or explicitly hypothetical product scenarios.
+
 ## 2027–2030 Personal AI, not just chatbots
 
 I imagine each of us having one or more personal AIs capable of managing information, devices, services, and everyday tasks. Not just answering questions, but agents that can work with real tools: read a document, compare options, fill out a form, query a service, prepare something, and ask for approval when necessary.
 
 The first signs are already here. In the [McKinsey *State of AI 2025* survey](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025), **23%** of respondents said their organizations were scaling at least one agentic AI system; another **39%** reported experimenting with agents. This survey covers organizations, not individuals. It does not mean 62% of people already have personal AI agents.
 
+![Two separate 2025 survey figures: 23% of respondents report their organizations scaling agentic AI, and an additional 39% report experimenting.](/blog/charts/en/enterprise-agents-survey.svg)
+
+*Chart 1 — Organizational adoption signals, not consumer adoption. Source: [McKinsey, State of AI 2025](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025), global survey of 1,993 respondents, June–July 2025. The groups describe reported stages; they are not a forecast.*
+
 The ability to operate a computer has also improved dramatically. The [Stanford AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance) reports a **66.3%** success rate on the OSWorld benchmark in 2025, up from roughly **5%** in 2024. The human reference score is **72.35%**. That's extraordinary progress, but it also shows that an agent may still fail on about one in three tasks in this particular test.
 
 ![Chart comparing AI performance on the OSWorld benchmark: roughly 5% in 2024, 66.3% in 2025, and a human reference of 72.35%.](/blog/charts/en/agents-osworld.svg)
 
-*Chart 1 — Data: [Stanford HAI, AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance). This benchmark measures specific computer tasks, not the overall reliability of every AI agent.*
+*Chart 2 — Data: [Stanford HAI, AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance). This benchmark measures specific computer tasks, not the overall reliability of every AI agent.*
+
+**A concrete example:** I ask my personal AI to plan a weekend trip. It reads a train timetable, compares hotels against my budget, proposes two itineraries, and prepares a reservation. Crucially, it **doesn't pay or book until I approve**. This is a hypothetical end-to-end scenario, not a claim that today's agents can do it reliably.
 
 For me, the most interesting part is independence from providers. I want an AI that keeps its memory and context even when I switch models, and that can operate locally or in the cloud. Open standards are moving in a promising direction: in December 2025, the [Model Context Protocol joined the Agentic AI Foundation](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation), under the Linux Foundation.
 
@@ -53,7 +67,19 @@ Today, we often adapt how we work to the screens of the software we bought. I im
 
 Code generation is reducing the cost of building interfaces and automations. In 2025, Gartner [forecast](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) that 33% of enterprise software applications would include agentic AI by 2028, up from less than 1% in 2024. That's still a **projection**, not a measurement of how long applications actually last.
 
+![Gartner's projected share of enterprise apps with agentic AI: below 1% in 2024, and 33% forecast for 2028.](/blog/charts/en/enterprise-agent-forecast.svg)
+
+*Chart 3 — Source: [Gartner, June 2025](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027). The 2024 figure is **less than 1%** and drawn as an upper-bound marker; 2028 is a forecast, not observed adoption.*
+
 My bet isn't that everything will be constantly rewritten. That would be a maintenance nightmare. It's that **the visible layer of software will become cheaper to change**, while data contracts, permissions, integrations, controls, and infrastructure will need to become much more stable. In regulated industries, audits, security, and reliability will still limit how quickly things can change.
+
+Here's how I picture it in commerce: a retailer creates a temporary dashboard for a two-week campaign. The interface is tailored to the team running the launch, but inventory, customer records, payment permissions, and order APIs remain in established systems. When the campaign ends, the dashboard can go away **without taking the data with it**.
+
+This isn't just about developer productivity. In July 2026, [Gartner estimated](https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence) that **up to $234 billion in enterprise application SaaS spending**, approximately **20%** of that category, could be exposed to agentic arbitrage by 2030: agents doing work across tools without users opening each interface. That money is **exposed to a different way of buying software**, not already lost revenue.
+
+![Diagram of Gartner's 2030 enterprise application SaaS exposure estimate: up to $234 billion, roughly 20% of the category.](/blog/charts/en/saas-exposure-2030.svg)
+
+*Chart 4 — Source: [Gartner, July 2026](https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence). Market exposure is an analyst estimate about business-model pressure, **not a prediction of $234B in losses**.*
 
 ## 2028–2033 Phones, tablets, and PCs converge
 
