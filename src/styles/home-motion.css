@@ -216,6 +216,7 @@ html.intro-playing.intro-leaving .code-intro {
 /* ── Pointer-responsive project cards and light accents ───────────── */
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .home-page .project-card {
+    position: relative;
     --card-rx: 0deg;
     --card-ry: 0deg;
     --card-lift: 0px;
@@ -243,7 +244,7 @@ html.intro-playing.intro-leaving .code-intro {
   .home-page .writing-card:hover { transform: translateY(-4px) rotate(-.3deg); }
   .home-page .writing-card-footer > span:last-child { transition: transform .2s ease; }
   .home-page .writing-card:hover .writing-card-footer > span:last-child { transform: translate(3px,-3px); }
-  .home-page .scroll-cue { overflow: hidden; isolation: isolate; }
+  .home-page .scroll-cue { position: relative; overflow: hidden; isolation: isolate; }
   .home-page .scroll-cue::before {
     content: "";
     position: absolute;
