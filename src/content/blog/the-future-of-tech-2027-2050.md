@@ -159,6 +159,8 @@ My prediction is that the center of gravity will gradually shift from platform a
 
 I don't think the endgame for AR is having 2D notifications and windows floating in front of our eyes. I expect digital objects that understand the geometry of the world, stay anchored in place, and respond to physical spaces.
 
+Picture fixing a machine: instead of looking down at a video, I see the correct component highlighted in its actual physical location, a torque value beside the fastener, and the next step only after confirming the previous one. **That's an illustrative future workflow**, not something I assume consumer AR glasses can deliver reliably today.
+
 Think of instructions attached to something I'm repairing, information about an object I'm looking at, or virtual work surfaces placed wherever I need them. That's very different from projecting a tiny screen into your field of vision.
 
 Device sales shouldn't be confused with the maturity of that vision. [IDC](https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/) forecasts around **3 million units shipped in 2026** for glasses with displays, rising to **12.2 million in 2030**. That category also includes devices that put images in front of your eyes without delivering full spatial AR.
@@ -175,7 +177,9 @@ The market is moving, although we're still far from a replacement. IDC forecasts
 
 ![Chart showing IDC's forecast smart-glasses shipments with and without displays in 2026 and 2030.](/blog/charts/en/smart-glasses.svg)
 
-*Chart 3 — [IDC, 2026](https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/). These are forecasts for annual shipments, not active users or the percentage of smartphones replaced.*
+*Chart 8 — [IDC, 2026](https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/). These are forecasts for annual shipments, not active users or the percentage of smartphones replaced.*
+
+The use case I find most convincing is small, frequent assistance: walking directions, a translation while traveling, or a reminder linked to a physical place, without taking out a phone. The harder question isn't whether a device can display that information. It's whether I would trust it to be comfortable, private, reliable, and socially acceptable all day.
 
 The numbers show market interest and projected growth. **They do not prove that smartphones will disappear.** For extended reading, complex work, or a private display, we may still prefer other devices.
 
@@ -194,6 +198,8 @@ I don't believe in a future without apps. I believe in one where apps are **less
 
 Of course, the opposite could happen: closed personal AIs, even more concentrated data, invasive sensors, and new dependencies on a handful of providers. Technology alone doesn't guarantee openness. That takes standards, regulation, well-designed products, and people demanding control.
 
+Imagine the full path: I ask a personal AI to organize my next trip. It accesses travel services through authorized connections, presents a temporary interface to compare routes, uses a portable credential only where necessary, and later gives me directions on whichever screen I have available. **The experience is continuous even if the apps, services, and devices behind it are not.** That's the future I'm betting on, not one magic product replacing everything.
+
 That's why the most important prediction here isn't about a device or a date.
 
 **The real value won't lie only in the software we use, but in the ability of our systems to communicate without taking away our freedom to choose.**
@@ -202,6 +208,13 @@ That's why the most important prediction here isn't about a device or a date.
 
 ### Sources and methodology
 
-I used information published by **November 22, 2026**. Each chart cites its underlying source. Estimates and market forecasts are labeled as such; the date ranges in this essay are **my personal hypotheses**, not statistical projections.
+This revision includes sources available by **November 23, 2026**. Eight charts are embedded as small static SVGs, with a direct source and a scope note beneath each. Charts 1, 2, 3, 4, 7 and 8 show reported data, survey findings or cited analyst estimates. Chart 5 is a timeline of sourced milestones; Chart 6 is a **conceptual product workflow**, not measured data.
 
-Main sources: [Stanford AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report), [McKinsey — State of AI 2025](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025), [Gartner — Agentic AI](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027), [IoT Analytics](https://iot-analytics.com/Number-Connected-Iot-Devices/), [IDC — Smart Glasses](https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/), [Android Developers](https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays), [W3C ActivityPub](https://www.w3.org/TR/activitypub/), [Linux Foundation — Agentic AI Foundation](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation), [Google Research — Generative UI](https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/), [European Commission — Digital Identity](https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en), [European Commission — Data Act](https://digital-strategy.ec.europa.eu/en/policies/data-act), and [Digital Markets Act — Interoperability](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en).
+The 2027–2050 dates are **my hypotheses**, not statistical forecasts. Enterprise surveys do not measure consumer behavior; shipment forecasts do not equal active users; and dollars **exposed** to disruption are not dollars **lost**. I deliberately keep those distinctions visible.
+
+Primary sources by subject:
+
+- **AI performance and enterprise adoption:** [Stanford AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance), [McKinsey State of AI 2025](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025), [Gartner on agents in software (2025)](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027).
+- **Software economics and interfaces:** [Gartner's July 2026 SaaS exposure estimate](https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence), [Android Developers on connected displays](https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays), [Google Research on generative UI](https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/), [Google Developers on A2UI](https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/).
+- **Protocols, digital identity and policy:** [W3C ActivityPub](https://www.w3.org/TR/activitypub/), [Linux Foundation / MCP](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation), [EU Digital Markets Act interoperability](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en), [European Digital Identity Wallet](https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en), [EU Data Act](https://digital-strategy.ec.europa.eu/en/policies/data-act).
+- **Connected devices and glasses:** [IoT Analytics](https://iot-analytics.com/number-connected-iot-devices/), [IDC smart glasses market outlook (2026)](https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/).
