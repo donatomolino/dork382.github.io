@@ -9,6 +9,9 @@ import swooshManiaImage from "~/content/showcase/_images/swooshmania.jpg";
 import thinkyImage from "~/content/showcase/_images/thinky.png";
 import "~/styles/index.css";
 import "~/styles/compact-editorial.css";
+import "~/styles/home-motion.css";
+import CodeIntro from "~/components/CodeIntro.astro";
+import HeroArtifact from "~/components/HeroArtifact.astro";
 
 const { generator, site } = Astro;
 const description =
@@ -136,6 +139,7 @@ const capabilities = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#f6f6f2" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="generator" content={generator} />
     <title>Donato Molino — Product Engineer</title>
@@ -151,8 +155,27 @@ const capabilities = [
     <meta property="og:image" content={socialImage} />
     <meta property="og:url" content={site} />
     <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>
+      (() => {
+        try {
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          const preview = new URLSearchParams(window.location.search).get("intro");
+          if (preview === "0") return;
+          if (preview !== "1" && window.sessionStorage.getItem("dm:code-intro:v1")) return;
+          window.sessionStorage.setItem("dm:code-intro:v1", "1");
+          document.documentElement.classList.add("intro-playing");
+          // Fail-safe: never leave the visitor behind an overlay.
+          window.setTimeout(() => {
+            document.documentElement.classList.remove("intro-playing", "intro-leaving");
+          }, 2500);
+        } catch (_error) {
+          // Storage may be disabled. The portfolio simply opens normally.
+        }
+      })();
+    </script>
   </head>
   <body class="home-page">
+    <CodeIntro />
     <a class="home-skip" href="#top">Skip to content</a>
     <header class="home-header">
       <a class="home-brand" href="#top" aria-label="Donato Molino, back to top">
@@ -168,13 +191,14 @@ const capabilities = [
       </nav>
     </header>
 
-    <main id="top">
+    <main id="top" tabindex="-1">
       <section class="home-hero" aria-labelledby="home-title">
         <p class="kicker">Independent builder · Full-stack developer</p>
         <h1 id="home-title">
           <span>Donato</span>
           <span class="red">Molino</span>
         </h1>
+        <HeroArtifact />
         <p class="hero-copy">
           I turn ambitious ideas into products that feel simple, useful and
           inevitable.
@@ -329,5 +353,8 @@ const capabilities = [
       </div>
       <a href="#top">Back to top ↑</a>
     </footer>
+    <script>
+      import "~/scripts/home-motion";
+    </script>
   </body>
 </html>
