@@ -1,12 +1,14 @@
 ---
 import "@fontsource-variable/inter";
 import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 import farmingCatImage from "~/content/showcase/_images/farmingcat.png";
 import flowlightImage from "~/content/showcase/_images/flowlight.png";
 import postOfficeImage from "~/content/showcase/_images/postoffice.png";
 import swooshManiaImage from "~/content/showcase/_images/swooshmania.jpg";
 import thinkyImage from "~/content/showcase/_images/thinky.png";
 import "~/styles/index.css";
+import "~/styles/compact-editorial.css";
 
 const { generator, site } = Astro;
 const description =
@@ -97,6 +99,14 @@ const projects = [
   },
 ];
 
+const latestPosts = (await getCollection("blog", ({ data }) =>
+  !data.draft && data.lang === "en" && data.pubDate <= new Date()
+)).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()).slice(0, 2);
+const formatPostDate = (date: Date) =>
+  new Intl.DateTimeFormat("en-GB", {
+    day: "numeric", month: "short", year: "numeric", timeZone: "UTC",
+  }).format(date);
+
 const capabilities = [
   {
     number: "01",
@@ -143,6 +153,7 @@ const capabilities = [
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body class="home-page">
+    <a class="home-skip" href="#top">Skip to content</a>
     <header class="home-header">
       <a class="home-brand" href="#top" aria-label="Donato Molino, back to top">
         <span class="signal-square" aria-hidden="true"></span>
@@ -173,7 +184,16 @@ const capabilities = [
           <span>Systems</span>
           <span>Experiments</span>
         </div>
-        <a class="scroll-cue" href="#work">Selected work ↓</a>
+        <a class="scroll-cue" href="#work">Selected work <span aria-hidden="true">↘</span></a>
+        <div class="hero-status" aria-label="Current focus">
+          <div>
+            <small>Current focus</small>
+            <strong>Product engineering + AI</strong>
+          </div>
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 19 19 5M8 5h11v11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
       </section>
 
       <section class="work-section" id="work" aria-labelledby="work-title">
@@ -194,7 +214,7 @@ const capabilities = [
               >
                 <div class="project-visual">
                   {project.image ? (
-                    <Image src={project.image} alt="" widths={[640, 960]} sizes="(min-width: 800px) 46vw, 100vw" />
+                    <Image src={project.image} alt="" widths={[640, 960]} sizes="(min-width: 1000px) 45vw, (min-width: 680px) 48vw, 100vw" />
                   ) : (
                     <span aria-hidden="true">JF</span>
                   )}
@@ -212,8 +232,38 @@ const capabilities = [
         </div>
       </section>
 
+      {latestPosts.length > 0 && (
+        <section class="writing-section" id="writing" aria-labelledby="writing-title">
+          <header class="writing-heading">
+            <div>
+              <p>02 / Journal</p>
+              <h2 id="writing-title">Recent writing.</h2>
+            </div>
+            <a href="/blog/" aria-label="See all writing">All articles <span aria-hidden="true">↗</span></a>
+          </header>
+          <div class="writing-list">
+            {latestPosts.map((post) => (
+              <a class="writing-card" href={"/blog/en/" + post.data.slug + "/"}>
+                <div class="writing-card-top">
+                  <span>{post.data.tags[0] ?? "Journal"}</span>
+                  <time datetime={post.data.pubDate.toISOString()}>{formatPostDate(post.data.pubDate)}</time>
+                </div>
+                <div>
+                  <h3>{post.data.title}</h3>
+                  <p>{post.data.description}</p>
+                </div>
+                <div class="writing-card-footer">
+                  <span>Read the article</span>
+                  <span aria-hidden="true">↗</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
       <section class="manifesto-callout" aria-labelledby="manifesto-heading">
-        <div class="manifesto-label">02 / Principles</div>
+        <div class="manifesto-label">03 / Principles</div>
         <h2 id="manifesto-heading">
           The Donnie<br />Manifesto
         </h2>
@@ -223,7 +273,7 @@ const capabilities = [
 
       <section class="capabilities-section" id="capabilities" aria-labelledby="capabilities-title">
         <header class="section-header section-header--compact">
-          <p>03 / Capabilities</p>
+          <p>04 / Capabilities</p>
           <h2 id="capabilities-title">The stack changes.<br />The standard doesn’t.</h2>
         </header>
         <div class="capabilities-grid">
@@ -242,7 +292,7 @@ const capabilities = [
       </section>
 
       <section class="about-section" id="about" aria-labelledby="about-title">
-        <p class="about-label">04 / About</p>
+        <p class="about-label">05 / About</p>
         <h2 id="about-title">
           Code is a tool.<br />The product is the point.
         </h2>
@@ -261,7 +311,7 @@ const capabilities = [
       </section>
 
       <section class="contact-section" id="contact" aria-labelledby="contact-title">
-        <p>05 / Start something</p>
+        <p>06 / Start something</p>
         <h2 id="contact-title">Have an idea<br />worth building?</h2>
         <a class="contact-link" href="mailto:donatomolino@europe.com">
           Let’s talk <span aria-hidden="true">↗</span>
