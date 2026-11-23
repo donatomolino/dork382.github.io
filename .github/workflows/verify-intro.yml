@@ -1,0 +1,46 @@
+name: Verify 3s Site Intro
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  intro-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Build the Astro site
+        run: npm run build
+      - name: Install Playwright in CI only
+        run: |
+          npm install --no-save --package-lock=false playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Run preview and capture visual QA
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4322 > /tmp/site-intro-preview.log 2>&1 &
+          for i in $(seq 1 45); do
+            if curl -fsS http://127.0.0.1:4322/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/verify-site-intro.mjs
+      - name: Upload 30 timeline captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swiss-intro-frames
+          path: artifacts/intro/
+          if-no-files-found: ignore
+          retention-days: 7
