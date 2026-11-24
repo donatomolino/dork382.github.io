@@ -211,3 +211,44 @@
     max-width: none;
   }
 }
+
+/* Quotable editorial thesis, rendered as real HTML in both languages. */
+.blog-quick-answer {
+  width: min(100%, 790px);
+  margin: 52px auto 0;
+  padding: clamp(23px, 4vw, 38px);
+  border-top: 3px solid var(--swiss-ink);
+  border-bottom: 2px solid var(--swiss-ink);
+  background: #e9e8e3;
+}
+.blog-quick-answer-eyebrow {
+  margin: 0 0 20px;
+  color: var(--swiss-red);
+  font-size: 11px;
+  font-weight: 780;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.blog-quick-answer h2 {
+  margin: 0 0 19px;
+  font-size: clamp(26px, 3.1vw, 39px);
+  font-weight: 770;
+  letter-spacing: -.055em;
+  line-height: 1.1;
+}
+.blog-quick-answer > p:not(.blog-quick-answer-eyebrow) {
+  margin: 0 0 14px;
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.55;
+}
+.blog-quick-answer .blog-quick-answer-note { font-size: 14px !important; color: #474741; }
+.blog-quick-answer a {
+  display: inline-block;
+  margin-top: 9px;
+  color: var(--swiss-red);
+  font-size: 13px;
+  font-weight: 770;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+#blog-quick-answer-context { scroll-margin-top: 20px; }
