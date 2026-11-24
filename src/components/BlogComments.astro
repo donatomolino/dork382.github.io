@@ -76,14 +76,15 @@ const t=it?{
     const cancel=form.querySelector<HTMLButtonElement>("[data-cancel]")!;
     const replyLabel=form.querySelector<HTMLElement>("[data-reply-label]")!;
     const widgetTarget=form.querySelector<HTMLElement>("[data-turnstile]")!;
-    let parentId:string|null=null,token="",widget:string|undefined,ts:Turnstile|undefined,sending=false,siteKey="";
+    let parentId:string|null=null,token="",widget:string|undefined,ts:Turnstile|undefined,sending=false,siteKey="",widgetLoading=false;
     function setReply(id:string|null,name=""){
       parentId=id;replyLabel.hidden=!id;cancel.hidden=!id;
       replyLabel.textContent=id?strings.replyTo+name:"";
     }
     cancel.addEventListener("click",()=>setReply(null));
     async function ensureWidget(){
-      if(widget!==undefined)return;
+      if(widget!==undefined||widgetLoading)return;
+      widgetLoading=true;
       try {
         ts=await loadTurnstile();
         widget=ts.render(widgetTarget,{sitekey:siteKey,action:"blog_comment",language:lang,
@@ -92,6 +93,7 @@ const t=it?{
           "error-callback":()=>{token="";submit.disabled=true;formStatus.textContent=strings.verify;}
         });
       } catch {formStatus.textContent=strings.unavailable;}
+      finally {widgetLoading=false;}
     }
     function commentElement(comment:Comment,isReply=false){
       const item=document.createElement("article");
