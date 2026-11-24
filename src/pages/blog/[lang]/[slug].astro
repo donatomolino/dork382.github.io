@@ -90,6 +90,22 @@ const formatDate = (date: Date) =>
         </div>
       )}
     </header>
+    {post.data.translationKey === "future-tech" && (
+      <aside class="blog-quick-answer" aria-labelledby="blog-quick-answer-title">
+        <p class="blog-quick-answer-eyebrow">{lang === "it" ? "In breve / Punto di vista personale" : "In brief / Personal perspective"}</p>
+        <h2 id="blog-quick-answer-title">{lang === "it" ? "La mia idea, in sintesi" : "The argument in a nutshell"}</h2>
+        <p>{lang === "it"
+          ? "Credo che tra il 2027 e il 2050 gli assistenti AI personali, i protocolli aperti e le interfacce dinamiche ridurranno la nostra dipendenza dalle app tradizionali. Smartphone e PC potrebbero convergere; la realtà aumentata indossabile richiederà più tempo. Sono previsioni personali, non fatti accertati."
+          : "My bet for 2027–2050 is that personal AI, interoperable protocols and task-specific interfaces will make traditional apps less central. Phones may become desktop computers when connected to a screen, while practical spatial AR will take longer. These are my hypotheses, not established forecasts."}
+        </p>
+        <p class="blog-quick-answer-note">{lang === "it"
+          ? "L'articolo distingue dati osservati, stime degli analisti e scenari ipotetici; le fonti sono citate accanto alle affermazioni."
+          : "The article distinguishes observed data, analyst estimates and hypothetical scenarios; primary sources accompany the claims."}
+        </p>
+        <a href="#blog-quick-answer-context">{lang === "it" ? "Leggi l'analisi completa ↓" : "Read the full argument ↓"}</a>
+      </aside>
+    )}
+    <div id="blog-quick-answer-context"></div>
     {toc.length > 2 && (
       <nav class="blog-article-toc" aria-label={t.onThisPage}>
         <p>{t.onThisPage}</p>
