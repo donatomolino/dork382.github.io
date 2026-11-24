@@ -1,6 +1,6 @@
 const origins = new Set(["https://donatomolino.it", "https://www.donatomolino.it"]);
 const hostnames = new Set(["donatomolino.it", "www.donatomolino.it"]);
-const MAX_BODY = 8192;
+const MAX_BODY = 16384;
 const threadPattern = /^[a-z0-9][a-z0-9-]{0,95}$/;
 const idPattern = /^[0-9a-f-]{36}$/i;
 const columns = "id, parent_id, name, body, lang, created_at";
