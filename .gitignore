@@ -19,3 +19,8 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# Cloudflare deployment config and local secrets
+workers/comments/wrangler.toml
+workers/comments/.dev.vars*
+workers/comments/.wrangler/
