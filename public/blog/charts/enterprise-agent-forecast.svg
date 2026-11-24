@@ -1,5 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="480" viewBox="0 0 1000 480" role="img" aria-labelledby="chart-title chart-desc">
-<title id="chart-title">AI agentica nel software aziendale</title><desc id="chart-desc">Gartner 2025: meno dell'1% di applicazioni aziendali con AI agentica nel 2024; previsione del 33% nel 2028.</desc>
-<rect x="0" y="0" width="1000" height="480" fill="#f2f1ed"  />
-<text x="48" y="65" font-family="Arial,Helvetica,sans-serif" font-size="34" font-weight="800" fill="#11110f" >AI agentica nel software aziendale</text><text x="48" y="100" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="500" fill="#5b5a56" >Quota di applicazioni enterprise con AI agentica, Gartner 2025</text><text x="48" y="211" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="800" fill="#11110f" >2024</text><rect x="245" y="175" width="600" height="45" fill="#dfded9" rx="3" /><rect x="245" y="175" width="15" height="45" fill="#11110f" rx="2" stroke="#11110f" stroke-dasharray="5 5"/><text x="275" y="205" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="800" fill="#11110f" >&lt;1%</text><text x="48" y="304" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="800" fill="#11110f" >2028</text><rect x="245" y="268" width="600" height="45" fill="#dfded9" rx="3" /><rect x="245" y="268" width="495" height="45" fill="#ed1c24" rx="3" /><text x="750" y="298" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="800" fill="#11110f" >33%</text><text x="48" y="369" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="600" fill="#5b5a56" >2024: meno dell’1%  •  2028: previsione, non dato osservato</text><line x1="48" y1="411" x2="952" y2="411" stroke="#11110f" stroke-width="2"/><text x="48" y="437" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" fill="#11110f" >Fonte: Gartner, comunicato del 25 giugno 2025</text><text x="48" y="461" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="500" fill="#5b5a56" >Scala fino al 40%; il valore 2024 indica un limite superiore dell’1%.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600" role="img" aria-labelledby="chart-title chart-desc">
+<title id="chart-title">AI agentica nel software aziendale</title><desc id="chart-desc">Due indicatori distinti Gartner: AI agentica, meno dell’1% nel 2024 e 33% previsto nel 2028; agenti specifici, meno del 5% nel 2025 e fino al 40% previsto per fine 2026. Dati intermedi non disponibili. Per il 2027, previsione separata di un terzo delle implementazioni con agenti di competenze diverse.</desc>
+<rect width="1000" height="600" fill="#f2f1ed"/>
+<text x="48" y="64" font-family="Arial,Helvetica,sans-serif" font-size="34" font-weight="800" fill="#11110f" text-anchor="start">AI agentica nel software aziendale</text>
+<text x="48" y="100" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="500" fill="#5b5a56" text-anchor="start">Due indicatori distinti sulle applicazioni enterprise • Gartner, 2025</text>
+<text x="351" y="155" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="800" fill="#11110f" text-anchor="middle">2024</text>
+<text x="485" y="155" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="800" fill="#11110f" text-anchor="middle">2025</text>
+<text x="619" y="155" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="800" fill="#11110f" text-anchor="middle">2026</text>
+<text x="753" y="155" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="800" fill="#11110f" text-anchor="middle">2027</text>
+<text x="887" y="155" font-family="Arial,Helvetica,sans-serif" font-size="23" font-weight="800" fill="#11110f" text-anchor="middle">2028</text>
+<line x1="48" y1="180" x2="952" y2="180" stroke="#11110f" stroke-width="1.5"/>
+<text x="48" y="213" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="800" fill="#11110f" text-anchor="start">AI agentica</text>
+<text x="48" y="239" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="600" fill="#11110f" text-anchor="start">nelle applicazioni</text>
+<text x="48" y="268" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="500" fill="#5b5a56" text-anchor="start">Fonte: giugno 2025</text>
+<rect x="292" y="195" width="118" height="105" rx="3" fill="#e5e3de"/>
+<text x="351" y="222" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="800" fill="#11110f" text-anchor="middle">&lt;1%</text>
+<rect x="302" y="238" width="98" height="13" fill="#cfcdc7" rx="2"/><rect x="302" y="238" width="2.45" height="13" fill="none" stroke="#11110f" stroke-dasharray="2 2" rx="2"/>
+<text x="351" y="275" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#11110f" text-anchor="middle">limite sup.</text>
+<rect x="426" y="195" width="118" height="105" rx="3" fill="#e5e3de"/>
+<text x="485" y="240" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="600" fill="#77756f" text-anchor="middle">n.d.</text>
+<text x="485" y="263" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="500" fill="#77756f" text-anchor="middle">—</text>
+<rect x="560" y="195" width="118" height="105" rx="3" fill="#e5e3de"/>
+<text x="619" y="240" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="600" fill="#77756f" text-anchor="middle">n.d.</text>
+<text x="619" y="263" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="500" fill="#77756f" text-anchor="middle">—</text>
+<rect x="694" y="195" width="118" height="105" rx="3" fill="#e5e3de"/>
+<text x="753" y="240" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="600" fill="#77756f" text-anchor="middle">n.d.</text>
+<text x="753" y="263" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="500" fill="#77756f" text-anchor="middle">—</text>
+<rect x="828" y="195" width="118" height="105" rx="3" fill="#e5e3de"/>
+<text x="887" y="222" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="800" fill="#ed1c24" text-anchor="middle">33%</text>
+<rect x="838" y="238" width="98" height="13" fill="#cfcdc7" rx="2"/><rect x="838" y="238" width="80.85" height="13" fill="#ed1c24" stroke="#ed1c24"  rx="2"/>
+<text x="887" y="275" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#ed1c24" text-anchor="middle">previsione</text>
+<line x1="48" y1="319" x2="952" y2="319" stroke="#11110f" stroke-width="1.5"/>
+<text x="48" y="352" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="800" fill="#11110f" text-anchor="start">Agenti specifici</text>
+<text x="48" y="378" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="600" fill="#11110f" text-anchor="start">integrati nelle app</text>
+<text x="48" y="407" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="500" fill="#5b5a56" text-anchor="start">Fonte: agosto 2025</text>
+<rect x="292" y="334" width="118" height="105" rx="3" fill="#e5e3de"/>
+<text x="351" y="379" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="600" fill="#77756f" text-anchor="middle">n.d.</text>
+<text x="351" y="402" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="500" fill="#77756f" text-anchor="middle">—</text>
+<rect x="426" y="334" width="118" height="105" rx="3" fill="#e5e3de"/>
+<text x="485" y="361" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="800" fill="#11110f" text-anchor="middle">&lt;5%</text>
+<rect x="436" y="377" width="98" height="13" fill="#cfcdc7" rx="2"/><rect x="436" y="377" width="12.25" height="13" fill="none" stroke="#11110f" stroke-dasharray="2 2" rx="2"/>
+<text x="485" y="414" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#11110f" text-anchor="middle">limite sup.</text>
+<rect x="560" y="334" width="118" height="105" rx="3" fill="#e5e3de"/>
+<text x="619" y="361" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="800" fill="#ed1c24" text-anchor="middle">fino al 40%</text>
+<rect x="570" y="377" width="98" height="13" fill="#cfcdc7" rx="2"/><rect x="570" y="377" width="98" height="13" fill="#ed1c24" stroke="#ed1c24"  rx="2"/>
+<text x="619" y="414" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#ed1c24" text-anchor="middle">previsione</text>
+<rect x="694" y="334" width="118" height="105" rx="3" fill="#e5e3de"/>
+<text x="753" y="379" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="600" fill="#77756f" text-anchor="middle">n.d.</text>
+<text x="753" y="402" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="500" fill="#77756f" text-anchor="middle">—</text>
+<rect x="828" y="334" width="118" height="105" rx="3" fill="#e5e3de"/>
+<text x="887" y="379" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="600" fill="#77756f" text-anchor="middle">n.d.</text>
+<text x="887" y="402" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="500" fill="#77756f" text-anchor="middle">—</text>
+<line x1="48" y1="458" x2="952" y2="458" stroke="#11110f" stroke-width="2"/>
+<text x="48" y="489" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="800" fill="#11110f" text-anchor="start">2027 • Altro indicatore</text>
+<text x="48" y="516" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="500" fill="#11110f" text-anchor="start">Circa 1/3 delle implementazioni agentiche combinerà agenti con competenze diverse (previsione).</text>
+<text x="48" y="551" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" fill="#11110f" text-anchor="start">Fonti: Gartner, 25 giugno e 26 agosto 2025. Previsioni, non risultati misurati.</text>
+<text x="48" y="577" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="500" fill="#5b5a56" text-anchor="start">Barre su scala 0–40%; n.d. = dato comparabile non disponibile, non zero.</text>
 </svg>
