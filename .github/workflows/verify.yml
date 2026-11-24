@@ -76,8 +76,16 @@ jobs:
           for name in enterprise-agents-survey agents-osworld enterprise-agent-forecast saas-exposure-2030 interoperability-milestones generated-interface-flow iot-devices smart-glasses; do
             test -f "dist/blog/charts/en/$name.svg"
             grep -q "/blog/charts/en/$name.svg" dist/blog/en/the-future-of-tech-2027-2050/index.html
+            test -f "dist/blog/charts/$name.svg"
+            grep -q "/blog/charts/$name.svg" dist/blog/it/il-futuro-del-tech-2027-2050/index.html
           done
-          grep -q '2026-11-23' dist/blog/en/the-future-of-tech-2027-2050/index.html
+          grep -q '2026-11-24' dist/blog/en/the-future-of-tech-2027-2050/index.html
+          grep -q '2026-11-24' dist/blog/it/il-futuro-del-tech-2027-2050/index.html
+          for article in dist/blog/en/the-future-of-tech-2027-2050/index.html dist/blog/it/il-futuro-del-tech-2027-2050/index.html; do
+            for product in 'ChatGPT' 'Claude Code' 'Model Context Protocol' 'Ray-Ban Meta' 'Meta Ray-Ban Display' 'Meta Orion' 'Samsung DeX' 'Apple Vision Pro' 'Home Assistant' 'GitHub Copilot'; do
+              grep -q "$product" "$article"
+            done
+          done
           grep -q 'Chart 8' dist/blog/en/the-future-of-tech-2027-2050/index.html
           grep -q 'Sources and methodology' dist/blog/en/the-future-of-tech-2027-2050/index.html
 
@@ -95,8 +103,8 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import xml.etree.ElementTree as ET
-          for chart in Path('dist/blog/charts/en').glob('*.svg'):
+          for chart in Path('dist/blog/charts').rglob('*.svg'):
               ET.parse(chart)
-          print('English editorial SVG charts parse as XML')
+          print('All editorial SVG charts parse as XML')
           PY
 
