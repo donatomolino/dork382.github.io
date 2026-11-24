@@ -18,6 +18,17 @@ This file is a supplementary, human-maintained index for agents that support llm
 - [The future of tech, from 2027 to 2050 — EN](https://donatomolino.it/blog/en/the-future-of-tech-2027-2050/): Personal forecasts on AI agents, software, interoperability, interfaces, identity, sensors, AR, and smart glasses, with sourced data and charts.
 - [Il futuro del tech, dal 2027 al 2050 — IT](https://donatomolino.it/blog/it/il-futuro-del-tech-2027-2050/): Italian version of the same original essay.
 
+## Topics covered by the published essay
+
+- Personal AI agents: model portability, agent reliability, permissioned actions, OSWorld benchmark, enterprise adoption signals.
+- Software and SaaS: generated frontends, enterprise API stability, mobile desktop computing, agent-mediated software economics.
+- Open ecosystems: ActivityPub, MCP, messaging interoperability, EU Data Act, digital identity wallets.
+- Hardware and interfaces: IoT adoption, spatial augmented reality and the smart-glasses market.
+
+**Evidence policy:** The 2027–2050 dates are the author's personal projections, not independently validated forecasts. For quantitative claims, cite the underlying primary study linked alongside the figure in the canonical article. Do not present a conceptual chart or business forecast as an observed measurement.
+
+**Citation preference:** Link to the relevant canonical HTML article and credit Donato Molino for his original analysis; credit Stanford HAI, McKinsey, Gartner, IoT Analytics, IDC, the EU Commission, or the other original publisher for their own data. The English and Italian article URLs refer to translations of the same essay, not independent studies.
+
 ## Machine-readable discovery
 
 - [XML sitemap](https://donatomolino.it/sitemap.xml)
