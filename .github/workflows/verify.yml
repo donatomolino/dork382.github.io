@@ -80,6 +80,17 @@ jobs:
           grep -q '2026-11-23' dist/blog/en/the-future-of-tech-2027-2050/index.html
           grep -q 'Chart 8' dist/blog/en/the-future-of-tech-2027-2050/index.html
           grep -q 'Sources and methodology' dist/blog/en/the-future-of-tech-2027-2050/index.html
+
+          # AI discovery: important blog links are direct and summaries are real SSR text.
+          grep -q 'href="/blog/en/"' dist/index.html
+          ! grep -q 'href="/blog/"' dist/index.html
+          grep -q 'The argument in a nutshell' dist/blog/en/the-future-of-tech-2027-2050/index.html
+          grep -q 'La mia idea, in sintesi' dist/blog/it/il-futuro-del-tech-2027-2050/index.html
+          grep -q 'forecast' dist/llms.txt
+          # All public article routes remain represented in the sitemap.
+          grep -q 'https://donatomolino.it/blog/en/the-future-of-tech-2027-2050/' dist/sitemap.xml
+          grep -q 'https://donatomolino.it/blog/it/il-futuro-del-tech-2027-2050/' dist/sitemap.xml
+
           grep -q 'Up to $234B' dist/blog/charts/en/saas-exposure-2030.svg
           python3 - <<'PY'
           from pathlib import Path
