@@ -5,7 +5,7 @@ lang: en
 slug: the-future-of-tech-2027-2050
 translationKey: future-tech
 pubDate: 2026-11-22
-updatedDate: 2026-11-23
+updatedDate: 2026-11-24
 draft: false
 sources:
   - https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance
@@ -22,6 +22,19 @@ sources:
   - https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays
   - https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/
   - https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/
+  - https://help.openai.com/en/articles/11752874-chatgpt-agent
+  - https://help.openai.com/en/articles/11487775-connectors-in-chatgpt
+  - https://www.anthropic.com/research/claude-code-best-practices
+  - https://www.anthropic.com/news/model-context-protocol
+  - https://help.openai.com/en/articles/12584461-developer-mode-and-full-mcp-connectors-in-chatgpt-beta
+  - https://docs.github.com/en/copilot/get-started/about-github-copilot
+  - https://www.samsung.com/it/apps/samsung-dex/
+  - https://www.home-assistant.io/integrations/matter
+  - https://developer.apple.com/visionos/
+  - https://www.meta.com/design-at-meta/blog/three-design-leaders-share-their-vision-for-wearables-meta/
+  - https://www.meta.com/ai-glasses/
+  - https://www.meta.com/ai-glasses/meta-ray-ban-display/
+  - https://developers.meta.com/blog/meta-connect-recap-ai-glasses/
 tags:
   - Future
   - Artificial Intelligence
@@ -40,6 +53,8 @@ The dates are approximate. Several changes will happen in parallel, and some may
 ## 2027–2030 Personal AI, not just chatbots
 
 I imagine each of us having one or more personal AIs capable of managing information, devices, services, and everyday tasks. Not just answering questions, but agents that can work with real tools: read a document, compare options, fill out a form, query a service, prepare something, and ask for approval when necessary.
+
+The products I watch today are [ChatGPT](https://help.openai.com/en/articles/11752874-chatgpt-agent) and Claude. ChatGPT can use [connected apps](https://help.openai.com/en/articles/11487775-connectors-in-chatgpt) to retrieve information from services such as Google Drive or Slack; Claude Code can work on a repository and use [MCP tools](https://www.anthropic.com/research/claude-code-best-practices) with permissions. Those are concrete examples of the move from conversation to action. They still differ in access, memory and capabilities, and they are not interchangeable personal operating systems.
 
 The first signs are already here. In the [McKinsey *State of AI 2025* survey](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025), **23%** of respondents said their organizations were scaling at least one agentic AI system; another **39%** reported experimenting with agents. This survey covers organizations, not individuals. It does not mean 62% of people already have personal AI agents.
 
@@ -63,6 +78,8 @@ But none of this is solved. Portable memory, permissions, security, accountabili
 
 I don't think Salesforce, SAP, ServiceNow, or Microsoft Dynamics will disappear. I think their role will change.
 
+[Claude Code](https://www.anthropic.com/research/claude-code-best-practices) and [GitHub Copilot](https://docs.github.com/en/copilot/get-started/about-github-copilot) already let developers delegate parts of a coding workflow to agents. Copilot, for example, can explore a repository, make changes and prepare a pull request for review. I see these products as the beginning of cheaper, more adaptable software, not as proof that companies can dispense with engineering, testing or maintenance.
+
 Today, we often adapt how we work to the screens of the software we bought. I imagine the opposite: software adapting to the workflow, built or modified quickly when necessary. An internal application might last a few months, be replaced by something else, and leave the data, APIs, identities, and core business logic intact.
 
 Code generation is reducing the cost of building interfaces and automations. In 2025, Gartner [forecast](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) that 33% of enterprise software applications would include agentic AI by 2028, up from less than 1% in 2024. That's still a **projection**, not a measurement of how long applications actually last.
@@ -85,6 +102,8 @@ This isn't just about developer productivity. In July 2026, [Gartner estimated](
 
 I think that for most everyday tasks, the smartphone will eventually become the only computer we need: a phone in our pocket, a tablet when unfolded, and a full desktop when connected to a monitor.
 
+[Samsung DeX](https://www.samsung.com/it/apps/samsung-dex/) is one of the clearest examples: compatible Galaxy phones, including foldable models, can offer a desktop-style workspace on an external screen. A foldable phone with that capability is close to my idea of a pocket computer. The remaining question is whether the software ecosystem can support all the work people currently do on a PC.
+
 This isn't science fiction. In March 2026, [Google documented](https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays) Android desktop experiences on external monitors, developed in collaboration with Samsung. The problem is no longer demonstrating that a phone can show desktop windows. It's making the whole experience reliable enough to replace a laptop.
 
 **What I mean in practice:** I start editing a document on my phone during a train ride. At home I connect it to a monitor and keyboard, and the same device opens a multi-window workspace. Google and Samsung's [Android 16 connected-display work](https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays) is a real technical step in this direction. That doesn't mean every Android phone supports the feature or that every desktop application runs there.
@@ -96,6 +115,8 @@ I don't believe the PC will die. **I believe that, for many people, the PC will 
 ## 2030–2037 Shared protocols instead of closed ecosystems
 
 This is probably the prediction I care about most.
+
+The [Model Context Protocol (MCP)](https://www.anthropic.com/news/model-context-protocol), originally introduced by Anthropic, is particularly interesting to me. Imagine a GitHub tool or a private document service exposed through an MCP server: compatible assistants can discover and invoke the operations that server exposes, within its permissions. [ChatGPT supports MCP-based apps](https://help.openai.com/en/articles/12584461-developer-mode-and-full-mcp-connectors-in-chatgpt-beta), and Claude Code can connect to MCP servers. The protocol does not make their models, memory or identities portable; it standardizes a connection to tools and context. I would like that same separation to spread much further.
 
 I should be able to use one messaging app while somebody else uses a completely different client, and we should still be able to communicate. Just like we already do with email. I can imagine the same principle gradually extending to social networks, content, digital services, and AI.
 
@@ -115,6 +136,8 @@ Still, I believe value will gradually move **from having to use the same app tow
 
 Today, we use products made of predefined screens that are more or less identical for everyone. Tomorrow, we could describe the result we want and receive an interface built specifically around that task: just the relevant data, the necessary actions, and controls appropriate for the device.
 
+[Apps in ChatGPT](https://help.openai.com/en/articles/11487775-connectors-in-chatgpt) are an early consumer-facing example of bringing third-party services into a conversation. The next step I imagine is an interface assembled from safe components for each task, rather than merely embedding an existing app. Google's A2UI is particularly relevant to that distinction.
+
 We are not starting from zero. [Google Research has explored dynamically generated interfaces](https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/), while the open [A2UI project](https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/) defines a way to describe agent-produced interfaces and render them across different frameworks.
 
 ![Concept diagram showing a generated-interface workflow: user request, permissioned data, approved components, and explicit human confirmation.](/blog/charts/en/generated-interface-flow.svg)
@@ -130,6 +153,8 @@ This doesn't mean that every pixel should be improvised. Sensitive operations wi
 ## 2030–2040 Sensors almost everywhere
 
 Glasses, headphones, rings, clothing, and household objects will collect increasing amounts of information about the environment and our activities. My personal AI could combine some of these signals to understand far more context than a simple written prompt provides.
+
+A concrete example is [Home Assistant with Matter](https://www.home-assistant.io/integrations/matter): compatible devices can communicate locally, without needing every manufacturer’s separate cloud integration. Combine that kind of home infrastructure with wearable devices such as [Ray-Ban Meta](https://www.meta.com/ai-glasses/), and I can imagine an assistant with richer situational context. Combining these systems securely is my proposed future, not a feature they already provide together.
 
 One number puts the scale into perspective. According to [IoT Analytics](https://iot-analytics.com/Number-Connected-Iot-Devices/), there were **18.5 billion** connected IoT devices worldwide in 2024; the estimate for 2025 was **21.1 billion**, and the forecast for 2030 reaches **39 billion**.
 
@@ -159,6 +184,8 @@ My prediction is that the center of gravity will gradually shift from platform a
 
 I don't think the endgame for AR is having 2D notifications and windows floating in front of our eyes. I expect digital objects that understand the geometry of the world, stay anchored in place, and respond to physical spaces.
 
+[Apple Vision Pro and visionOS](https://developer.apple.com/visionos/) already demonstrate spatial applications, while [Meta Orion](https://www.meta.com/design-at-meta/blog/three-design-leaders-share-their-vision-for-wearables-meta/) was presented as a prototype of AR glasses. These are two distinct approaches: a headset available as a product and a prototype exploring a glasses form factor. Neither demonstrates that lightweight, all-day spatial AR is a solved engineering problem.
+
 Picture fixing a machine: instead of looking down at a video, I see the correct component highlighted in its actual physical location, a torque value beside the fastener, and the next step only after confirming the previous one. **That's an illustrative future workflow**, not something I assume consumer AR glasses can deliver reliably today.
 
 Think of instructions attached to something I'm repairing, information about an object I'm looking at, or virtual work surfaces placed wherever I need them. That's very different from projecting a tiny screen into your field of vision.
@@ -170,6 +197,8 @@ The real bottlenecks will still be battery life, heat, weight, field of view, pr
 ## 2040–2050+ Glasses could replace the smartphone
 
 This is my most distant prediction, and the one where I'm least confident about the timing.
+
+The difference between [Ray-Ban Meta](https://www.meta.com/ai-glasses/) and [Meta Ray-Ban Display](https://www.meta.com/ai-glasses/meta-ray-ban-display/) matters here. The former illustrates voice-first AI, cameras and hands-free capture without a display; the latter adds an in-lens display and the Meta Neural Band. Meta has also [documented web-app experiences for its display glasses](https://developers.meta.com/blog/meta-connect-recap-ai-glasses/). I see these products as early steps toward a new interface, not a complete replacement for the smartphone. A small display in front of the eye is also different from spatial AR that anchors content throughout a room.
 
 At some point, I think glasses could take over many of the phone's functions: communication, navigation, contextual information, translation, photography, and interaction with a personal AI. We might no longer need to pull out a screen for every small action.
 
@@ -208,7 +237,7 @@ That's why the most important prediction here isn't about a device or a date.
 
 ### Sources and methodology
 
-This revision includes sources available by **November 23, 2026**. Eight charts are embedded as small static SVGs, with a direct source and a scope note beneath each. Charts 1, 2, 3, 4, 7 and 8 show reported data, survey findings or cited analyst estimates. Chart 5 is a timeline of sourced milestones; Chart 6 is a **conceptual product workflow**, not measured data.
+This revision includes sources available by **November 24, 2026**. Eight charts are embedded as small static SVGs, with a direct source and a scope note beneath each. Charts 1, 2, 3, 4, 7 and 8 show reported data, survey findings or cited analyst estimates. Chart 5 is a timeline of sourced milestones; Chart 6 is a **conceptual product workflow**, not measured data.
 
 The 2027–2050 dates are **my hypotheses**, not statistical forecasts. Enterprise surveys do not measure consumer behavior; shipment forecasts do not equal active users; and dollars **exposed** to disruption are not dollars **lost**. I deliberately keep those distinctions visible.
 
