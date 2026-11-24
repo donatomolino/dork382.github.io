@@ -176,12 +176,12 @@
 
 /* Static editorial charts: responsive without JS, readable at phone widths.
    Mobile charts scroll inside their own paragraph, never the page viewport. */
-.blog-prose--future-tech p:has(> img[src^="/blog/charts/en/"]) {
+.blog-prose--future-tech p:has(> img[src^="/blog/charts/"]) {
   margin: 2.25em 0 .85em;
   padding-top: 14px;
   border-top: 2px solid var(--swiss-ink);
 }
-.blog-prose--future-tech p > img[src^="/blog/charts/en/"] {
+.blog-prose--future-tech p > img[src^="/blog/charts/"] {
   display: block;
   width: 100%;
   height: auto;
@@ -189,13 +189,13 @@
   background: #f2f1ed;
 }
 @media (max-width: 680px) {
-  .blog-prose--future-tech p:has(> img[src^="/blog/charts/en/"]) {
+  .blog-prose--future-tech p:has(> img[src^="/blog/charts/"]) {
     max-width: 100%;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
     scrollbar-color: var(--swiss-red) #dfded9;
   }
-  .blog-prose--future-tech p:has(> img[src^="/blog/charts/en/"])::before {
+  .blog-prose--future-tech p:has(> img[src^="/blog/charts/"])::before {
     content: "SWIPE CHART ↔";
     display: block;
     margin: 0 0 8px;
@@ -205,7 +205,8 @@
     letter-spacing: .08em;
     text-align: right;
   }
-  .blog-prose--future-tech p > img[src^="/blog/charts/en/"] {
+  html[lang="it"] .blog-prose--future-tech p:has(> img[src^="/blog/charts/"])::before { content: "SCORRI IL GRAFICO ↔"; }
+  .blog-prose--future-tech p > img[src^="/blog/charts/"] {
     width: 650px;
     min-width: 650px;
     max-width: none;
