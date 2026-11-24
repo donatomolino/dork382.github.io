@@ -35,6 +35,7 @@ sources:
   - https://www.meta.com/ai-glasses/
   - https://www.meta.com/ai-glasses/meta-ray-ban-display/
   - https://developers.meta.com/blog/meta-connect-recap-ai-glasses/
+  - https://www.gartner.com/en/newsroom/press-releases/2025-08-26-gartner-predicts-40-percent-of-enterprise-apps-will-feature-task-specific-ai-agents-by-2026-up-from-less-than-5-percent-in-2025
 tags:
   - Future
   - Artificial Intelligence
@@ -84,9 +85,11 @@ Today, we often adapt how we work to the screens of the software we bought. I im
 
 Code generation is reducing the cost of building interfaces and automations. In 2025, Gartner [forecast](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) that 33% of enterprise software applications would include agentic AI by 2028, up from less than 1% in 2024. That's still a **projection**, not a measurement of how long applications actually last.
 
-![Gartner's projected share of enterprise apps with agentic AI: below 1% in 2024, and 33% forecast for 2028.](/blog/charts/en/enterprise-agent-forecast.svg)
+![Two separate Gartner indicators, 2024–2028: agentic AI, below 1% in 2024 and 33% forecast for 2028; task-specific agents, below 5% in 2025 and up to 40% forecast by end-2026. Missing comparable annual figures marked N/A.](/blog/charts/en/enterprise-agent-forecast.svg)
 
-*Chart 3 — Source: [Gartner, June 2025](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027). The 2024 figure is **less than 1%** and drawn as an upper-bound marker; 2028 is a forecast, not observed adoption.*
+*Chart 3 — Two distinct measures: [Gartner, June 2025](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) for agentic AI in applications and [Gartner, August 2025](https://www.gartner.com/en/newsroom/press-releases/2025-08-26-gartner-predicts-40-percent-of-enterprise-apps-will-feature-task-specific-ai-agents-by-2026-up-from-less-than-5-percent-in-2025) for integrated task-specific agents. The 2026 and 2028 figures are forecasts issued in 2025, not measured outcomes. N/A indicates that I found no comparable annual figure, not zero.*
+
+For 2027, Gartner also predicts that roughly one-third of agentic AI implementations will combine agents with different skills. That is a third measure, concerning implementations rather than the share of applications, so I do not plot it as part of either series.
 
 My bet isn't that everything will be constantly rewritten. That would be a maintenance nightmare. It's that **the visible layer of software will become cheaper to change**, while data contracts, permissions, integrations, controls, and infrastructure will need to become much more stable. In regulated industries, audits, security, and reliability will still limit how quickly things can change.
 
@@ -97,6 +100,16 @@ This isn't just about developer productivity. In July 2026, [Gartner estimated](
 ![Diagram of Gartner's 2030 enterprise application SaaS exposure estimate: up to $234 billion, roughly 20% of the category.](/blog/charts/en/saas-exposure-2030.svg)
 
 *Chart 4 — Source: [Gartner, July 2026](https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence). Market exposure is an analyst estimate about business-model pressure, **not a prediction of $234B in losses**.*
+
+### A new market: tools for AI
+
+I believe a market will emerge in which the customer is still the person, but their AI increasingly operates the software on their behalf. If ChatGPT, Claude or a personal assistant can select and combine the tools it needs, building an entire application merely to make the user navigate its interface becomes less compelling.
+
+Think of a document-conversion service, a specialized search engine, a real-time price-comparison service, or a tool that generates invoices and checks payments. An agent could invoke them through APIs or MCP and assemble the experience it needs. I wouldn't necessarily buy four apps: I'd pay, directly or through my assistant, for the capabilities I actually need.
+
+**The product would no longer necessarily be the application, but what it lets you do.** Value would lie in the data, output quality, reliability, permissions and interoperability. I can imagine usage-based, per-operation or outcome-based business models alongside traditional subscriptions. That doesn't mean complete products or interfaces will become pointless; I am thinking particularly of specialized services that an agent can compose.
+
+It's an idea I want to explore in more depth in a future article.
 
 ## 2028–2033 Phones, tablets, and PCs converge
 
