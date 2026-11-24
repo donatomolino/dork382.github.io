@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import BlogLayout from "~/layouts/BlogLayout.astro";
+import BlogComments from "~/components/BlogComments.astro";
 
 export const prerender = true;
 type Language = "it" | "en";
@@ -126,6 +127,7 @@ const formatDate = (date: Date) =>
       <p>{t.authorIntro}</p>
       <a href="/#work">{t.authorLink} <span aria-hidden="true">↗</span></a>
     </aside>
+    <BlogComments thread={post.data.translationKey || post.data.slug} lang={lang} />
     <footer class="blog-article-footer">
       <p>{t.end}</p>
       <a href={"/blog/" + lang + "/"}>{t.more} <span aria-hidden="true">↗</span></a>

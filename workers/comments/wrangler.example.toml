@@ -1,0 +1,20 @@
+name = "donatomolino-comments"
+main = "index.mjs"
+compatibility_date = "2026-11-24"
+workers_dev = false
+preview_urls = false
+
+[[routes]]
+pattern = "comments.donatomolino.it"
+custom_domain = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "donatomolino-comments"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[vars]
+TURNSTILE_SITE_KEY = "REPLACE_WITH_PUBLIC_SITE_KEY"
+
+[triggers]
+crons = ["15 0 * * *"]

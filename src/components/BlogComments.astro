@@ -1,0 +1,174 @@
+---
+interface Props { thread: string; lang: "it" | "en"; }
+const {thread,lang}=Astro.props;
+const it=lang==="it";
+const t=it?{
+ title:"Discussione",intro:"Condividi la tua opinione. I commenti sono pubblicati dopo moderazione.",
+ load:"Carica commenti",name:"Nome o pseudonimo",body:"Il tuo commento",submit:"Invia commento",
+ privacy:"Non serve un account o un indirizzo email. Non inserire dati personali nel testo. Per limitare lo spam usiamo Cloudflare Turnstile e un identificatore pseudonimo giornaliero, cancellato il giorno successivo.",
+ cancel:"Annulla risposta"
+}:{
+ title:"Discussion",intro:"Share your thoughts. Comments appear after moderation.",
+ load:"Load comments",name:"Name or pseudonym",body:"Your comment",submit:"Post comment",
+ privacy:"No account or email required. Do not include personal data in your comment. To prevent spam, we use Cloudflare Turnstile and a daily pseudonymous identifier, cleared the following day.",
+ cancel:"Cancel reply"
+};
+---
+<section class="blog-comments" data-blog-comments data-thread={thread} data-lang={lang} aria-labelledby="comments-title">
+  <h2 id="comments-title">{t.title}</h2>
+  <p>{t.intro}</p>
+  <button type="button" data-load>{t.load} ↗</button>
+  <p data-load-status role="status" aria-live="polite"></p>
+  <div data-list></div>
+  <form data-comment-form hidden>
+    <p data-reply-label hidden></p>
+    <button data-cancel type="button" hidden>{t.cancel}</button>
+    <label>{t.name}<input name="name" maxlength="60" required autocomplete="nickname" /></label>
+    <label>{t.body}<textarea name="body" maxlength="2000" rows="5" required></textarea></label>
+    <div class="comment-trap" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off" /></label></div>
+    <p class="comments-privacy">{t.privacy} <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">Cloudflare</a>.</p>
+    <div data-turnstile></div>
+    <button type="submit" disabled>{t.submit} ↗</button>
+    <p data-form-status role="status" aria-live="polite"></p>
+  </form>
+</section>
+<script>
+  type Comment = {id:string;parent_id:string|null;name:string;body:string;lang:string;created_at:number};
+  type Turnstile = {render(el:HTMLElement,options:Record<string,unknown>):string;reset(id:string):void};
+  let turnstilePromise:Promise<Turnstile>|undefined;
+  function loadTurnstile():Promise<Turnstile>{
+    const w=window as Window & {turnstile?:Turnstile};
+    if(w.turnstile)return Promise.resolve(w.turnstile);
+    if(turnstilePromise)return turnstilePromise;
+    turnstilePromise=new Promise<Turnstile>((resolve,reject)=>{
+      const script=document.createElement("script");
+      script.src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async=true;
+      const timeout=window.setTimeout(()=>{script.remove();reject(new Error("timeout"));},15000);
+      script.onload=()=>{clearTimeout(timeout);w.turnstile?resolve(w.turnstile):reject(new Error("unavailable"));};
+      script.onerror=()=>{clearTimeout(timeout);script.remove();reject(new Error("unavailable"));};
+      document.head.append(script);
+    }).catch(error=>{turnstilePromise=undefined;throw error;});
+    return turnstilePromise;
+  }
+  const endpoint="https://comments.donatomolino.it/v1/comments";
+  for(const node of document.querySelectorAll<HTMLElement>("[data-blog-comments]")){
+    const lang=node.dataset.lang==="it"?"it":"en";
+    const it=lang==="it";
+    const strings=it?{
+      loading:"Caricamento…",unavailable:"Commenti temporaneamente non disponibili. Riprova.",empty:"Non ci sono ancora commenti approvati.",
+      reply:"Rispondi",replyTo:"In risposta a ",verify:"Completa la verifica antispam.",sending:"Invio…",
+      pending:"Commento ricevuto. Sarà visibile dopo l’approvazione.",rate:"Limite giornaliero raggiunto. Riprova domani.",error:"Invio non riuscito. Riprova.",
+      retry:"Riprova",refresh:"Aggiorna commenti"
+    }:{
+      loading:"Loading…",unavailable:"Comments are temporarily unavailable. Please retry.",empty:"No approved comments yet.",
+      reply:"Reply",replyTo:"Replying to ",verify:"Complete the anti-spam check.",sending:"Sending…",
+      pending:"Comment received. It will appear after approval.",rate:"Daily limit reached. Try again tomorrow.",error:"Could not post. Please retry.",
+      retry:"Retry",refresh:"Refresh comments"
+    };
+    const thread=node.dataset.thread||"";
+    const button=node.querySelector<HTMLButtonElement>("[data-load]")!;
+    const list=node.querySelector<HTMLElement>("[data-list]")!;
+    const loadStatus=node.querySelector<HTMLElement>("[data-load-status]")!;
+    const form=node.querySelector<HTMLFormElement>("[data-comment-form]")!;
+    const formStatus=node.querySelector<HTMLElement>("[data-form-status]")!;
+    const submit=form.querySelector<HTMLButtonElement>('[type="submit"]')!;
+    const cancel=form.querySelector<HTMLButtonElement>("[data-cancel]")!;
+    const replyLabel=form.querySelector<HTMLElement>("[data-reply-label]")!;
+    const widgetTarget=form.querySelector<HTMLElement>("[data-turnstile]")!;
+    let parentId:string|null=null,token="",widget:string|undefined,ts:Turnstile|undefined,sending=false,siteKey="",widgetLoading=false;
+    function setReply(id:string|null,name=""){
+      parentId=id;replyLabel.hidden=!id;cancel.hidden=!id;
+      replyLabel.textContent=id?strings.replyTo+name:"";
+    }
+    cancel.addEventListener("click",()=>setReply(null));
+    async function ensureWidget(){
+      if(widget!==undefined||widgetLoading)return;
+      widgetLoading=true;
+      try {
+        ts=await loadTurnstile();
+        widget=ts.render(widgetTarget,{sitekey:siteKey,action:"blog_comment",language:lang,
+          callback:(value:string)=>{token=value;submit.disabled=sending;},
+          "expired-callback":()=>{token="";submit.disabled=true;},
+          "error-callback":()=>{token="";submit.disabled=true;formStatus.textContent=strings.verify;}
+        });
+      } catch {formStatus.textContent=strings.unavailable;}
+      finally {widgetLoading=false;}
+    }
+    function commentElement(comment:Comment,isReply=false){
+      const item=document.createElement("article");
+      item.className=isReply?"comment-item comment-reply":"comment-item";
+      const meta=document.createElement("div");meta.className="comment-meta";
+      const author=document.createElement("strong");author.textContent=comment.name;
+      const time=document.createElement("time");
+      const date=new Date(comment.created_at);
+      time.dateTime=date.toISOString();time.textContent=new Intl.DateTimeFormat(lang,{dateStyle:"medium"}).format(date);
+      meta.append(author,time);
+      const p=document.createElement("p");p.className="comment-text";p.textContent=comment.body;p.lang=comment.lang;
+      item.append(meta,p);
+      if(!isReply){
+        const b=document.createElement("button");b.type="button";b.className="comment-reply-button";b.textContent=strings.reply;
+        b.addEventListener("click",()=>{setReply(comment.id,comment.name);form.querySelector<HTMLTextAreaElement>("textarea")?.focus();void ensureWidget();});
+        item.append(b);
+      }
+      return item;
+    }
+    button.addEventListener("click",async()=>{
+      button.disabled=true;loadStatus.textContent=strings.loading;
+      try{
+        const res=await fetch(endpoint+"?thread="+encodeURIComponent(thread),{signal:AbortSignal.timeout(12000),credentials:"omit"});
+        if(!res.ok)throw new Error("unavailable");
+        const data=await res.json() as {comments:Comment[];siteKey:string};
+        if(!Array.isArray(data.comments)||typeof data.siteKey!=="string")throw new Error("invalid");
+        siteKey=data.siteKey;list.replaceChildren();loadStatus.textContent=data.comments.length?"":strings.empty;
+        for(const root of data.comments.filter(c=>!c.parent_id)){
+          const el=commentElement(root);
+          for(const child of data.comments.filter(c=>c.parent_id===root.id))el.append(commentElement(child,true));
+          list.append(el);
+        }
+        form.hidden=false;button.textContent=strings.refresh+" ↗";
+      }catch{loadStatus.textContent=strings.unavailable;button.textContent=strings.retry+" ↗";}
+      finally{button.disabled=false;}
+    });
+    form.addEventListener("focusin",()=>{void ensureWidget();});
+    form.addEventListener("submit",async(event)=>{
+      event.preventDefault();
+      if(sending||!token){formStatus.textContent=strings.verify;return;}
+      sending=true;submit.disabled=true;formStatus.textContent=strings.sending;
+      const data=new FormData(form);
+      try{
+        const res=await fetch(endpoint,{method:"POST",credentials:"omit",headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({thread,lang,parentId,name:data.get("name"),body:data.get("body"),website:data.get("website"),token}),
+          signal:AbortSignal.timeout(15000)});
+        if(res.status===429){formStatus.textContent=strings.rate;return;}
+        if(!res.ok)throw new Error("failed");
+        form.reset();setReply(null);formStatus.textContent=strings.pending;
+      }catch{formStatus.textContent=strings.error;}
+      finally{sending=false;token="";submit.disabled=true;if(widget!==undefined)ts?.reset(widget);}
+    });
+  }
+</script>
+<style>
+  .blog-comments{width:min(100%,790px);margin:60px auto 0;padding:30px 0;border-top:2px solid var(--swiss-ink)}
+  .blog-comments h2{font-size:clamp(28px,4vw,44px);font-weight:780;letter-spacing:-.045em;margin:0 0 12px}
+  .blog-comments p{line-height:1.55;margin:0 0 14px}
+  .blog-comments button{border:1px solid var(--swiss-ink);padding:10px 14px;background:transparent;font-weight:740;cursor:pointer}
+  .blog-comments button:hover:not(:disabled){background:var(--swiss-ink);color:var(--swiss-paper)}
+  .blog-comments button:disabled{opacity:.5;cursor:not-allowed}
+  .blog-comments form{margin-top:24px;padding-top:22px;border-top:1px solid var(--swiss-ink)}
+  .blog-comments label{display:block;font-weight:650;margin:16px 0}
+  .blog-comments input,.blog-comments textarea{display:block;width:100%;box-sizing:border-box;background:transparent;border:1px solid var(--swiss-ink);padding:10px;margin-top:6px;font:inherit;font-weight:400;color:inherit}
+  .blog-comments textarea{resize:vertical}
+  .blog-comments [data-turnstile]{margin:12px 0}
+  .blog-comments [data-form-status]{margin-top:12px}
+  .comments-privacy{font-size:13px}
+  .comments-privacy a{text-decoration:underline}
+  .comment-trap{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .blog-comments [hidden]{display:none!important}
+  .blog-comments :global(.comment-item){padding:18px 0;border-top:1px solid var(--swiss-ink);overflow-wrap:anywhere}
+  .blog-comments :global(.comment-reply){margin:18px 0 0 18px;padding:14px;border-left:2px solid var(--swiss-red)}
+  .blog-comments :global(.comment-meta){display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;margin-bottom:10px}
+  .blog-comments :global(.comment-meta time){font-size:12px}
+  .blog-comments :global(.comment-text){white-space:pre-wrap}
+  .blog-comments :global(.comment-reply-button){border:0;padding:4px 0;color:var(--swiss-red);font-size:13px;background:transparent;cursor:pointer;font-weight:750}
+</style>
