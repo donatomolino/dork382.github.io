@@ -11,12 +11,17 @@ sources:
   - https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance
   - https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025
   - https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027
-  - https://iot-analytics.com/Number-Connected-Iot-Devices/
+  - https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence
+  - https://iot-analytics.com/number-connected-iot-devices/
   - https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/
   - https://www.w3.org/TR/activitypub/
   - https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation
   - https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en
   - https://digital-strategy.ec.europa.eu/en/policies/data-act
+  - https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en
+  - https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays
+  - https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/
+  - https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/
   - https://help.openai.com/en/articles/11752874-chatgpt-agent
   - https://help.openai.com/en/articles/11487775-connectors-in-chatgpt
   - https://www.anthropic.com/research/claude-code-best-practices
@@ -30,6 +35,7 @@ sources:
   - https://www.meta.com/ai-glasses/
   - https://www.meta.com/ai-glasses/meta-ray-ban-display/
   - https://developers.meta.com/blog/meta-connect-recap-ai-glasses/
+  - https://iot-analytics.com/Number-Connected-Iot-Devices/
 tags:
   - Futuro
   - Intelligenza artificiale
@@ -51,11 +57,15 @@ I prodotti che osservo oggi sono soprattutto [ChatGPT](https://help.openai.com/e
 
 Il segnale è già visibile. Nel sondaggio [McKinsey *State of AI 2025*](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025), il **23%** dei rispondenti indicava che la propria organizzazione stava ampliando l'uso di almeno un sistema AI agentico; un ulteriore **39%** dichiarava sperimentazioni. È un'indagine sulle organizzazioni, non sulle persone: non significa che il 62% della popolazione abbia già un agente personale.
 
+![Sondaggio McKinsey 2025: 23% dei rispondenti in fase di adozione su scala e 39% in sperimentazione.](/blog/charts/enterprise-agents-survey.svg)
+
+*Grafico 1 — [McKinsey, State of AI 2025](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025), sondaggio globale su 1.993 rispondenti tra giugno e luglio 2025. I gruppi sono distinti e si riferiscono alle organizzazioni.*
+
 Anche la capacità di operare su un computer è cambiata rapidamente. Lo [Stanford AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance) riporta un successo del **66,3%** sul benchmark OSWorld nel 2025, contro circa il **5%** nel 2024. Il riferimento umano è **72,35%**. È una progressione notevole, ma significa anche che un agente può ancora fallire circa una volta su tre in questo tipo di test.
 
 ![Grafico: successo degli agenti AI su OSWorld, circa 5% nel 2024, 66,3% nel 2025 e 72,35% per il riferimento umano.](/blog/charts/agents-osworld.svg)
 
-*Grafico 1 — Dati: [Stanford HAI, AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance). Il benchmark misura compiti specifici al computer; non dimostra l'affidabilità degli agenti in ogni situazione.*
+*Grafico 2 — Dati: [Stanford HAI, AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance). Il benchmark misura compiti specifici al computer; non dimostra l'affidabilità degli agenti in ogni situazione.*
 
 Per me la parte più interessante è l'indipendenza dai fornitori. Vorrei un'AI che possa conservare memoria e contesto anche quando cambio modello, e che possa usare strumenti locali oppure cloud. La direzione degli standard è promettente: nel dicembre 2025 il [Model Context Protocol è entrato nella Agentic AI Foundation](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation), sotto la Linux Foundation.
 
@@ -71,7 +81,19 @@ Oggi spesso adattiamo il lavoro alle schermate del software che abbiamo acquista
 
 La generazione di codice sta abbassando il costo di creare interfacce e automazioni. Gartner [stimava nel 2025](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) che il 33% delle applicazioni software enterprise avrebbe incluso AI agentica entro il 2028, contro meno dell'1% nel 2024. Anche questa è una **proiezione**, non una misura della vita utile delle applicazioni.
 
+![Quota di applicazioni enterprise con AI agentica: meno dell'1% nel 2024, previsione del 33% nel 2028.](/blog/charts/enterprise-agent-forecast.svg)
+
+*Grafico 3 — [Gartner, giugno 2025](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027). Il valore 2024 è un limite superiore; quello del 2028 è una previsione.*
+
 La mia scommessa non è che tutto verrà riscritto continuamente. Quello sarebbe un incubo di manutenzione. È che **la parte visibile del software diventerà più economica da cambiare**, mentre contratti di dati, autorizzazioni, integrazioni, controlli e infrastrutture dovranno essere molto più stabili. In aziende regolamentate la velocità sarà comunque limitata da audit, sicurezza e affidabilità.
+
+Immagino un retailer che costruisce una dashboard specifica per una campagna di due settimane: le interfacce cambiano, ma inventario, ordini, clienti e autorizzazioni rimangono nei sistemi esistenti. Finita la campagna, la dashboard può sparire senza portarsi via i dati.
+
+Nel luglio 2026 [Gartner ha stimato](https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence) che entro il 2030 fino a **234 miliardi di dollari**, circa il **20% della spesa SaaS applicativa aziendale**, potrebbero essere esposti alla pressione economica degli agenti che operano trasversalmente ai software.
+
+![Stima Gartner: fino a 234 miliardi di dollari, circa il 20% della spesa SaaS applicativa aziendale, esposta entro il 2030.](/blog/charts/saas-exposure-2030.svg)
+
+*Grafico 4 — [Gartner, luglio 2026](https://www.gartner.com/en/newsroom/press-releases/2026-07-01-gartner-says-us-dollars-234-billion-in-enterprise-application-software-spend-is-at-risk-from-agentic-artificial-intelligence). È una stima dell'esposizione al cambiamento del modello di business, non una previsione di ricavi persi per 234 miliardi.*
 
 ## 2028–2033 Smartphone, tablet e PC convergeranno
 
@@ -95,6 +117,10 @@ Io dovrei poter usare un'app di messaggistica, un'altra persona un client divers
 
 I pezzi esistono già. [ActivityPub](https://www.w3.org/TR/activitypub/) è una raccomandazione W3C dal 2018 per il social networking decentralizzato. Il [Digital Markets Act europeo](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en) impone specifiche forme di interoperabilità ai grandi servizi di messaggistica designati: i primi servizi terzi interoperabili con WhatsApp sono arrivati nel novembre 2025. Nel mondo degli agenti, standard come MCP affrontano il problema di collegare strumenti e dati.
 
+![Cronologia di ActivityPub, Data Act, interoperabilità WhatsApp, MCP e wallet europei.](/blog/charts/interoperability-milestones.svg)
+
+*Grafico 5 — Tappe documentate da [W3C](https://www.w3.org/TR/activitypub/), [Commissione europea — Data Act](https://digital-strategy.ec.europa.eu/en/policies/data-act), [DMA](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en), [Linux Foundation](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation) e [Digital Identity Wallet](https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en). La scadenza per i wallet non indica adozione universale.*
+
 Sono segnali, non una garanzia. L'interoperabilità porta difficoltà di moderazione, antispam, crittografia, identità e incentivi economici. Le piattaforme hanno ottime ragioni commerciali per trattenere i propri utenti.
 
 Credo però che il valore si sposterà gradualmente **dall'obbligo di usare la stessa app alla libertà di scegliere l'interfaccia che preferisci**.
@@ -109,6 +135,10 @@ Anche qui non partiamo da zero. [Google Research ha sperimentato interfacce gene
 
 Immagino di aprire la mia AI e chiederle di confrontare le spese di casa: invece di farmi navigare tra tre app, genera un grafico, una tabella e due azioni. Quando cambio obiettivo, cambia anche la schermata.
 
+![Schema concettuale: richiesta, accesso autorizzato ai dati, componenti approvati e conferma umana.](/blog/charts/generated-interface-flow.svg)
+
+*Grafico 6 — Schema concettuale, non statistica, ispirato a [Google Research](https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/) e [A2UI](https://developers.googleblog.com/introducing-a2ui-an-open-project-for-agent-driven-interfaces/). Il pagamento o il cambio di contratto richiederebbe una decisione esplicita dell'utente.*
+
 Questo non significa che ogni pixel debba essere improvvisato. Per operazioni delicate serviranno componenti affidabili, accessibilità, coerenza e conferme esplicite. **L'interfaccia può essere dinamica senza diventare imprevedibile.**
 
 ## 2030–2040 Sensori praticamente ovunque
@@ -121,7 +151,7 @@ Un dato aiuta a capire la scala. Secondo [IoT Analytics](https://iot-analytics.c
 
 ![Grafico: connessioni IoT mondiali, 18,5 miliardi nel 2024, 21,1 stimati nel 2025, 39 previsti nel 2030.](/blog/charts/iot-devices.svg)
 
-*Grafico 2 — [IoT Analytics](https://iot-analytics.com/Number-Connected-Iot-Devices/). Il totale comprende anche industria, infrastrutture e altri oggetti connessi: non sono tutti dispositivi indossabili. Il 2030 è una previsione.*
+*Grafico 7 — [IoT Analytics](https://iot-analytics.com/Number-Connected-Iot-Devices/). Il totale comprende anche industria, infrastrutture e altri oggetti connessi: non sono tutti dispositivi indossabili. Il 2030 è una previsione.*
 
 I sensori, però, non producono automaticamente informazioni utili. Dati imprecisi o fuori contesto possono essere peggiori dell'assenza di dati. E se un sistema conosce abitudini, posizione e segnali personali, privacy e sicurezza non possono essere opzioni secondarie.
 
@@ -161,7 +191,7 @@ Il mercato si sta muovendo, anche se siamo lontani da una sostituzione. IDC prev
 
 ![Grafico: spedizioni previste di occhiali intelligenti con e senza display nel 2026 e nel 2030.](/blog/charts/smart-glasses.svg)
 
-*Grafico 3 — [IDC, 2026](https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/). Si confrontano spedizioni annue previste, non utenti attivi né quota di sostituzione degli smartphone.*
+*Grafico 8 — [IDC, 2026](https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/). Si confrontano spedizioni annue previste, non utenti attivi né quota di sostituzione degli smartphone.*
 
 I numeri dimostrano interesse e crescita prevista, **non dimostrano che lo smartphone scomparirà**. Per leggere a lungo, lavorare su contenuti complessi o usare un display privato potremmo continuare a preferire altri dispositivi.
 
@@ -188,6 +218,6 @@ Per questo, tra tutte le previsioni, la più importante per me non riguarda un d
 
 ### Fonti e metodo
 
-Ho usato dati pubblicati entro il **24 novembre 2026**. I numeri dei grafici provengono da fonti indicate accanto a ogni visualizzazione. Dove è presente una stima o una previsione di mercato l'ho etichettata come tale; le finestre temporali del post sono invece **ipotesi personali**, non proiezioni statistiche.
+Ho usato dati pubblicati entro il **24 novembre 2026**. Gli otto grafici statici distinguono dati osservati, sondaggi, previsioni, una cronologia documentata (grafico 5) e uno schema concettuale (grafico 6). Ogni prodotto citato è collegato alla relativa documentazione; gli scenari di integrazione futura restano ipotesi. Dove è presente una stima o una previsione di mercato l'ho etichettata come tale; le finestre temporali del post sono invece **ipotesi personali**, non proiezioni statistiche.
 
 Fonti principali: [Stanford AI Index 2026](https://hai.stanford.edu/ai-index/2026-ai-index-report), [McKinsey — State of AI 2025](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025), [Gartner — Agentic AI](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027), [IoT Analytics](https://iot-analytics.com/Number-Connected-Iot-Devices/), [IDC — Smart Glasses](https://www.idc.com/resource-center/blog/smart-glasses-surge-the-xr-market-is-rewriting-its-own-rules/), [Android Developers](https://developer.android.com/blog/posts/android-devices-extend-seamlessly-to-connected-displays), [W3C ActivityPub](https://www.w3.org/TR/activitypub/), [Linux Foundation — Agentic AI Foundation](https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-Agentic-ai-foundation), [Google Research — Generative UI](https://research.google/blog/generative-ui-a-rich-custom-visual-interactive-user-experience-for-any-prompt/), [Commissione europea — Digital Identity](https://commission.europa.eu/topics/digital-economy-and-society/european-digital-identity_en), [Commissione europea — Data Act](https://digital-strategy.ec.europa.eu/en/policies/data-act) e [Digital Markets Act — Interoperability](https://digital-markets-act.ec.europa.eu/businesses-portal/messaging-interoperability_en).
