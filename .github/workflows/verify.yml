@@ -22,6 +22,8 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci
+      - name: Test comments API using local SQLite
+        run: node --test workers/comments/index.test.mjs
       - name: Build production site
         run: npm run build
       - name: Check generated discovery files
@@ -72,6 +74,8 @@ jobs:
           ! grep -q '06 projects' dist/index.html
           ! grep -q 'donatomolino@europe.com' dist/index.html
 
+          grep -q 'data-thread="future-tech"' dist/blog/en/the-future-of-tech-2027-2050/index.html
+          grep -q 'data-thread="future-tech"' dist/blog/it/il-futuro-del-tech-2027-2050/index.html
           # Eight referenced charts must be valid static assets, not JS widgets.
           for name in enterprise-agents-survey agents-osworld enterprise-agent-forecast saas-exposure-2030 interoperability-milestones generated-interface-flow iot-devices smart-glasses; do
             test -f "dist/blog/charts/en/$name.svg"
