@@ -25,6 +25,25 @@ html {
   font-synthesis: none;
 }
 
+/* A quiet dot grid, inspired by the portfolio banner. Homepage only. */
+.home-page:has(> main#top > .home-hero) {
+  background-image: radial-gradient(circle, rgb(17 17 15 / 24%) 0.8px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: 0 0;
+}
+
+@media (max-width: 640px) {
+  .home-page:has(> main#top > .home-hero) {
+    background-size: 28px 28px;
+  }
+}
+
+@media print {
+  .home-page:has(> main#top > .home-hero) {
+    background-image: none;
+  }
+}
+
 .home-page *,
 .home-page *::before,
 .home-page *::after {
